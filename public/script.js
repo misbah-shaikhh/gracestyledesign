@@ -23,15 +23,17 @@ function isValidDate(date) {
   return !isNaN(new Date(date).getTime());
 }
 
-// REGISTER
+// ================= REGISTER =================
 document.getElementById("registerForm").addEventListener("submit", async (e) => {
   e.preventDefault();
 
-  const name = nameInput.value.trim();
-  const contactNo = contactNoInput.value.trim();
-  const email = emailInput.value.trim();
-  const dob = dobInput.value;
-  const gender = genderInput.value;
+  const name = document.getElementById("name").value.trim();
+  const contactNo = document.getElementById("contactNo").value.trim();
+  const email = document.getElementById("email").value.trim();
+  const dob = document.getElementById("dob").value;
+  const gender = document.getElementById("gender").value;
+  const password = document.getElementById("password").value;
+  const confirmPassword = document.getElementById("confirmPassword").value;
 
   if (!isValidName(name)) {
     alert("Invalid name");
@@ -53,36 +55,62 @@ document.getElementById("registerForm").addEventListener("submit", async (e) => 
     return;
   }
 
+  if (password.length < 6) {
+    alert("Password must be at least 6 characters");
+    return;
+  }
+
+  if (password !== confirmPassword) {
+    alert("Passwords do not match");
+    return;
+  }
+
   try {
     const res = await fetch("/register", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ name, contactNo, email, dob, gender })
+      body: JSON.stringify({
+        name,
+        contactNo,
+        email,
+        dob,
+        gender,
+        password
+      }),
     });
 
     const data = await res.json();
     alert(data.message);
   } catch (err) {
+    console.error(err);
     alert("Registration failed");
   }
 });
 
-// LOGIN
+
+// ================= LOGIN =================
 document.getElementById("loginForm").addEventListener("submit", async (e) => {
   e.preventDefault();
 
-  const email = loginEmailInput.value.trim();
+  const email = document.getElementById("loginEmail").value.trim();
+  const password = document.getElementById("loginPassword").value;
+
+  if (!email || !password) {
+    alert("Please enter email and password");
+    return;
+  }
 
   try {
     const res = await fetch("/login", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email })
+      body: JSON.stringify({ email, password }),
     });
 
     const data = await res.json();
     alert(data.message);
   } catch (err) {
+    console.error(err);
     alert("Login failed");
   }
 });

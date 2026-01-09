@@ -1,18 +1,18 @@
 const express = require("express");
-const bodyParser = require("body-parser");
 const connectDB = require("./config/db");
 const User = require("./models/user");
+const bcrypt = require("bcryptjs");
 
 connectDB();
 
 const app = express();
-app.use(bodyParser.json());
+app.use(express.json());
 app.use(express.static("public"));
 
-// REGISTER
+// ================= REGISTER =================
 app.post("/register", async (req, res) => {
   try {
-    const { name, contactNo, email, dob, gender } = req.body;
+    const { name, contactNo, email, dob, gender, password } = req.body;
 
     const existingUser = await User.findOne({
       $or: [{ email }, { contactNo }]
@@ -22,27 +22,51 @@ app.post("/register", async (req, res) => {
       return res.status(400).json({ message: "User already exists" });
     }
 
-    const user = new User({ name, contactNo, email, dob, gender });
-    await user.save();
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    const newUser = new User({
+      name,
+      contactNo,
+      email,
+      dob,
+      gender,
+      password: hashedPassword,
+    });
+
+    await newUser.save();
 
     res.status(201).json({ message: "Registration successful" });
-  } catch (error) {
-    res.status(500).json({ message: error.message });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Server error" });
   }
 });
 
-// LOGIN (email only for now)
+// ================= LOGIN =================
 app.post("/login", async (req, res) => {
-  const { email } = req.body;
+  try {
+    const { email, password } = req.body;
 
-  const user = await User.findOne({ email });
-  if (!user) {
-    return res.status(404).json({ message: "User not found" });
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(401).json({ message: "Invalid email or password" });
+    }
+
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) {
+      return res.status(401).json({ message: "Invalid email or password" });
+    }
+
+    res.status(200).json({ message: "Login successful" });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Server error" });
   }
-
-  res.json({ message: "Login successful", user });
 });
 
-app.listen(3000, () => {
-  console.log("Server running on http://localhost:3000");
-});
+// ================= SERVER =================
+const PORT = 3000;
+app.listen(PORT, () =>
+  console.log(`Server running on http://localhost:${PORT}`)
+);
+
