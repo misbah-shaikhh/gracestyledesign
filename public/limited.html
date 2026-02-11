@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>GS Ethnic Store</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="catalogue.css">
+  <link href="https://fonts.cdnfonts.com/css/rowdies" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Corben">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Crimson+Text">
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="header">
+  <div class="logo">
+  <img src="gsd.png" alt="GS Logo">
+</div>
+  <nav class="nav">
+    <a href="#">HOME</a>
+    <a href="javascript:void(0)" id="categoryBtn">CATEGORIES</a>
+    <a href="#">SALE</a>
+    <a href="#">ABOUT</a>
+    <a href="#">CONTACT</a>
+  </nav>
+ <div class="nav-icons">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <i class="fa-regular fa-user"></i>
+  <i class="fa-regular fa-heart"></i>
+  <i class="fa-solid fa-bag-shopping"></i>
+</div>
+</header>
+
+<!-- Categories Overlay -->
+<div class="category-overlay" id="categoryOverlay">
+  <div class="category-box">
+    <h4>Kurtis</h4>
+    <ul>
+      <li>Cotton Kurtis</li>
+      <li>Designer Kurtis</li>
+      <li>Traditional Kurtis</li>
+      <li>Festive Kurtis</li>
+      <li>Office Wear Kurtis</li>
+      <li>Everyday Kurtis</li>
+    </ul>
+
+    <h4>Sarees</h4>
+    <h4>Ethnic Wear</h4>
+  </div>
+</div>
+
+<!-- HERO SECTION -->
+<section class="hero-slider">
+
+  <!-- Left Arrow -->
+  <button class="slider-btn left" onclick="prevSlide()">
+    <i class="fa-solid fa-chevron-left"></i>
+  </button>
+
+  <!-- Slides -->
+  <div class="slides">
+    <div class="slide-track">
+    <img src="hero-banner.png" class="slide active">
+    <img src="hero-banner.png" class="slide">
+    <img src="hero-banner.png" class="slide">
+    </div>
+  </div>
+
+  <!-- Right Arrow -->
+  <button class="slider-btn right" onclick="nextSlide()">
+    <i class="fa-solid fa-chevron-right"></i>
+  </button>
+
+</section>
+
+<section class="catalogue-section">
+
+  <!-- SIDEBAR FILTER -->
+  <aside class="filter-sidebar">
+
+    <div class="filter-header">
+      <h3>Filters</h3>
+      <span class="clear-filter">Clear All</span>
+    </div>
+
+<div class="filter-box">
+  <h4>Price</h4>
+  <input type="range" id="priceRange" min="100" max="10000" value="2000">
+  <p style="font-family: 'Corben', serif;">
+    ₹100 - ₹<span id="priceValue">2000</span>+
+  </p>
+</div>
+
+    <div class="filter-box">
+      <h4>Filter By Size Availability</h4>
+      <div class="size-options">
+        <span>XS</span>
+        <span>S</span>
+        <span>M</span>
+        <span>L</span>
+        <span>XL</span>
+        <span>XXL</span>
+      </div>
+    </div>
+
+  </aside>
+
+  <!-- PRODUCTS AREA -->
+  <div style="background-color: rgba(157, 145, 103, 0.73);" class="catalogue-products">
+
+    <div class="catalogue-topbar">
+      <select style="background-color: rgba(157, 145, 103, 0); border: 0;">
+        <option>Sort By : Recommended</option>
+        <option> Bestselling </option>
+        <option> Discount </option>
+        <option>Price : Low to High</option>
+        <option>Price : High to Low</option>
+      </select>
+    </div>
+<div class="product-grid">
+
+  <!-- PRODUCT CARD 1 -->
+  <div class="product-card">
+
+    <!-- IMAGE -->
+    <div class="product-img">
+      <img src="product.jpg" alt="Pink Ethnic Suit">
+    </div>
+
+    <!-- PRODUCT INFO -->
+    <div class="product-info">
+      
+      <h3>Pink Ethnic Suit</h3>
+      <p class="price">₹2,499 <span>₹3,999</span></p>
+
+      <div class="info-row">
+
+        <!-- COLORS -->
+        <div class="colors">
+          <span class="c1"></span>
+          <span class="c2"></span>
+        </div>
+
+        <!-- RATING + HEART -->
+        <div class="rating-heart">
+          <span class="rating">⭐ 4.5</span>
+          <i class="fa-regular fa-heart heart"></i>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- product card 2 -->
+  <div class="product-card">
+    <div class="product-img">
+      <img src="product.jpg" alt="Pink Ethnic Suit">
+    </div>
+
+    <div class="product-info">
+      <h3>Pink Ethnic Suit</h3>
+      <p class="price">₹2,499 <span>₹3,999</span></p>
+
+      <div class="info-row">
+        <div class="colors">
+          <span class="c1"></span>
+          <span class="c2"></span>
+        </div>
+
+        <div class="rating-heart">
+          <span class="rating">⭐ 4.5</span>
+          <i class="fa-regular fa-heart heart"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+    <!-- product card 3 -->
+  <div class="product-card">
+    <div class="product-img">
+      <img src="product.jpg" alt="Pink Ethnic Suit">
+    </div>
+
+    <div class="product-info">
+      <h3>Pink Ethnic Suit</h3>
+      <p class="price">₹2,499 <span>₹3,999</span></p>
+
+      <div class="info-row">
+        <div class="colors">
+          <span class="c1"></span>
+          <span class="c2"></span>
+        </div>
+
+        <div class="rating-heart">
+          <span class="rating">⭐ 4.5</span>
+          <i class="fa-regular fa-heart heart"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+    <!-- product card 4 -->
+  <div class="product-card">
+    <div class="product-img">
+      <img src="product.jpg" alt="Pink Ethnic Suit">
+    </div>
+
+    <div class="product-info">
+      <h3>Pink Ethnic Suit</h3>
+      <p class="price">₹2,499 <span>₹3,999</span></p>
+
+      <div class="info-row">
+        <div class="colors">
+          <span class="c1"></span>
+          <span class="c2"></span>
+        </div>
+
+        <div class="rating-heart">
+          <span class="rating">⭐ 4.5</span>
+          <i class="fa-regular fa-heart heart"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+    <!-- product card 5 -->
+  <div class="product-card">
+    <div class="product-img">
+      <img src="product.jpg" alt="Pink Ethnic Suit">
+    </div>
+
+    <div class="product-info">
+      <h3>Pink Ethnic Suit</h3>
+      <p class="price">₹2,499 <span>₹3,999</span></p>
+
+      <div class="info-row">
+        <div class="colors">
+          <span class="c1"></span>
+          <span class="c2"></span>
+        </div>
+
+        <div class="rating-heart">
+          <span class="rating">⭐ 4.5</span>
+          <i class="fa-regular fa-heart heart"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+    <!-- product card 6 -->
+  <div class="product-card">
+    <div class="product-img">
+      <img src="product.jpg" alt="Pink Ethnic Suit">
+    </div>
+
+    <div class="product-info">
+      <h3>Pink Ethnic Suit</h3>
+      <p class="price">₹2,499 <span>₹3,999</span></p>
+
+      <div class="info-row">
+        <div class="colors">
+          <span class="c1"></span>
+          <span class="c2"></span>
+        </div>
+
+        <div class="rating-heart">
+          <span class="rating">⭐ 4.5</span>
+          <i class="fa-regular fa-heart heart"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+</div>
+
+
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-container">
+
+    <!-- Menu -->
+    <div class="footer-box">
+      <h3>Menu</h3>
+      <ul>
+        <li><a href="#">Track Your Order</a></li>
+        <li><a href="#">Return Order</a></li>
+        <li><a href="#">Exchange Order</a></li>
+      </ul>
+    </div>
+
+    <!-- Policies -->
+    <div class="footer-box">
+      <h3>Our Policies</h3>
+      <ul>
+        <li><a href="#">Return and Exchange Policy</a></li>
+        <li><a href="#">Shipping Policy</a></li>
+        <li><a href="#">Privacy Policy</a></li>
+        <li><a href="#">Terms and Conditions</a></li>
+      </ul>
+    </div>
+
+    <!-- Contact -->
+    <div class="footer-box">
+      <h3>Contact Us</h3>
+      <p>Support Contact: 8287440077</p>
+      <p>(12PM To 6PM, Mon-Sat)</p>
+
+      <div class="social-icons">
+        <a href="#"><i class="fab fa-instagram"></i></a>
+        <a href="#"><i class="fab fa-whatsapp"></i></a>
+        <a href="#"><i class="fab fa-facebook"></i></a>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="footer-bottom">
+    <p>© 2026, Grace Style Design.</p>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>

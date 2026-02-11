@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My Wishlist - GS Store</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Corben">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Crimson+Text">
+    <link href="https://fonts.cdnfonts.com/css/rowdies" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css"> 
+    <link rel="stylesheet" href="cart.css">
+    <!-- Link JavaScript File -->
+    <style>
+      
+      .wishlist-section {
+      padding: 40px 80px; /* same as grid padding for perfect alignment */
+      }
+
+      .wishlist-title {
+        font-family: 'Rowdies', sans-serif;
+        font-size: 32px;
+        font-weight: 400;
+        color: #000;
+        margin-bottom: 20px;
+        text-align: left;
+        margin-left: 30px;
+      }
+    </style>
+</head>
+<body>
+<!-- HEADER -->
+<header class="header">
+  <div class="logo">
+  <img src="gsd.png" alt="GS Logo">
+</div>
+  <nav class="nav">
+    <a href="#">HOME</a>
+    <a href="javascript:void(0)" id="categoryBtn">CATEGORIES</a>
+    <a href="#">SALE</a>
+    <a href="#">ABOUT</a>
+    <a href="#">CONTACT</a>
+  </nav>
+ <div class="nav-icons">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <i class="fa-regular fa-user" id="profileBtn"></i>
+  <i class="fa-regular fa-heart"></i>
+  <i class="fa-solid fa-bag-shopping"></i>
+</div>
+</header>
+
+<!-- Categories Overlay -->
+<div class="category-overlay" id="categoryOverlay">
+  <div class="category-box">
+    <h4>Kurtis</h4>
+    <ul>
+      <li>Cotton Kurtis</li>
+      <li>Designer Kurtis</li>
+      <li>Traditional Kurtis</li>
+      <li>Festive Kurtis</li>
+      <li>Office Wear Kurtis</li>
+      <li>Everyday Kurtis</li>
+    </ul>
+
+    <h4>Sarees</h4>
+    <h4>Ethnic Wear</h4>
+  </div>
+</div>
+
+<!-- Profile Overlay -->
+<div class="profile-overlay" id="profileOverlay">
+  <div class="profile-box">
+    <ul>
+      <li><a href="orders.html">My Orders</a></li>
+      <li><a href="wishlist.html">My Wishlist</a></li>
+      <li><a href="address.html">Saved Addresses</a></li>
+    </ul>
+
+    <hr>
+
+    <ul>
+      <li><a href="profile.html">Edit Profile</a></li>
+      <li><a href="logout.html">Logout</a></li>
+    </ul>
+  </div>
+</div>
+
+
+<!-- wishlist section -->
+ <section class="wishlist-section">
+  <h2 class="wishlist-title">Wishlist</h2>
+
+<div class="product-track">
+
+      <!-- PRODUCT CARD -->
+      <div class="product-card">
+
+      <!-- DISCOUNT TAG -->
+      <div class="cart-tag">Add to Cart</div>
+
+      <!-- IMAGE -->
+      <img src="product.jpg" alt="">
+
+      <!-- RIGHT SIDE INFO -->
+      <div class="right-info">
+
+      <div class="rating">
+      ⭐ 4.5
+      </div>
+
+    <div class="wishlist">
+      <i class="fa-regular fa-heart heart"></i>
+    </div>
+
+  </div>
+
+  <!-- PRODUCT DETAILS -->
+  <div class="product-info">
+    <h3>Pink Ethnic Suit</h3>
+    <p class="price">₹2,499 <span>₹3,999</span></p>
+    <div class="colors">
+            <span class="c1"></span>
+            <span class="c2"></span>
+          </div>
+  </div>
+
+</div>
+
+
+      <!-- PRODUCT CARD 2 -->
+      <div class="product-card">
+
+      <!-- DISCOUNT TAG -->
+      <div class="cart-tag">Add to Cart</div>
+      <!-- IMAGE -->
+      <img src="product.jpg" alt="">
+
+      <!-- RIGHT SIDE INFO -->
+      <div class="right-info">
+
+      <div class="rating">
+      ⭐ 4.5
+      </div>
+
+    <div class="wishlist">
+      <i class="fa-regular fa-heart heart"></i>
+    </div>
+
+  </div>
+
+  <!-- PRODUCT DETAILS -->
+  <div class="product-info">
+    <h3>Pink Ethnic Suit</h3>
+    <p class="price">₹2,499 <span>₹3,999</span></p>
+    <div class="colors">
+            <span class="c1"></span>
+            <span class="c2"></span>
+          </div>
+  </div>
+
+</div>
+
+      <!-- PRODUCT CARD 3 -->
+      <div class="product-card">
+
+      <!-- DISCOUNT TAG -->
+      <div class="cart-tag">Add to Cart</div>
+
+      <!-- IMAGE -->
+      <img src="product.jpg" alt="">
+
+      <!-- RIGHT SIDE INFO -->
+      <div class="right-info">
+
+      <div class="rating">
+      ⭐ 4.5
+      </div>
+
+    <div class="wishlist">
+      <i class="fa-regular fa-heart heart"></i>
+    </div>
+
+  </div>
+
+  <!-- PRODUCT DETAILS -->
+  <div class="product-info">
+    <h3>Pink Ethnic Suit</h3>
+    <p class="price">₹2,499 <span>₹3,999</span></p>
+    <div class="colors">
+            <span class="c1"></span>
+            <span class="c2"></span>
+          </div>
+  </div>
+
+</div>
+
+      <!-- PRODUCT CARD 4 -->
+      <div class="product-card">
+
+      <!-- DISCOUNT TAG -->
+      <div class="cart-tag">Add to Cart</div>
+
+      <!-- IMAGE -->
+      <img src="product.jpg" alt="">
+
+      <!-- RIGHT SIDE INFO -->
+      <div class="right-info">
+
+      <div class="rating">
+      ⭐ 4.5
+      </div>
+
+    <div class="wishlist">
+      <i class="fa-regular fa-heart heart"></i>
+    </div>
+
+  </div>
+
+  <!-- PRODUCT DETAILS -->
+  <div class="product-info">
+    <h3>Pink Ethnic Suit</h3>
+    <p class="price">₹2,499 <span>₹3,999</span></p>
+    <div class="colors">
+            <span class="c1"></span>
+            <span class="c2"></span>
+          </div>
+  </div>
+
+</div>
+
+      <!-- PRODUCT CARD 3 -->
+      <div class="product-card">
+
+      <!-- DISCOUNT TAG -->
+      <div class="cart-tag">Add to Cart</div>
+
+      <!-- IMAGE -->
+      <img src="product.jpg" alt="">
+
+      <!-- RIGHT SIDE INFO -->
+      <div class="right-info">
+
+      <div class="rating">
+      ⭐ 4.5
+      </div>
+
+    <div class="wishlist">
+      <i class="fa-regular fa-heart heart"></i>
+    </div>
+
+  </div>
+
+  <!-- PRODUCT DETAILS -->
+  <div class="product-info">
+    <h3>Pink Ethnic Suit</h3>
+    <p class="price">₹2,499 <span>₹3,999</span></p>
+    <div class="colors">
+            <span class="c1"></span>
+            <span class="c2"></span>
+          </div>
+  </div>
+
+</div>
+
+      <!-- PRODUCT CARD 3 -->
+      <div class="product-card">
+
+      <!-- DISCOUNT TAG -->
+      <div class="cart-tag">Add to Cart</div>
+
+      <!-- IMAGE -->
+      <img src="product.jpg" alt="">
+
+      <!-- RIGHT SIDE INFO -->
+      <div class="right-info">
+
+      <div class="rating">
+      ⭐ 4.5
+      </div>
+
+    <div class="wishlist">
+      <i class="fa-regular fa-heart heart"></i>
+    </div>
+
+  </div>
+
+  <!-- PRODUCT DETAILS -->
+  <div class="product-info">
+    <h3>Pink Ethnic Suit</h3>
+    <p class="price">₹2,499 <span>₹3,999</span></p>
+    <div class="colors">
+            <span class="c1"></span>
+            <span class="c2"></span>
+          </div>
+  </div>
+
+</div>
+
+</div>
+
+</section>
+
+
+    <!-- Footer -->
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-container">
+
+    <!-- Menu -->
+    <div class="footer-box">
+      <h3>Menu</h3>
+      <ul>
+        <li><a href="#">Track Your Order</a></li>
+        <li><a href="#">Return Order</a></li>
+        <li><a href="#">Exchange Order</a></li>
+      </ul>
+    </div>
+
+    <!-- Policies -->
+    <div class="footer-box">
+      <h3>Our Policies</h3>
+      <ul>
+        <li><a href="#">Return and Exchange Policy</a></li>
+        <li><a href="#">Shipping Policy</a></li>
+        <li><a href="#">Privacy Policy</a></li>
+        <li><a href="#">Terms and Conditions</a></li>
+      </ul>
+    </div>
+
+    <!-- Contact -->
+    <div class="footer-box">
+      <h3>Contact Us</h3>
+      <p>Support Contact: 8287440077</p>
+      <p>(12PM To 6PM, Mon-Sat)</p>
+
+      <div class="social-icons">
+        <a href="#"><i class="fab fa-instagram"></i></a>
+        <a href="#"><i class="fab fa-whatsapp"></i></a>
+        <a href="#"><i class="fab fa-facebook"></i></a>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="footer-bottom">
+    <p>© 2026, Grace Style Design.</p>
+  </div>
+</footer>
+    <script defer src="prod.js"></script>
+    <script defer src="script.js"></script>
+</body>
+</html>
+
+

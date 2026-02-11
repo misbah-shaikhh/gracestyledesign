@@ -1,0 +1,1103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Pink Ethnic Suit - GS Store</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="stylesheet" href="style.css"> 
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.cdnfonts.com/css/rowdies" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Corben">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Crimson+Text">
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Aref+Ruqaa+Ink:wght@400;700&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', 'Segoe UI', sans-serif;
+            background-color: #fff;
+        }
+
+        /* Product Section */
+        .product-container {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 40px 40px; /* ✅ slightly less padding */
+        display: grid;
+        grid-template-columns: 90px 500px 1fr; /* ✅ balanced */
+        gap: 30px;
+        background-color: #fff;
+        align-items: start; /* ✅ align properly */
+        }
+
+
+        /* Thumbnail Gallery */
+        .thumbnail-gallery {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .thumbnail {
+            width: 55px;
+            height: 75px;
+            border: 1px solid #d0d0d0;
+            border-radius: 3px;
+            cursor: pointer;
+            overflow: hidden;
+            transition: all 0.3s;
+            background-color: #fafafa;
+        }
+
+        .thumbnail:hover {
+            border-color: #999;
+        }
+
+        .thumbnail.active {
+            border: 2px solid #000;
+        }
+
+        .thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Main Image */
+            .main-image {
+            position: relative;
+            background-color: #f8f8f8;
+            border: 3px solid #ffeed7;
+            border-radius: 8px;
+            overflow: hidden;
+            height: 700px;
+            width: 100%;   
+            max-width: 700px; 
+            }
+
+
+
+        .main-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Product Info */
+        .product-info {
+            padding: 10px 0;
+             overflow: hidden;
+        }
+
+        .product-title {
+        font-size: 34px;
+        font-weight: 600;
+        color: #000;
+        margin-bottom: 10px;
+        font-family: 'Crimson Text', serif;
+        }
+
+
+        .rating {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        .stars {
+            color: #ffa500;
+            font-size: 18px;
+            letter-spacing: 2px;
+        }
+
+        .rating-text {
+            color: #666;
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        .price-container {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 22px;
+        }
+
+        .price {
+        font-size: 24px;
+        font-weight: 700;
+        color: #000;
+        }
+
+        .original-price {
+        font-size: 15px;
+        color: #b08c6a;
+        text-decoration: line-through;
+        }
+
+        .discount-badge {
+        background-color: #7a2e00;
+        color: #fff;
+        padding: 3px 10px;
+        border-radius: 4px;
+        font-size: 11px;
+        font-weight: 600;
+        }
+
+
+        .option-group {
+            margin-bottom: 25px;
+        }
+
+        .option-label {
+            font-size: 15px;
+            font-weight: 700;
+            color: #000;
+            margin-bottom: 14px;
+            display: block;
+        }
+
+        .size-options,
+        .color-options {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        padding: 14px 16px;
+        border-radius: 6px;
+        background-color: #f7ecd9;
+        }
+
+
+            .size-btn {
+            padding: 8px 16px;
+            border: none;
+            background-color: #7a2e00;
+            color: #fff;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 600;
+            transition: 0.2s ease;
+            }
+
+            .size-btn:hover {
+            background-color: #5c2100;
+            }
+
+
+        .size-chart-link {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            color: #000;
+            font-size: 12px;
+            text-decoration: none;
+            margin-top: 8px;
+            cursor: pointer;
+        }
+
+        .size-chart-link i {
+            font-size: 10px;
+        }
+
+        .size-chart-link:hover {
+            text-decoration: underline;
+        }
+
+        /* Color Options */
+        .color-label-container {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.option-label,
+.color-name {
+    margin: 0;
+    padding: 0;
+    line-height: 1;
+}
+
+
+        .color-name {
+            font-size: 14px;
+            color: #666;
+            font-weight: 400;
+            text-align: center;
+        }
+
+
+        .color-option {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        cursor: pointer;
+        border: 2px solid #ddd;
+        transition: 0.2s ease;
+        }
+
+
+        .color-option:hover {
+            border-color: #999;
+            transform: scale(1.05);
+        }
+
+        .color-option.active {
+            border-color: #000;
+            box-shadow: 0 0 0 2px #fff, 0 0 0 4px #000;
+        }
+
+        .color-option.beige { background-color: #c9b59a; }
+        .color-option.cream { background-color: #f5e6d3; }
+        .color-option.lavender { background-color: #b8a9d4; }
+        .color-option.yellow { background-color: #f4d47a; }
+
+        /* Buttons */
+        .action-buttons {
+        display: flex;
+        gap: 18px;
+        margin-top: 20px;
+        }
+
+        .btn {
+        padding: 12px 38px;
+        border-radius: 8px;
+        font-size: 15px;
+        font-family: 'Crimson Text', serif;
+        cursor: pointer;
+        transition: 0.2s ease;
+        }
+
+        .btn-secondary {
+        background-color: #f3d9b5;
+        border: 2px solid #7a2e00;
+        color: #7a2e00;
+        }
+
+        .btn-secondary:hover {
+        background-color: #eac79c;
+        }
+
+        .btn-primary {
+        background-color: #7a2e00;
+        border: none;
+        color: #fff;
+        }
+
+        .btn-primary:hover {
+        background-color: #5c2100;
+        }
+
+
+        /* Product Details */
+        .product-details {
+        margin-top: 25px;
+        padding: 18px 20px;
+        border: 1.5px solid #b07a4a;
+        border-radius: 8px;
+        background-color: #fff7ec;
+        }
+
+        .details-title {
+            font-size: 15px;
+            font-weight: 700;
+            color: #000;
+            margin-bottom: 18px;
+        }
+
+        .details-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+            row-gap: 12px;
+        }
+
+        .detail-item {
+            font-size: 13px;
+            color: #333;
+            line-height: 1.5;
+        }
+
+        .detail-label {
+            font-weight: 600;
+            color: #000;
+            display: block;
+            margin-bottom: 2px;
+        }
+
+        .detail-value {
+            color: #555;
+        }
+
+        /* Reviews Section */
+        .reviews-section {
+            max-width: 1400px;
+            margin: 60px auto 40px;
+            padding: 0 60px;
+        }
+
+        .reviews-container {
+            background-color: #f1eae0;
+            padding: 30px;
+            border: 1px solid #634419;
+            border-radius: 5px;
+        }
+
+        .reviews-header {
+            margin-bottom: 25px;
+        }
+
+        .reviews-title {
+            font-size: 28px;
+            font-weight: 600;
+            color: #000;
+            margin-bottom: 8px;
+        }
+
+        .total-reviews {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .rating-breakdown {
+            display: grid;
+            grid-template-columns: 200px 1fr;
+            gap: 60px;
+            margin-bottom: 40px;
+        }
+
+        .overall-rating {
+            text-align: left;
+        }
+
+        .overall-score {
+            font-size: 56px;
+            font-weight: 700;
+            color: #000;
+            margin-bottom: 5px;
+            line-height: 1;
+        }
+
+        .overall-stars {
+            color: #ffa500;
+            font-size: 20px;
+            margin-bottom: 8px;
+            letter-spacing: 2px;
+        }
+
+        .out-of-text {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .rating-bars {
+            flex: 1;
+        }
+
+        .rating-bar {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 10px;
+        }
+
+        .bar-label {
+            color: #ffa500;
+            font-size: 15px;
+            min-width: 90px;
+            letter-spacing: 1px;
+        }
+
+        .bar-container {
+            flex: 1;
+            height: 10px;
+            background-color: #f0f0f0;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .bar-fill {
+            height: 100%;
+            background-color: #ffa500;
+            border-radius: 5px;
+            transition: width 0.3s ease;
+        }
+
+        .bar-count {
+            color: #666;
+            font-size: 14px;
+            min-width: 25px;
+            text-align: right;
+            font-weight: 600;
+        }
+
+        /* Individual Reviews */
+        .review-list {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .review-item {
+            border: 1px solid #e0e0e0;
+            padding: 20px;
+            border-radius: 5px;
+            background-color: #fafafa;
+        }
+
+        .review-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            margin-bottom: 12px;
+        }
+
+        .reviewer-avatar {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background-color: #b8a896;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-weight: 600;
+            font-size: 16px;
+            flex-shrink: 0;
+        }
+
+        .reviewer-info {
+            flex: 1;
+        }
+
+        .reviewer-name {
+            font-weight: 600;
+            color: #000;
+            font-size: 14px;
+            margin-bottom: 4px;
+        }
+
+        .review-stars {
+            color: #ffa500;
+            font-size: 14px;
+            letter-spacing: 1px;
+        }
+
+        .review-date {
+            color: #999;
+            font-size: 12px;
+            margin-left: auto;
+        }
+
+        .review-title {
+            font-weight: 600;
+            color: #000;
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+
+        .review-text {
+            color: #555;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+        /* Related Products */
+        .related-products {
+            max-width: 1400px;
+            margin: 40px auto;
+            padding: 0 60px;
+        }
+
+        .section-title {
+            font-size: 24px;
+            font-weight: 600;
+            color: #000;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .product-card {
+            background-color: #fff;
+            border-radius: 0;
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+            position: relative;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            border: 1px solid #ffeed7;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 280px;
+            overflow: hidden;
+            background-color: #f5f5f5;
+            position: relative;
+        }
+
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .sale-badge {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background-color: #8b4513;
+            color: #fff;
+            padding: 4px 10px;
+            border-radius: 3px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .wishlist-btn {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background-color: #fff;
+            border: none;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+        }
+
+        .wishlist-btn:hover {
+            background-color: #8b4513;
+            color: #fff;
+        }
+
+        .product-details-card {
+            padding: 15px;
+        }
+
+        .product-name {
+            font-size: 14px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 6px;
+        }
+
+        .product-price {
+            font-size: 16px;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 8px;
+        }
+
+        .product-rating {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            margin-bottom: 8px;
+        }
+
+        .product-stars {
+            color: #ffa500;
+            font-size: 12px;
+        }
+
+        .product-colors {
+            display: flex;
+            gap: 6px;
+            align-items: center;
+        }
+
+        .product-color-dot {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            border: 1px solid #ddd;
+            cursor: pointer;
+        }
+
+        .product-color-dot.black {
+            background-color: #000;
+        }
+
+        .product-color-dot.brown {
+            background-color: #8b4513;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .product-container {
+                grid-template-columns: 1fr;
+            }
+
+            .thumbnail-gallery {
+                flex-direction: row;
+                overflow-x: auto;
+            }
+
+            .products-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+
+            header {
+                padding: 15px 20px;
+            }
+
+            .product-container,
+            .reviews-section,
+            .related-products {
+                padding: 0 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+<!-- HEADER -->
+<header class="header">
+  <div class="logo">
+  <img src="gsd.png" alt="GS Logo">
+</div>
+  <nav class="nav">
+    <a href="#">HOME</a>
+    <a href="javascript:void(0)" id="categoryBtn">CATEGORIES</a>
+    <a href="#">SALE</a>
+    <a href="#">ABOUT</a>
+    <a href="#">CONTACT</a>
+  </nav>
+ <div class="nav-icons">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <i class="fa-regular fa-user" id="profileBtn"></i>
+  <i class="fa-regular fa-heart"></i>
+  <i class="fa-solid fa-bag-shopping"></i>
+</div>
+</header>
+
+<!-- Categories Overlay -->
+<div class="category-overlay" id="categoryOverlay">
+  <div class="category-box">
+    <h4>Kurtis</h4>
+    <ul>
+      <li>Cotton Kurtis</li>
+      <li>Designer Kurtis</li>
+      <li>Traditional Kurtis</li>
+      <li>Festive Kurtis</li>
+      <li>Office Wear Kurtis</li>
+      <li>Everyday Kurtis</li>
+    </ul>
+
+    <h4>Sarees</h4>
+    <h4>Ethnic Wear</h4>
+  </div>
+</div>
+
+<!-- Profile Overlay -->
+<div class="profile-overlay" id="profileOverlay">
+  <div class="profile-box">
+    <ul>
+      <li><a href="orders.html">My Orders</a></li>
+      <li><a href="wishlist.html">My Wishlist</a></li>
+      <li><a href="address.html">Saved Addresses</a></li>
+    </ul>
+
+    <hr>
+
+    <ul>
+      <li><a href="profile.html">Edit Profile</a></li>
+      <li><a href="logout.html">Logout</a></li>
+    </ul>
+  </div>
+</div>
+
+
+    <!-- Product Section -->
+    <div class="product-container">
+        <!-- Thumbnail Gallery -->
+        <div class="thumbnail-gallery">
+            <div class="thumbnail active">
+                <img src="product.jpg" alt="Thumbnail 1">
+            </div>
+            <div class="thumbnail">
+                <img src="product.jpg" alt="Thumbnail 2">
+            </div>
+            <div class="thumbnail">
+                <img src="product.jpg" alt="Thumbnail 3">
+            </div>
+            <div class="thumbnail">
+                <img src="product.jpg" alt="Thumbnail 4">
+            </div>
+        </div>
+
+        <!-- Main Image -->
+        <div class="main-image">
+            <img id="mainImage" src="product.jpg" alt="Pink Ethnic Suit">
+        </div>
+
+        <!-- Product Info -->
+        <div class="product-info">
+            <h1 class="product-title">Pink Ethnic Suit</h1>
+            <div class="rating">
+                <span class="stars">★★★★★</span>
+                <span class="rating-text">( 3 Reviews )</span>
+            </div>
+            <div class="price-container">
+                <div class="price">Rs. 2,499.00</div>
+                <div class="original-price">Rs. 4,599.00</div>
+                <div class="discount-badge">Save 3,000</div>
+            </div>
+
+            <!-- Size Selection -->
+            <div class="option-group">
+                <label class="option-label">Sizes</label>
+                <div class="size-options">
+                    <button class="size-btn">XS</button>
+                    <button class="size-btn">S</button>
+                    <button class="size-btn">M</button>
+                    <button class="size-btn">L</button>
+                    <button class="size-btn">XL</button>
+                    <button class="size-btn">XXL</button>
+                </div>
+                <a href="#" class="size-chart-link">
+                    <i class="fas fa-ruler"></i>
+                    Click Here For Size Chart
+                </a>
+            </div>
+
+            <!-- Color Selection -->
+            <div class="option-group">
+                <div class="color-label-container">
+                    <label class="option-label">Color :</label>
+                    <span class="color-name">Beige</span>
+                </div>
+                <div class="color-options">
+                    <div class="color-option beige active"></div>
+                    <div class="color-option cream"></div>
+                    <div class="color-option lavender"></div>
+                    <div class="color-option yellow"></div>
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="action-buttons">
+                <button class="btn btn-secondary">Add To Cart</button>
+                <button class="btn btn-primary">Buy Now</button>
+            </div>
+
+            <!-- Product Details -->
+            <div class="product-details">
+                <h3 class="details-title">Product Details</h3>
+                <div class="details-grid">
+                    <div class="detail-item">
+                        <span class="detail-label">Material Composition</span>
+                        <span class="detail-value">100% Cotton</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Sleeve Type</span>
+                        <span class="detail-value">Short Sleeve</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Neck Style</span>
+                        <span class="detail-value">Crew Neck</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Country Of Origin</span>
+                        <span class="detail-value">India</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Reviews Section -->
+    <div class="reviews-section">
+        <div class="reviews-container">
+            <div class="reviews-header">
+                <h2 class="reviews-title">Customer Reviews</h2>
+                <span class="total-reviews">83 Ratings</span>
+            </div>
+
+            <div class="rating-breakdown">
+                <div class="overall-rating">
+                    <div class="overall-score">5</div>
+                    <div class="overall-stars">★★★★★</div>
+                    <div class="out-of-text">5 Out Of 5</div>
+                </div>
+
+                <div class="rating-bars">
+                    <div class="rating-bar">
+                        <span class="bar-label">★★★★★</span>
+                        <div class="bar-container">
+                            <div class="bar-fill" style="width: 30%"></div>
+                        </div>
+                        <span class="bar-count">2</span>
+                    </div>
+                    <div class="rating-bar">
+                        <span class="bar-label">★★★★☆</span>
+                        <div class="bar-container">
+                            <div class="bar-fill" style="width: 15%"></div>
+                        </div>
+                        <span class="bar-count">1</span>
+                    </div>
+                    <div class="rating-bar">
+                        <span class="bar-label">★★★☆☆</span>
+                        <div class="bar-container">
+                            <div class="bar-fill" style="width: 0%"></div>
+                        </div>
+                        <span class="bar-count">0</span>
+                    </div>
+                    <div class="rating-bar">
+                        <span class="bar-label">★★☆☆☆</span>
+                        <div class="bar-container">
+                            <div class="bar-fill" style="width: 0%"></div>
+                        </div>
+                        <span class="bar-count">0</span>
+                    </div>
+                    <div class="rating-bar">
+                        <span class="bar-label">★☆☆☆☆</span>
+                        <div class="bar-container">
+                            <div class="bar-fill" style="width: 0%"></div>
+                        </div>
+                        <span class="bar-count">0</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="review-list">
+                <div class="review-item">
+                    <div class="review-header">
+                        <div class="reviewer-avatar">E</div>
+                        <div class="reviewer-info">
+                            <div class="reviewer-name">Eirene</div>
+                            <div class="review-stars">★★★☆☆</div>
+                        </div>
+                        <div class="review-date">06/03/2026</div>
+                    </div>
+                    <div class="review-title">Customer Service And Product</div>
+                    <div class="review-text">The Customer Service Is Really Helpful And The Product Quality Is Very Good Worth The Money</div>
+                </div>
+
+                <div class="review-item">
+                    <div class="review-header">
+                        <div class="reviewer-avatar">E</div>
+                        <div class="reviewer-info">
+                            <div class="reviewer-name">Eirene</div>
+                            <div class="review-stars">★★★☆☆</div>
+                        </div>
+                        <div class="review-date">06/03/2026</div>
+                    </div>
+                    <div class="review-title">Customer Service And Product</div>
+                    <div class="review-text">The Customer Service Is Really Helpful And The Product Quality Is Very Good Worth The Money</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Related Products -->
+    <div class="related-products">
+        <h2 class="section-title">You May Also Like</h2>
+        <div class="products-grid">
+            <div class="product-card">
+                <div class="product-image">
+                    <span class="sale-badge">Sale</span>
+                    <img src="https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=400&h=500&fit=crop" alt="Pink Ethnic Suit">
+                    <button class="wishlist-btn"><i class="far fa-heart"></i></button>
+                </div>
+                <div class="product-details-card">
+                    <div class="product-name">Pink Ethnic Suit</div>
+                    <div class="product-price">Rs. 2,999.00</div>
+                    <div class="product-rating">
+                        <span class="product-stars">★★★★★</span>
+                    </div>
+                    <div class="product-colors">
+                        <div class="product-color-dot black"></div>
+                        <div class="product-color-dot brown"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="product-image">
+                    <span class="sale-badge">Sale</span>
+                    <img src="https://images.unsplash.com/photo-1583391733981-8b1e3e0b3f34?w=400&h=500&fit=crop" alt="Pink Ethnic Suit">
+                    <button class="wishlist-btn"><i class="far fa-heart"></i></button>
+                </div>
+                <div class="product-details-card">
+                    <div class="product-name">Pink Ethnic Suit</div>
+                    <div class="product-price">Rs. 2,999.00</div>
+                    <div class="product-rating">
+                        <span class="product-stars">★★★★★</span>
+                    </div>
+                    <div class="product-colors">
+                        <div class="product-color-dot black"></div>
+                        <div class="product-color-dot brown"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="product-image">
+                    <span class="sale-badge">Sale</span>
+                    <img src="https://images.unsplash.com/photo-1617038260897-41a1f14a8ca0?w=400&h=500&fit=crop" alt="Pink Ethnic Suit">
+                    <button class="wishlist-btn"><i class="far fa-heart"></i></button>
+                </div>
+                <div class="product-details-card">
+                    <div class="product-name">Pink Ethnic Suit</div>
+                    <div class="product-price">Rs. 2,999.00</div>
+                    <div class="product-rating">
+                        <span class="product-stars">★★★★★</span>
+                    </div>
+                    <div class="product-colors">
+                        <div class="product-color-dot black"></div>
+                        <div class="product-color-dot brown"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="product-image">
+                    <span class="sale-badge">Sale</span>
+                    <img src="https://images.unsplash.com/photo-1614095849258-c2168e68ca60?w=400&h=500&fit=crop" alt="Pink Ethnic Suit">
+                    <button class="wishlist-btn"><i class="far fa-heart"></i></button>
+                </div>
+                <div class="product-details-card">
+                    <div class="product-name">Pink Ethnic Suit</div>
+                    <div class="product-price">Rs. 2,999.00</div>
+                    <div class="product-rating">
+                        <span class="product-stars">★★★★★</span>
+                    </div>
+                    <div class="product-colors">
+                        <div class="product-color-dot black"></div>
+                        <div class="product-color-dot brown"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="product-image">
+                    <span class="sale-badge">Sale</span>
+                    <img src="https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=400&h=500&fit=crop" alt="Pink Ethnic Suit">
+                    <button class="wishlist-btn"><i class="far fa-heart"></i></button>
+                </div>
+                <div class="product-details-card">
+                    <div class="product-name">Pink Ethnic Suit</div>
+                    <div class="product-price">Rs. 2,999.00</div>
+                    <div class="product-rating">
+                        <span class="product-stars">★★★★★</span>
+                    </div>
+                    <div class="product-colors">
+                        <div class="product-color-dot black"></div>
+                        <div class="product-color-dot brown"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="product-image">
+                    <span class="sale-badge">Sale</span>
+                    <img src="https://images.unsplash.com/photo-1583391733981-8b1e3e0b3f34?w=400&h=500&fit=crop" alt="Pink Ethnic Suit">
+                    <button class="wishlist-btn"><i class="far fa-heart"></i></button>
+                </div>
+                <div class="product-details-card">
+                    <div class="product-name">Pink Ethnic Suit</div>
+                    <div class="product-price">Rs. 2,999.00</div>
+                    <div class="product-rating">
+                        <span class="product-stars">★★★★★</span>
+                    </div>
+                    <div class="product-colors">
+                        <div class="product-color-dot black"></div>
+                        <div class="product-color-dot brown"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-container">
+
+    <!-- Menu -->
+    <div class="footer-box">
+      <h3>Menu</h3>
+      <ul>
+        <li><a href="#">Track Your Order</a></li>
+        <li><a href="#">Return Order</a></li>
+        <li><a href="#">Exchange Order</a></li>
+      </ul>
+    </div>
+
+    <!-- Policies -->
+    <div class="footer-box">
+      <h3>Our Policies</h3>
+      <ul>
+        <li><a href="#">Return and Exchange Policy</a></li>
+        <li><a href="#">Shipping Policy</a></li>
+        <li><a href="#">Privacy Policy</a></li>
+        <li><a href="#">Terms and Conditions</a></li>
+      </ul>
+    </div>
+
+    <!-- Contact -->
+    <div class="footer-box">
+      <h3>Contact Us</h3>
+      <p>Support Contact: 8287440077</p>
+      <p>(12PM To 6PM, Mon-Sat)</p>
+
+      <div class="social-icons">
+        <a href="#"><i class="fab fa-instagram"></i></a>
+        <a href="#"><i class="fab fa-whatsapp"></i></a>
+        <a href="#"><i class="fab fa-facebook"></i></a>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="footer-bottom">
+    <p>© 2026, Grace Style Design.</p>
+  </div>
+</footer>
+
+     <script src="prod.js"></script>
+     <script src="script.js"></script>
+     </body>
+</html>
+

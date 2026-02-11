@@ -1,0 +1,243 @@
+/* LOGIN + OTP PAGE WRAPPER */
+.login-wrapper,
+.otp-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 80px 0;
+  background: #fff;
+}
+
+/* LOGIN + OTP BOX */
+.login-box,
+.otp-box {
+  width: 600px;
+  height: 600px;
+  background: rgba(157, 145, 103, 0.6);
+  border: 2px solid rgba(113, 32, 0, 1);
+  border-radius: 6px;
+  padding: 40px 35px;
+  text-align: center;
+  font-family: 'Crimson Text', serif;
+}
+
+/* TITLE */
+.login-box h2,
+.otp-box h2 {
+  font-size: 28px;
+  margin-bottom: 30px;
+  color: #000;
+}
+
+/* PHONE INPUT */
+.phone-input {
+  display: flex;
+  align-items: center;
+  border: 1.5px solid rgba(113, 32, 0, 0.6);
+  background: #fff;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 18px;
+}
+
+.country-code {
+  padding: 8px 12px;
+  font-size: 18px;
+  border-right: 1px solid rgba(113, 32, 0, 0.4);
+  color: #000;
+}
+
+.phone-input input {
+  flex: 1;
+  border: none;
+  outline: none;
+  padding: 8px 10px;
+  font-size: 18px;
+  font-family: 'Crimson Text', serif;
+}
+
+/* OTP INPUTS (inherits same font & theme) */
+.otp-inputs {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.otp-inputs input {
+  width: 46px;
+  height: 46px;
+  text-align: center;
+  font-size: 20px;
+  border: 1.5px solid rgba(113, 32, 0, 0.6);
+  border-radius: 4px;
+  outline: none;
+  font-family: 'Crimson Text', serif;
+  background: #fff;
+}
+
+.otp-inputs input:focus {
+  border-color: rgba(113, 32, 0, 1);
+}
+
+/* TERMS */
+.terms {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 14px;
+  text-align: left;
+  margin-top: 48px;
+  margin-bottom: 28px;
+}
+
+.terms input {
+  margin-top: 3px;
+}
+
+.terms a {
+  color: rgba(113, 32, 0, 1);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+/* OTP TEXT */
+.otp-subtitle,
+.resend,
+.password-login {
+  font-size: 14px;
+  color: #000;
+  margin-bottom: 18px;
+  font-family: 'Crimson Text', serif;
+  margin-top: 30px;
+}
+
+.resend {
+  color: rgba(113, 32, 0, 0.8);
+  cursor: pointer;
+}
+
+.password-login span {
+  color: rgba(113, 32, 0, 1);
+  font-weight: 500;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+/* BUTTON (LOGIN + OTP SAME STYLE) */
+.login-btn,
+.verify-btn {
+  width: 100%;
+  background: rgba(113, 32, 0, 1);
+  color: #fff;
+  border: none;
+  padding: 10px 0;
+  font-size: 15px;
+  font-family: 'Crimson Text', serif;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.login-btn:hover,
+.verify-btn:hover {
+  background: rgba(113, 32, 0, 0.85);
+}
+
+/* LABELS */
+.input-label {
+  display: block;
+  text-align: left;
+  font-size: 14px;
+  margin: 12px 0 6px;
+  color: #000;
+}
+
+/* NORMAL INPUTS (same style as phone input) */
+.normal-input {
+  width: 100%;
+  padding: 8px 10px;
+  border: 1.5px solid rgba(113, 32, 0, 0.6);
+  border-radius: 4px;
+  font-size: 16px;
+  font-family: 'Crimson Text', serif;
+  outline: none;
+  margin-bottom: 16px;
+}
+
+.small-text {
+  font-size: 13px;
+  color: rgba(0, 0, 0, 0.7);
+  text-align: left;
+  margin: 6px 0 30px;
+  font-family: 'Crimson Text', serif;
+}
+
+/* ABOUT PAGE */
+.about-wrapper {
+  display: flex;
+  justify-content: center;
+  padding: 40px 0 60px;
+  background: #fff;
+}
+
+.about-box {
+  width: 96%;
+  max-width: 1600px;
+  background: rgba(157, 145, 103, 0.6);
+  border: 3px solid rgba(113, 32, 0, 1);
+  padding: 30px 40px; 
+  color: #000;
+  line-height: 1.8;
+}
+
+.about-box h2 {
+  text-align: center;
+  font-size: 36px;
+  font-weight: 600;
+  margin-bottom: 20px;
+  text-decoration: underline;
+  font-family: 'Crimson Text', serif !important;
+}
+
+.about-box p {
+  font-size: 20px;
+  margin-bottom: 20px;
+  text-align: center;
+  font-family: 'Crimson Text', serif !important;
+}
+
+.policy-section {
+  width: 96%;
+  max-width: 1600px;
+  margin: 40px auto;
+  background: rgba(157, 145, 103, 0.6);
+  border: 2px solid rgba(113, 32, 0, 1);
+  padding: 30px 40px;
+  color: #000;
+  line-height: 1.7;
+}
+
+.policy-section h2 {
+  text-align: center;
+  font-size: 26px;
+  margin-bottom: 20px;
+  font-family: 'Crimson Text', serif !important;
+}
+
+.policy-section h3 {
+  font-size: 18px;
+  margin-top: 20px;
+  color: rgba(113, 32, 0, 1);
+  font-family: 'Crimson Text', serif !important;
+}
+
+.policy-section a {
+  color: rgba(113, 32, 0, 1);
+  text-decoration: none;
+  font-weight: 600;
+  font-family: 'Crimson Text', serif !important;
+}
+.policy-section p, ol, li {
+    font-family: 'Crimson Text', serif !important;
+}
