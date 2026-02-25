@@ -7,7 +7,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="stylesheet" href="style.css"> 
+    <link rel="stylesheet" href="../csspages/style.css"> 
+    <!--- <link rel="stylesheet" href="cart.css"> -->
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.cdnfonts.com/css/rowdies" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
@@ -341,318 +342,310 @@
             color: #555;
         }
 
-        /* Reviews Section */
-        .reviews-section {
-            max-width: 1400px;
-            margin: 60px auto 40px;
-            padding: 0 60px;
-        }
+/* ============================= */
+/* REVIEWS SECTION */
+/* ============================= */
 
-        .reviews-container {
-            background-color: #f1eae0;
-            padding: 30px;
-            border: 1px solid #634419;
-            border-radius: 5px;
-        }
+.reviews-section {
+    width: 100%;
+    max-width: 1200px;
+    margin: 60px auto;
+    padding: 0 20px;
+}
 
-        .reviews-header {
-            margin-bottom: 25px;
-        }
+.reviews-container {
+    width: 100%;
+}
 
-        .reviews-title {
-            font-size: 28px;
-            font-weight: 600;
-            color: #000;
-            margin-bottom: 8px;
-        }
+/* Header */
+.reviews-header {
+    margin-bottom: 30px;
+}
 
-        .total-reviews {
-            color: #666;
-            font-size: 14px;
-        }
+.reviews-title {
+    font-size: 26px;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
 
-        .rating-breakdown {
-            display: grid;
-            grid-template-columns: 200px 1fr;
-            gap: 60px;
-            margin-bottom: 40px;
-        }
+.total-reviews {
+    font-size: 14px;
+    color: #666;
+}
 
-        .overall-rating {
-            text-align: left;
-        }
+/* MAIN GRID LAYOUT */
+.rating-breakdown {
+    display: grid;
+    grid-template-columns: 360px 1fr; /* wider left side like screenshot */
+    gap: 50px;
+    align-items: start;
+}
 
-        .overall-score {
-            font-size: 56px;
-            font-weight: 700;
-            color: #000;
-            margin-bottom: 5px;
-            line-height: 1;
-        }
+/* LEFT COLUMN WRAPPER */
+.rating-left {
+    width: 100%;
+}
 
-        .overall-stars {
-            color: #ffa500;
-            font-size: 20px;
-            margin-bottom: 8px;
-            letter-spacing: 2px;
-        }
+/* Overall Rating */
+.overall-score {
+    font-size: 48px;
+    font-weight: 700;
+    line-height: 1;
+    margin-bottom: 6px;
+}
 
-        .out-of-text {
-            color: #666;
-            font-size: 14px;
-        }
+.overall-stars {
+    color: #f4a100;
+    font-size: 18px;
+    margin-bottom: 6px;
+}
 
-        .rating-bars {
-            flex: 1;
-        }
+.out-of-text {
+    font-size: 14px;
+    color: #666;
+}
 
-        .rating-bar {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 10px;
-        }
+/* Rating Bars */
+.rating-bars {
+    margin-top: 20px;
+}
 
-        .bar-label {
-            color: #ffa500;
-            font-size: 15px;
-            min-width: 90px;
-            letter-spacing: 1px;
-        }
+.rating-bar {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 10px;
+}
 
-        .bar-container {
-            flex: 1;
-            height: 10px;
-            background-color: #f0f0f0;
-            border-radius: 5px;
-            overflow: hidden;
-        }
+.bar-label {
+    color: #f4a100;
+    font-size: 14px;
+    min-width: 90px;
+}
 
-        .bar-fill {
-            height: 100%;
-            background-color: #ffa500;
-            border-radius: 5px;
-            transition: width 0.3s ease;
-        }
+.bar-container {
+    flex: 1;
+    height: 8px;
+    background: #e5e5e5;
+    border-radius: 20px;
+    overflow: hidden;
+}
 
-        .bar-count {
-            color: #666;
-            font-size: 14px;
-            min-width: 25px;
-            text-align: right;
-            font-weight: 600;
-        }
+.bar-fill {
+    height: 100%;
+    background: #f4a100;
+    border-radius: 20px;
+}
 
-        /* Individual Reviews */
-        .review-list {
-            display: flex;
-            flex-direction: column;
-            gap: 25px;
-        }
+.bar-count {
+    font-size: 13px;
+    color: #444;
+    min-width: 25px;
+    text-align: right;
+}
 
-        .review-item {
-            border: 1px solid #e0e0e0;
-            padding: 20px;
-            border-radius: 5px;
-            background-color: #fafafa;
-        }
+/* RIGHT SIDE PANEL */
+.review-list {
+    background: #f3e8dc;
+    border: 1px solid #d6c2a8;
+    border-radius: 8px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
 
-        .review-header {
-            display: flex;
-            align-items: flex-start;
-            gap: 15px;
-            margin-bottom: 12px;
-        }
+/* Review Card */
+.review-item {
+    background: #eadbcc;
+    border: 1px solid #d2bfa6;
+    border-radius: 6px;
+    padding: 16px;
+}
 
-        .reviewer-avatar {
-            width: 42px;
-            height: 42px;
-            border-radius: 50%;
-            background-color: #b8a896;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #fff;
-            font-weight: 600;
-            font-size: 16px;
-            flex-shrink: 0;
-        }
+.review-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 10px;
+}
 
-        .reviewer-info {
-            flex: 1;
-        }
+.reviewer-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #c9b49a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-weight: 600;
+}
 
-        .reviewer-name {
-            font-weight: 600;
-            color: #000;
-            font-size: 14px;
-            margin-bottom: 4px;
-        }
+.reviewer-info {
+    flex: 1;
+}
 
-        .review-stars {
-            color: #ffa500;
-            font-size: 14px;
-            letter-spacing: 1px;
-        }
+.reviewer-name {
+    font-size: 14px;
+    font-weight: 600;
+}
 
-        .review-date {
-            color: #999;
-            font-size: 12px;
-            margin-left: auto;
-        }
+.review-stars {
+    font-size: 13px;
+    color: #f4a100;
+}
 
-        .review-title {
-            font-weight: 600;
-            color: #000;
-            font-size: 14px;
-            margin-bottom: 8px;
-        }
+.review-date {
+    font-size: 12px;
+    color: #777;
+}
 
-        .review-text {
-            color: #555;
-            font-size: 13px;
-            line-height: 1.6;
-        }
+.review-title {
+    font-weight: 600;
+    font-size: 14px;
+    margin-bottom: 6px;
+}
 
-        /* Related Products */
-        .related-products {
-            max-width: 1400px;
-            margin: 40px auto;
-            padding: 0 60px;
-        }
+.review-text {
+    font-size: 13px;
+    color: #555;
+    line-height: 1.6;
+}
 
-        .section-title {
-            font-size: 24px;
-            font-weight: 600;
-            color: #000;
-            margin-bottom: 30px;
-            text-align: center;
-        }
+.related-products .product-track {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); 
+  gap: 40px;
+  padding: 20px;
+  justify-items: center;
+}
 
-        .products-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 30px;
-            margin-bottom: 40px;
-        }
+.related-products .product-card {
+  width: 443px;
+  height: 578px;
+  background: #fff;
+  overflow: hidden;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+  transition: 0.3s ease;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
 
-        .product-card {
-            background-color: #fff;
-            border-radius: 0;
-            overflow: hidden;
-            transition: transform 0.3s, box-shadow 0.3s;
-            cursor: pointer;
-            position: relative;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-            border: 1px solid #ffeed7;
-        }
+.related-products .product-card:hover {
+  transform: translateY(-6px);
+}
 
-        .product-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
-        }
+.related-products .product-card img {
+  width: 434px;
+  height: 470px;
+  object-fit: cover;
+  display: block;
+  margin: 5px auto 0;
+}
 
-        .product-image {
-            width: 100%;
-            height: 280px;
-            overflow: hidden;
-            background-color: #f5f5f5;
-            position: relative;
-        }
+.related-products .cart-tag {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  background: #7a2d00;
+  color: #fff;
+  font-size: 10px;
+  padding: 5px 10px;
+  border-radius: 20px;
+  font-weight: 600;
+}
 
-        .product-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
+.related-products .right-info {
+  position: absolute;
+  right: 14px;
+  top: 485px;
+  text-align: right;
+}
 
-        .sale-badge {
-            position: absolute;
-            top: 10px;
-            left: 10px;
-            background-color: #8b4513;
-            color: #fff;
-            padding: 4px 10px;
-            border-radius: 3px;
-            font-size: 11px;
-            font-weight: 600;
-            text-transform: uppercase;
-        }
+.related-products .product-info {
+  position: absolute;
+  left: 18px;
+  bottom: 18px;
+}
 
-        .wishlist-btn {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            background-color: #fff;
-            border: none;
-            width: 35px;
-            height: 35px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-            transition: all 0.3s;
-        }
+.related-products .product-info h3 {
+  font-size: 17px;
+  margin-bottom: 4px;
+}
 
-        .wishlist-btn:hover {
-            background-color: #8b4513;
-            color: #fff;
-        }
+.related-products .price {
+  font-size: 17px;
+  font-weight: 600;
+  color: #7a2d00;
+}
 
-        .product-details-card {
-            padding: 15px;
-        }
+.related-products .price span {
+  font-size: 14px;
+  color: #999;
+  text-decoration: line-through;
+  margin-left: 6px;
+}
 
-        .product-name {
-            font-size: 14px;
-            font-weight: 600;
-            color: #333;
-            margin-bottom: 6px;
-        }
+.related-products .heart {
+  font-size: 22px;
+  cursor: pointer;
+  color: #777;
+  transition: 0.2s;
+}
 
-        .product-price {
-            font-size: 16px;
-            font-weight: 700;
-            color: #333;
-            margin-bottom: 8px;
-        }
+.related-products .heart.active {
+  color: red;
+}
 
-        .product-rating {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            margin-bottom: 8px;
-        }
+.related-products .rating {
+  font-size: 14px;
+  color: #333;
+  margin-bottom: 6px;
+}
 
-        .product-stars {
-            color: #ffa500;
-            font-size: 12px;
-        }
+.related-products .colors {
+  display: flex;
+  gap: 6px;
+  margin-top: 6px;
+}
 
-        .product-colors {
-            display: flex;
-            gap: 6px;
-            align-items: center;
-        }
+.related-products .colors span {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 1px solid #ccc;
+}
 
-        .product-color-dot {
-            width: 18px;
-            height: 18px;
-            border-radius: 50%;
-            border: 1px solid #ddd;
-            cursor: pointer;
-        }
+.related-products .colors .c1 {
+  background: #000;
+}
 
-        .product-color-dot.black {
-            background-color: #000;
-        }
+.related-products .colors .c2 {
+  background: #6b2f2f;
+}
 
-        .product-color-dot.brown {
-            background-color: #8b4513;
-        }
+.related-products .wishlist-title{
+    text-align: center;
+    font-family: 'Rowdies',serif;
+    margin-bottom: 30px;
+    font-weight: 500;
+}
 
+/* Responsive */
+@media (max-width: 900px) {
+    .rating-breakdown {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+}
+      
+    .wishlist-section {
+      padding: 40px 80px; /* same as grid padding for perfect alignment */
+    }
+
+        
         /* Responsive */
         @media (max-width: 1024px) {
             .product-container {
@@ -694,21 +687,31 @@
 <!-- HEADER -->
 <header class="header">
   <div class="logo">
-  <img src="gsd.png" alt="GS Logo">
+  <img src="../images/gsd.png" alt="GS Logo">
 </div>
   <nav class="nav">
-    <a href="#">HOME</a>
+    <a href="../htmlpages/index.html">HOME</a>
     <a href="javascript:void(0)" id="categoryBtn">CATEGORIES</a>
     <a href="#">SALE</a>
     <a href="#">ABOUT</a>
     <a href="#">CONTACT</a>
   </nav>
- <div class="nav-icons">
+<div class="nav-icons">
   <i class="fa-solid fa-magnifying-glass"></i>
+
   <i class="fa-regular fa-user" id="profileBtn"></i>
-  <i class="fa-regular fa-heart"></i>
-  <i class="fa-solid fa-bag-shopping"></i>
+
+  <!-- Wishlist Icon -->
+  <a href="../htmlpages/wishlist.html">
+    <i class="fa-regular fa-heart"></i>
+  </a>
+
+  <!-- Cart Icon -->
+  <a href="../htmlpages/cart.html">
+    <i class="fa-solid fa-bag-shopping"></i>
+  </a>
 </div>
+
 </header>
 
 <!-- Categories Overlay -->
@@ -733,19 +736,20 @@
 <div class="profile-overlay" id="profileOverlay">
   <div class="profile-box">
     <ul>
-      <li><a href="orders.html">My Orders</a></li>
-      <li><a href="wishlist.html">My Wishlist</a></li>
-      <li><a href="address.html">Saved Addresses</a></li>
+      <li><a href="../htmlpages/userprofile.html?section=orders">My Orders</a></li>
+      <li><a href="../htmlpages/wishlist.html">My Wishlist</a></li>
+      <li><a href="../htmlpages/userprofile.html?section=savedAddress">Saved Addresses</a></li>
     </ul>
 
     <hr>
 
     <ul>
-      <li><a href="profile.html">Edit Profile</a></li>
-      <li><a href="logout.html">Logout</a></li>
+      <li><a href="../htmlpages/userprofile.html?section=editProfile">Edit Profile</a></li>
+      <li><a href="../htmlpages/logout.html">Logout</a></li>
     </ul>
   </div>
 </div>
+
 
 
     <!-- Product Section -->
@@ -753,22 +757,22 @@
         <!-- Thumbnail Gallery -->
         <div class="thumbnail-gallery">
             <div class="thumbnail active">
-                <img src="product.jpg" alt="Thumbnail 1">
+                <img src="../images/product.jpg" alt="Thumbnail 1">
             </div>
             <div class="thumbnail">
-                <img src="product.jpg" alt="Thumbnail 2">
+                <img src="../mages/product.jpg" alt="Thumbnail 2">
             </div>
             <div class="thumbnail">
-                <img src="product.jpg" alt="Thumbnail 3">
+                <img src="../images/product.jpg" alt="Thumbnail 3">
             </div>
             <div class="thumbnail">
-                <img src="product.jpg" alt="Thumbnail 4">
+                <img src="../images/product.jpg" alt="Thumbnail 4">
             </div>
         </div>
 
         <!-- Main Image -->
         <div class="main-image">
-            <img id="mainImage" src="product.jpg" alt="Pink Ethnic Suit">
+            <img id="mainImage" src="../images/product.jpg" alt="Pink Ethnic Suit">
         </div>
 
         <!-- Product Info -->
@@ -847,14 +851,21 @@
     </div>
 
     <!-- Reviews Section -->
-    <div class="reviews-section">
-        <div class="reviews-container">
-            <div class="reviews-header">
-                <h2 class="reviews-title">Customer Reviews</h2>
-                <span class="total-reviews">83 Ratings</span>
-            </div>
+<div class="reviews-section">
+    <div class="reviews-container">
 
-            <div class="rating-breakdown">
+        <!-- Header -->
+        <div class="reviews-header">
+            <h2 class="reviews-title">Customer Reviews</h2>
+            <span class="total-reviews">83 Ratings</span>
+        </div>
+
+        <!-- 2 Column Layout -->
+        <div class="rating-breakdown">
+
+            <!-- LEFT SIDE -->
+            <div class="rating-left">
+
                 <div class="overall-rating">
                     <div class="overall-score">5</div>
                     <div class="overall-stars">★★★★★</div>
@@ -862,6 +873,7 @@
                 </div>
 
                 <div class="rating-bars">
+
                     <div class="rating-bar">
                         <span class="bar-label">★★★★★</span>
                         <div class="bar-container">
@@ -869,6 +881,7 @@
                         </div>
                         <span class="bar-count">2</span>
                     </div>
+
                     <div class="rating-bar">
                         <span class="bar-label">★★★★☆</span>
                         <div class="bar-container">
@@ -876,6 +889,7 @@
                         </div>
                         <span class="bar-count">1</span>
                     </div>
+
                     <div class="rating-bar">
                         <span class="bar-label">★★★☆☆</span>
                         <div class="bar-container">
@@ -883,6 +897,7 @@
                         </div>
                         <span class="bar-count">0</span>
                     </div>
+
                     <div class="rating-bar">
                         <span class="bar-label">★★☆☆☆</span>
                         <div class="bar-container">
@@ -890,6 +905,7 @@
                         </div>
                         <span class="bar-count">0</span>
                     </div>
+
                     <div class="rating-bar">
                         <span class="bar-label">★☆☆☆☆</span>
                         <div class="bar-container">
@@ -897,10 +913,13 @@
                         </div>
                         <span class="bar-count">0</span>
                     </div>
+
                 </div>
             </div>
 
+            <!-- RIGHT SIDE -->
             <div class="review-list">
+
                 <div class="review-item">
                     <div class="review-header">
                         <div class="reviewer-avatar">E</div>
@@ -911,7 +930,9 @@
                         <div class="review-date">06/03/2026</div>
                     </div>
                     <div class="review-title">Customer Service And Product</div>
-                    <div class="review-text">The Customer Service Is Really Helpful And The Product Quality Is Very Good Worth The Money</div>
+                    <div class="review-text">
+                        The Customer Service Is Really Helpful And The Product Quality Is Very Good Worth The Money
+                    </div>
                 </div>
 
                 <div class="review-item">
@@ -924,133 +945,167 @@
                         <div class="review-date">06/03/2026</div>
                     </div>
                     <div class="review-title">Customer Service And Product</div>
-                    <div class="review-text">The Customer Service Is Really Helpful And The Product Quality Is Very Good Worth The Money</div>
+                    <div class="review-text">
+                        The Customer Service Is Really Helpful And The Product Quality Is Very Good Worth The Money
+                    </div>
                 </div>
+
             </div>
+
         </div>
+
     </div>
+</div>
+
 
     <!-- Related Products -->
-    <div class="related-products">
-        <h2 class="section-title">You May Also Like</h2>
-        <div class="products-grid">
-            <div class="product-card">
-                <div class="product-image">
-                    <span class="sale-badge">Sale</span>
-                    <img src="https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=400&h=500&fit=crop" alt="Pink Ethnic Suit">
-                    <button class="wishlist-btn"><i class="far fa-heart"></i></button>
-                </div>
-                <div class="product-details-card">
-                    <div class="product-name">Pink Ethnic Suit</div>
-                    <div class="product-price">Rs. 2,999.00</div>
-                    <div class="product-rating">
-                        <span class="product-stars">★★★★★</span>
-                    </div>
-                    <div class="product-colors">
-                        <div class="product-color-dot black"></div>
-                        <div class="product-color-dot brown"></div>
-                    </div>
-                </div>
-            </div>
+<section class="wishlist-section related-products">
+  <h2 class="wishlist-title">You May Also Like</h2>
 
-            <div class="product-card">
-                <div class="product-image">
-                    <span class="sale-badge">Sale</span>
-                    <img src="https://images.unsplash.com/photo-1583391733981-8b1e3e0b3f34?w=400&h=500&fit=crop" alt="Pink Ethnic Suit">
-                    <button class="wishlist-btn"><i class="far fa-heart"></i></button>
-                </div>
-                <div class="product-details-card">
-                    <div class="product-name">Pink Ethnic Suit</div>
-                    <div class="product-price">Rs. 2,999.00</div>
-                    <div class="product-rating">
-                        <span class="product-stars">★★★★★</span>
-                    </div>
-                    <div class="product-colors">
-                        <div class="product-color-dot black"></div>
-                        <div class="product-color-dot brown"></div>
-                    </div>
-                </div>
-            </div>
+  <div class="product-track">
 
-            <div class="product-card">
-                <div class="product-image">
-                    <span class="sale-badge">Sale</span>
-                    <img src="https://images.unsplash.com/photo-1617038260897-41a1f14a8ca0?w=400&h=500&fit=crop" alt="Pink Ethnic Suit">
-                    <button class="wishlist-btn"><i class="far fa-heart"></i></button>
-                </div>
-                <div class="product-details-card">
-                    <div class="product-name">Pink Ethnic Suit</div>
-                    <div class="product-price">Rs. 2,999.00</div>
-                    <div class="product-rating">
-                        <span class="product-stars">★★★★★</span>
-                    </div>
-                    <div class="product-colors">
-                        <div class="product-color-dot black"></div>
-                        <div class="product-color-dot brown"></div>
-                    </div>
-                </div>
-            </div>
+    <!-- PRODUCT CARD 1 -->
+    <div class="product-card">
+      <div class="cart-tag">Add to Cart</div>
 
-            <div class="product-card">
-                <div class="product-image">
-                    <span class="sale-badge">Sale</span>
-                    <img src="https://images.unsplash.com/photo-1614095849258-c2168e68ca60?w=400&h=500&fit=crop" alt="Pink Ethnic Suit">
-                    <button class="wishlist-btn"><i class="far fa-heart"></i></button>
-                </div>
-                <div class="product-details-card">
-                    <div class="product-name">Pink Ethnic Suit</div>
-                    <div class="product-price">Rs. 2,999.00</div>
-                    <div class="product-rating">
-                        <span class="product-stars">★★★★★</span>
-                    </div>
-                    <div class="product-colors">
-                        <div class="product-color-dot black"></div>
-                        <div class="product-color-dot brown"></div>
-                    </div>
-                </div>
-            </div>
+      <img src="../images/product.jpg" alt="Pink Ethnic Suit">
 
-            <div class="product-card">
-                <div class="product-image">
-                    <span class="sale-badge">Sale</span>
-                    <img src="https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=400&h=500&fit=crop" alt="Pink Ethnic Suit">
-                    <button class="wishlist-btn"><i class="far fa-heart"></i></button>
-                </div>
-                <div class="product-details-card">
-                    <div class="product-name">Pink Ethnic Suit</div>
-                    <div class="product-price">Rs. 2,999.00</div>
-                    <div class="product-rating">
-                        <span class="product-stars">★★★★★</span>
-                    </div>
-                    <div class="product-colors">
-                        <div class="product-color-dot black"></div>
-                        <div class="product-color-dot brown"></div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="product-card">
-                <div class="product-image">
-                    <span class="sale-badge">Sale</span>
-                    <img src="https://images.unsplash.com/photo-1583391733981-8b1e3e0b3f34?w=400&h=500&fit=crop" alt="Pink Ethnic Suit">
-                    <button class="wishlist-btn"><i class="far fa-heart"></i></button>
-                </div>
-                <div class="product-details-card">
-                    <div class="product-name">Pink Ethnic Suit</div>
-                    <div class="product-price">Rs. 2,999.00</div>
-                    <div class="product-rating">
-                        <span class="product-stars">★★★★★</span>
-                    </div>
-                    <div class="product-colors">
-                        <div class="product-color-dot black"></div>
-                        <div class="product-color-dot brown"></div>
-                    </div>
-                </div>
-            </div>
+      <div class="right-info">
+        <div class="rating">⭐ 4.5</div>
+        <div class="wishlist">
+          <i class="fa-regular fa-heart heart"></i>
         </div>
+      </div>
+
+      <div class="product-info">
+        <h3>Pink Ethnic Suit</h3>
+        <p class="price">₹2,499 <span>₹3,999</span></p>
+        <div class="colors">
+          <span class="c1"></span>
+          <span class="c2"></span>
+        </div>
+      </div>
     </div>
 
-    <!-- Footer -->
+    <!-- PRODUCT CARD 2 -->
+    <div class="product-card">
+      <div class="cart-tag">Add to Cart</div>
+
+      <img src="../images/product.jpg" alt="Pink Ethnic Suit">
+
+      <div class="right-info">
+        <div class="rating">⭐ 4.5</div>
+        <div class="wishlist">
+          <i class="fa-regular fa-heart heart"></i>
+        </div>
+      </div>
+
+      <div class="product-info">
+        <h3>Pink Ethnic Suit</h3>
+        <p class="price">₹2,499 <span>₹3,999</span></p>
+        <div class="colors">
+          <span class="c1"></span>
+          <span class="c2"></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- PRODUCT CARD 3 -->
+    <div class="product-card">
+      <div class="cart-tag">Add to Cart</div>
+
+      <img src="../images/product.jpg" alt="Pink Ethnic Suit">
+
+      <div class="right-info">
+        <div class="rating">⭐ 4.5</div>
+        <div class="wishlist">
+          <i class="fa-regular fa-heart heart"></i>
+        </div>
+      </div>
+
+      <div class="product-info">
+        <h3>Pink Ethnic Suit</h3>
+        <p class="price">₹2,499 <span>₹3,999</span></p>
+        <div class="colors">
+          <span class="c1"></span>
+          <span class="c2"></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- PRODUCT CARD 4 -->
+    <div class="product-card">
+      <div class="cart-tag">Add to Cart</div>
+
+      <img src="../images/product.jpg" alt="Pink Ethnic Suit">
+
+      <div class="right-info">
+        <div class="rating">⭐ 4.5</div>
+        <div class="wishlist">
+          <i class="fa-regular fa-heart heart"></i>
+        </div>
+      </div>
+
+      <div class="product-info">
+        <h3>Pink Ethnic Suit</h3>
+        <p class="price">₹2,499 <span>₹3,999</span></p>
+        <div class="colors">
+          <span class="c1"></span>
+          <span class="c2"></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- PRODUCT CARD 5 -->
+    <div class="product-card">
+      <div class="cart-tag">Add to Cart</div>
+
+      <img src="../images/product.jpg" alt="Pink Ethnic Suit">
+
+      <div class="right-info">
+        <div class="rating">⭐ 4.5</div>
+        <div class="wishlist">
+          <i class="fa-regular fa-heart heart"></i>
+        </div>
+      </div>
+
+      <div class="product-info">
+        <h3>Pink Ethnic Suit</h3>
+        <p class="price">₹2,499 <span>₹3,999</span></p>
+        <div class="colors">
+          <span class="c1"></span>
+          <span class="c2"></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- PRODUCT CARD 6 -->
+    <div class="product-card">
+      <div class="cart-tag">Add to Cart</div>
+
+      <img src="../images/product.jpg" alt="Pink Ethnic Suit">
+
+      <div class="right-info">
+        <div class="rating">⭐ 4.5</div>
+        <div class="wishlist">
+          <i class="fa-regular fa-heart heart"></i>
+        </div>
+      </div>
+
+      <div class="product-info">
+        <h3>Pink Ethnic Suit</h3>
+        <p class="price">₹2,499 <span>₹3,999</span></p>
+        <div class="colors">
+          <span class="c1"></span>
+          <span class="c2"></span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
     <!-- FOOTER -->
 <footer class="footer">
   <div class="footer-container">
@@ -1059,9 +1114,9 @@
     <div class="footer-box">
       <h3>Menu</h3>
       <ul>
-        <li><a href="#">Track Your Order</a></li>
-        <li><a href="#">Return Order</a></li>
-        <li><a href="#">Exchange Order</a></li>
+        <li><a href="../htmlpages/track.html">Track Your Order</a></li>
+        <li><a href="../htmlpages/exchange.html">Return Order</a></li>
+        <li><a href="../htmlpages/exchange.html">Exchange Order</a></li>
       </ul>
     </div>
 
@@ -1069,10 +1124,10 @@
     <div class="footer-box">
       <h3>Our Policies</h3>
       <ul>
-        <li><a href="#">Return and Exchange Policy</a></li>
-        <li><a href="#">Shipping Policy</a></li>
-        <li><a href="#">Privacy Policy</a></li>
-        <li><a href="#">Terms and Conditions</a></li>
+        <li><a href="../htmlpages/return.html">Return and Exchange Policy</a></li>
+        <li><a href="../htmlpages/policy.html">Shipping Policy</a></li>
+        <li><a href="../htmlpages/policy.html">Privacy Policy</a></li>
+        <li><a href="../htmlpages/policy.html">Terms and Conditions</a></li>
       </ul>
     </div>
 
@@ -1096,8 +1151,8 @@
   </div>
 </footer>
 
-     <script src="prod.js"></script>
-     <script src="script.js"></script>
+     <script src="../jspages/prod.js"></script>
+     <script src="../jspages/script.js"></script>
      </body>
 </html>
 

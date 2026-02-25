@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>GS Ethnic Store</title>
+  <link rel="stylesheet" href="../csspages/style.css">
+  <link rel="stylesheet" href="../csspages/form.css">
+  <link href="https://fonts.cdnfonts.com/css/rowdies" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Corben">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Crimson+Text">
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="header">
+  <div class="logo">
+  <img src="../images/gsd.png" alt="GS Logo">
+</div>
+  <nav class="nav">
+    <a href="../htmlpages/index.html">HOME</a>
+    <a href="javascript:void(0)" id="categoryBtn">CATEGORIES</a>
+    <a href="#">SALE</a>
+    <a href="#">ABOUT</a>
+    <a href="#">CONTACT</a>
+  </nav>
+<div class="nav-icons">
+  <i class="fa-solid fa-magnifying-glass"></i>
+
+  <i class="fa-regular fa-user" id="profileBtn"></i>
+
+  <!-- Wishlist Icon -->
+  <a href="../htmlpages/wishlist.html">
+    <i class="fa-regular fa-heart"></i>
+  </a>
+
+  <!-- Cart Icon -->
+  <a href="../htmlpages/cart.html">
+    <i class="fa-solid fa-bag-shopping"></i>
+  </a>
+</div>
+
+</header>
+
+<!-- Categories Overlay -->
+<div class="category-overlay" id="categoryOverlay">
+  <div class="category-box">
+    <h4>Kurtis</h4>
+    <ul>
+      <li>Cotton Kurtis</li>
+      <li>Designer Kurtis</li>
+      <li>Traditional Kurtis</li>
+      <li>Festive Kurtis</li>
+      <li>Office Wear Kurtis</li>
+      <li>Everyday Kurtis</li>
+    </ul>
+
+    <h4>Sarees</h4>
+    <h4>Ethnic Wear</h4>
+  </div>
+</div>
+
+<!-- Profile Overlay -->
+<div class="profile-overlay" id="profileOverlay">
+  <div class="profile-box">
+    <ul>
+      <li><a href="../htmlpages/userprofile.html?section=orders">My Orders</a></li>
+      <li><a href="../htmlpages/wishlist.html">My Wishlist</a></li>
+      <li><a href="../htmlpages/userprofile.html?section=savedAddress">Saved Addresses</a></li>
+    </ul>
+
+    <hr>
+
+    <ul>
+      <li><a href="../htmlpages/userprofile.html?section=editProfile">Edit Profile</a></li>
+      <li><a href="../htmlpages/logout.html">Logout</a></li>
+    </ul>
+  </div>
+</div>
+
+
+
+<div class="login-wrapper">
+  <div class="login-box">
+
+    <h2>Signup</h2>
+
+    <!-- Mobile Number -->
+    <label class="input-label">Mobile Number</label>
+    <div class="phone-input">
+      <span class="country-code">+91</span>
+      <input type="tel" placeholder="Enter mobile number">
+    </div>
+
+    <!-- Email -->
+    <label class="input-label">Email Id (For Backup)</label>
+    <input type="email" class="normal-input" placeholder="Enter email">
+
+    <!-- Password -->
+    <label class="input-label">Create New Password</label>
+    <input type="password" class="normal-input" placeholder="Create password">
+
+    <!-- Confirm Password -->
+    <label class="input-label">Verify Password</label>
+    <input type="password" class="normal-input" placeholder="Confirm password">
+
+    <!-- Button -->
+    <button class="login-btn">Sign Up</button>
+
+  </div>
+</div>
+
+<script src="../jspages/script.js"></script>
+</body>
+</html>

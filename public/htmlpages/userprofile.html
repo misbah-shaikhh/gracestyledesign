@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My Wishlist - GS Store</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Corben">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Crimson+Text">
+    <link href="https://fonts.cdnfonts.com/css/rowdies" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../csspages/style.css"> 
+    <link rel="stylesheet" href="../csspages/userprofile.css">
+</head>
+<body>
+<!-- HEADER -->
+<header class="header">
+  <div class="logo">
+  <img src="../images/gsd.png" alt="GS Logo">
+</div>
+  <nav class="nav">
+    <a href="../htmlpages/index.html">HOME</a>
+    <a href="javascript:void(0)" id="categoryBtn">CATEGORIES</a>
+    <a href="#">SALE</a>
+    <a href="#">ABOUT</a>
+    <a href="#">CONTACT</a>
+  </nav>
+<div class="nav-icons">
+  <i class="fa-solid fa-magnifying-glass"></i>
+
+  <i class="fa-regular fa-user" id="profileBtn"></i>
+
+  <!-- Wishlist Icon -->
+  <a href="../htmlpages/wishlist.html">
+    <i class="fa-regular fa-heart"></i>
+  </a>
+
+  <!-- Cart Icon -->
+  <a href="../htmlpages/cart.html">
+    <i class="fa-solid fa-bag-shopping"></i>
+  </a>
+</div>
+
+</header>
+
+<!-- Categories Overlay -->
+<div class="category-overlay" id="categoryOverlay">
+  <div class="category-box">
+    <h4>Kurtis</h4>
+    <ul>
+      <li>Cotton Kurtis</li>
+      <li>Designer Kurtis</li>
+      <li>Traditional Kurtis</li>
+      <li>Festive Kurtis</li>
+      <li>Office Wear Kurtis</li>
+      <li>Everyday Kurtis</li>
+    </ul>
+
+    <h4>Sarees</h4>
+    <h4>Ethnic Wear</h4>
+  </div>
+</div>
+
+<!-- Profile Overlay -->
+<div class="profile-overlay" id="profileOverlay">
+  <div class="profile-box">
+    <ul>
+      <li><a href="../htmlpages/userprofile.html?section=orders">My Orders</a></li>
+      <li><a href="../htmlpages/wishlist.html">My Wishlist</a></li>
+      <li><a href="../htmlpages/userprofile.html?section=savedAddress">Saved Addresses</a></li>
+    </ul>
+
+    <hr>
+
+    <ul>
+      <li><a href="../htmlpages/userprofile.html?section=editProfile">Edit Profile</a></li>
+      <li><a href="../htmlpages/logout.html">Logout</a></li>
+    </ul>
+  </div>
+</div>
+
+
+<div class="profile-container">
+
+  <!-- LEFT SIDEBAR -->
+  <aside class="profile-sidebar">
+    <div class="user-info">
+      <div class="avatar"></div>
+      <p>Welcome User!</p>
+    </div>
+
+    <div class="sidebar-section">
+      <h4>Account</h4>
+      <ul>
+        <li class="active" data-page="editProfile">Edit Profile</li>
+        <li data-page="savedAddress">Saved Address</li>
+      </ul>
+    </div>
+
+    <div class="sidebar-section">
+      <h4>Orders</h4>
+      <ul>
+        <li data-page="myOrders">My Orders</li>
+        <li>
+          <a href="../htmlpages/wishlist.html" class="side-link">My Wishlist</a>
+        </li>
+
+        <li>
+          <a href="../htmlpages/cart.html" class="side-link">My Cart</a>
+        </li>
+      </ul>
+    </div>
+  </aside>
+
+
+  <!-- RIGHT CONTENT AREA -->
+  <main class="profile-content" id="profileContent">
+    <!-- Edit Profile loads here -->
+  </main>
+
+</div>
+
+<!-- Address Overlay -->
+<div class="address-overlay" id="addressOverlay">
+  <div class="overlay-box">
+    
+    <div class="overlay-header">
+      <h2>Edit Address</h2>
+      <span id="cancelOverlay">CANCEL</span>
+    </div>
+
+    <div class="form-group">
+      <label>Name</label>
+      <input type="text">
+    </div>
+
+    <div class="form-group">
+      <label>Mobile</label>
+      <input type="text">
+    </div>
+
+    <div class="form-row split">
+      <div>
+        <label>Pincode</label>
+        <input type="text">
+      </div>
+      <div>
+        <label>State</label>
+        <input type="text">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Address (House no., Building, Street, Area)</label>
+      <input type="text">
+    </div>
+
+    <div class="form-row split">
+      <div>
+        <label>Locality</label>
+        <input type="text">
+      </div>
+      <div>
+        <label>City/District</label>
+        <input type="text">
+      </div>
+    </div>
+
+    <div style="margin-top:15px;">
+      <label style="display:flex; align-items:center; gap:10px;">
+        <input type="radio" name="newDefault">
+        Default Address
+      </label>
+    </div>
+
+    <button class="save-btn">Save Details</button>
+
+  </div>
+</div>
+
+<!-- Review Overlay -->
+<div class="review-overlay" id="reviewOverlay">
+  <div class="review-box" id="reviewBox">
+
+    <h2>REVIEW PRODUCT</h2>
+
+    <div class="review-section">
+      <h4>RATE PRODUCT</h4>
+
+      <div class="rating-row">
+        <div>
+          <strong>Pink Ethnic Suit</strong>
+          <p>Colour: 05-BIHU BLISS</p>
+        </div>
+
+        <div class="stars" id="starContainer">
+          <span class="star" data-value="1">&#9733;</span>
+          <span class="star" data-value="2">&#9733;</span>
+          <span class="star" data-value="3">&#9733;</span>
+          <span class="star" data-value="4">&#9733;</span>
+          <span class="star" data-value="5">&#9733;</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="review-text">
+      <h4>WRITE REVIEW HERE :</h4>
+      <textarea id="reviewText"></textarea>
+    </div>
+
+    <div class="review-consent">
+      <label class="consent-label">
+        <input type="checkbox" id="reviewConsent">
+        <span>
+          By Submitting Review You Give Us Consent To Publish And Process Personal Information 
+          In Accordance With <u>Terms Of Use</u> And <u>Privacy Policy</u>
+        </span>
+      </label>
+    </div>
+
+    <button class="submit-review" id="submitReview">
+      Submit Review
+    </button>
+
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-container">
+
+    <!-- Menu -->
+    <div class="footer-box">
+      <h3>Menu</h3>
+      <ul>
+        <li><a href="../htmlpages/track.html">Track Your Order</a></li>
+        <li><a href="../htmlpages/exchange.html">Return Order</a></li>
+        <li><a href="../htmlpages/exchange.html">Exchange Order</a></li>
+      </ul>
+    </div>
+
+    <!-- Policies -->
+    <div class="footer-box">
+      <h3>Our Policies</h3>
+      <ul>
+        <li><a href="../htmlpages/return.html">Return and Exchange Policy</a></li>
+        <li><a href="../htmlpages/policy.html">Shipping Policy</a></li>
+        <li><a href="../htmlpages/policy.html">Privacy Policy</a></li>
+        <li><a href="../htmlpages/policy.html">Terms and Conditions</a></li>
+      </ul>
+    </div>
+
+    <!-- Contact -->
+    <div class="footer-box">
+      <h3>Contact Us</h3>
+      <p>Support Contact: 8287440077</p>
+      <p>(12PM To 6PM, Mon-Sat)</p>
+
+      <div class="social-icons">
+        <a href="#"><i class="fab fa-instagram"></i></a>
+        <a href="#"><i class="fab fa-whatsapp"></i></a>
+        <a href="#"><i class="fab fa-facebook"></i></a>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="footer-bottom">
+    <p>© 2026, Grace Style Design.</p>
+  </div>
+</footer>
+    <script defer src="../jspages/userprofile.js"></script>
+    <script defer src="../jspages/script.js"></script>
+</body>
+</html>

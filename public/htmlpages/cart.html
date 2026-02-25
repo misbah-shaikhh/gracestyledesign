@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <title>GS Ethnic Store</title>
-  <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="cart.css">
+  <link rel="stylesheet" href="../csspages/style.css">
+  <link rel="stylesheet" href="../csspages/cart.css">
   <link href="https://fonts.cdnfonts.com/css/rowdies" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Corben">
@@ -19,21 +19,31 @@
 <!-- HEADER -->
 <header class="header">
   <div class="logo">
-  <img src="gsd.png" alt="GS Logo">
+  <img src="../images/gsd.png" alt="GS Logo">
 </div>
   <nav class="nav">
-    <a href="#">HOME</a>
+    <a href="../htmlpages/index.html">HOME</a>
     <a href="javascript:void(0)" id="categoryBtn">CATEGORIES</a>
     <a href="#">SALE</a>
     <a href="#">ABOUT</a>
     <a href="#">CONTACT</a>
   </nav>
- <div class="nav-icons">
+<div class="nav-icons">
   <i class="fa-solid fa-magnifying-glass"></i>
-  <i class="fa-regular fa-user"></i>
-  <i class="fa-regular fa-heart"></i>
-  <i class="fa-solid fa-bag-shopping"></i>
+
+  <i class="fa-regular fa-user" id="profileBtn"></i>
+
+  <!-- Wishlist Icon -->
+  <a href="../htmlpages/wishlist.html">
+    <i class="fa-regular fa-heart"></i>
+  </a>
+
+  <!-- Cart Icon -->
+  <a href="../htmlpages/cart.html">
+    <i class="fa-solid fa-bag-shopping"></i>
+  </a>
 </div>
+
 </header>
 
 <!-- Categories Overlay -->
@@ -54,6 +64,26 @@
   </div>
 </div>
 
+<!-- Profile Overlay -->
+<div class="profile-overlay" id="profileOverlay">
+  <div class="profile-box">
+    <ul>
+      <li><a href="../htmlpages/userprofile.html?section=orders">My Orders</a></li>
+      <li><a href="../htmlpages/wishlist.html">My Wishlist</a></li>
+      <li><a href="../htmlpages/userprofile.html?section=savedAddress">Saved Addresses</a></li>
+    </ul>
+
+    <hr>
+
+    <ul>
+      <li><a href="../htmlpages/userprofile.html?section=editProfile">Edit Profile</a></li>
+      <li><a href="../htmlpages/logout.html">Logout</a></li>
+    </ul>
+  </div>
+</div>
+
+
+
 <section class="cart-page">
 
   <h2 class="cart-title">Shopping Cart</h2>
@@ -66,7 +96,7 @@
       <!-- CART ITEM -->
       <div class="cart-item">
         <div class="cart-img">
-          <img src="product.jpg" alt="Pink Ethnic Suit">
+          <img src="../images/product.jpg" alt="Pink Ethnic Suit">
         </div>
 
         <div class="cart-details">
@@ -105,7 +135,7 @@
       <!-- COPY THIS BLOCK FOR MORE ITEMS -->
       <div class="cart-item">
         <div class="cart-img">
-          <img src="product.jpg" alt="Pink Ethnic Suit">
+          <img src="../images/product.jpg" alt="Pink Ethnic Suit">
         </div>
 
         <div class="cart-details">
@@ -171,7 +201,7 @@
       </div>
 
       <button class="place-order-btn">Place Order</button>
-      <button class="next-btn">Select Payment Method Next</button>
+      <button class="next-btn">Fill Order Details Next</button>
     </div>
 
   </div>
@@ -189,7 +219,7 @@
       <div class="discount-tag">60% OFF</div>
 
       <!-- IMAGE -->
-      <img src="product.jpg" alt="">
+      <img src="../images/product.jpg" alt="">
 
       <!-- RIGHT SIDE INFO -->
       <div class="right-info">
@@ -223,7 +253,7 @@
       <!-- DISCOUNT TAG -->
       <div class="discount-tag">60% OFF</div>
       <!-- IMAGE -->
-      <img src="product.jpg" alt="">
+      <img src="../images/product.jpg" alt="">
 
       <!-- RIGHT SIDE INFO -->
       <div class="right-info">
@@ -257,7 +287,7 @@
       <div class="discount-tag">60% OFF</div>
 
       <!-- IMAGE -->
-      <img src="product.jpg" alt="">
+      <img src="../images/product.jpg" alt="">
 
       <!-- RIGHT SIDE INFO -->
       <div class="right-info">
@@ -291,14 +321,13 @@
 <!-- FOOTER -->
 <footer class="footer">
   <div class="footer-container">
-
     <!-- Menu -->
     <div class="footer-box">
       <h3>Menu</h3>
       <ul>
-        <li><a href="#">Track Your Order</a></li>
-        <li><a href="#">Return Order</a></li>
-        <li><a href="#">Exchange Order</a></li>
+        <li><a href="../htmlpages/track.html">Track Your Order</a></li>
+        <li><a href="../htmlpages/exchange.html">Return Order</a></li>
+        <li><a href="../htmlpages/exchange.html">Exchange Order</a></li>
       </ul>
     </div>
 
@@ -306,10 +335,10 @@
     <div class="footer-box">
       <h3>Our Policies</h3>
       <ul>
-        <li><a href="#">Return and Exchange Policy</a></li>
-        <li><a href="#">Shipping Policy</a></li>
-        <li><a href="#">Privacy Policy</a></li>
-        <li><a href="#">Terms and Conditions</a></li>
+        <li><a href="../htmlpages/return.html">Return and Exchange Policy</a></li>
+        <li><a href="../htmlpages/policy.html">Shipping Policy</a></li>
+        <li><a href="../htmlpages/policy.html">Privacy Policy</a></li>
+        <li><a href="../htmlpages/policy.html">Terms and Conditions</a></li>
       </ul>
     </div>
 
@@ -333,7 +362,123 @@
   </div>
 </footer>
 
+<!-- METHOD OVERLAY -->
+<div class="method-overlay" id="methodOverlay">
+  <div class="method-box" id="methodBox">
 
-<script src="script.js"></script>
+    <div class="method-header">
+      <h3>Select Address</h3>
+      <span class="cancel-btn" id="closeMethodOverlay">CANCEL</span>
+    </div>
+
+    <div class="default-address">
+      <p><strong>Default Address</strong></p>
+
+      <div class="address-card">
+        <p><strong>Name :</strong> KIMO</p>
+        <p><strong>Phone :</strong> 1329745640</p>
+        <p>
+          John Doe, 123 Main St, Apt 4,<br>
+          New York, NY 10001.
+        </p>
+
+        <div class="address-btns">
+          <button class="edit-btn">Edit Address</button>
+          <button class="add-btn">Add New Address</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="price-summary">
+      <h4>Price Details ( 3 Items )</h4>
+
+      <div class="price-row">
+        <span>Total MRP</span>
+        <span>₹2,499</span>
+      </div>
+
+      <div class="price-row discount">
+        <span>Discount On MRP</span>
+        <span>-₹1,400</span>
+      </div>
+
+      <div class="price-row">
+        <span>Platform Fee</span>
+        <span>₹23</span>
+      </div>
+
+      <hr>
+
+      <div class="price-total">
+        <span>Total Amount</span>
+        <span>₹2,522</span>
+      </div>
+    </div>
+
+    <button class="confirm-order-btn">Place Order</button>
+
+  </div>
+</div>
+
+<!-- Address Overlay -->
+<div class="address-overlay" id="addressOverlay">
+  <div class="overlay-box">
+    
+    <div class="overlay-header">
+      <h2>Edit Address</h2>
+      <span id="cancelOverlay">CANCEL</span>
+    </div>
+
+    <div class="form-group">
+      <label>Name</label>
+      <input type="text">
+    </div>
+
+    <div class="form-group">
+      <label>Mobile</label>
+      <input type="text">
+    </div>
+
+    <div class="form-row split">
+      <div>
+        <label>Pincode</label>
+        <input type="text">
+      </div>
+      <div>
+        <label>State</label>
+        <input type="text">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Address (House no., Building, Street, Area)</label>
+      <input type="text">
+    </div>
+
+    <div class="form-row split">
+      <div>
+        <label>Locality</label>
+        <input type="text">
+      </div>
+      <div>
+        <label>City/District</label>
+        <input type="text">
+      </div>
+    </div>
+
+    <div style="margin-top:15px;">
+      <label style="display:flex; align-items:center; gap:10px;">
+        <input type="radio" name="newDefault">
+        Default Address
+      </label>
+    </div>
+
+    <button class="save-btn">Save Details</button>
+
+  </div>
+</div>
+
+<script src="../jspages/cart.js"></script>
+<script src="../jspages/script.js"></script>
 </body>
 </html>

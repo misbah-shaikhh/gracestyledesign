@@ -248,3 +248,11 @@ body {
   margin: 0;
   padding: 0;
 }
+
+.profile-overlay {
+  display: none;
+}
+
+.profile-overlay.show {
+  display: block;
+}

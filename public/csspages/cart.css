@@ -183,12 +183,13 @@
   border-radius: 0px;
   border: 2px solid rgba(113, 32, 0, 1);
   min-width: 280px;
-  height: 430px;
+  height: 400px;
 }
 
 .price-box h3 {
   font-size: 20px;
   margin-bottom: 15px;
+  padding: 10px;
 }
 
 .price-row,
@@ -409,3 +410,257 @@
   background: #6b2f2f;
 }
 
+.method-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 3000;
+}
+
+.method-box {
+  background: #f5f5f5;
+  width: 450px;
+  padding: 30px;
+  border: 2px solid #7b1f00;
+}
+
+.method-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid #7b1f00;
+  padding-bottom: 10px;
+}
+
+.method-overlay p {
+  margin-top: 10px;
+}
+
+.cancel-btn {
+  cursor: pointer;
+  color: #7b1f00;
+  font-weight: 500;
+}
+
+.address-card {
+  border: 1px solid #7b1f00;
+  padding: 15px;
+  margin-top: 10px;
+  font-family: 'Inter', serif;
+}
+
+.address-card p {
+  font-family: 'Inter', serif;
+}
+
+.address-btns {
+  margin-top: 15px;
+  display: flex;
+  gap: 10px;
+}
+
+.address-btns button {
+  border: 1px solid #7b1f00;
+  background: transparent;
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+.price-summary {
+  background: #e5dbc4;
+  padding: 15px;
+  margin-top: 20px;
+}
+
+.price-row {
+  display: flex;
+  justify-content: space-between;
+  margin: 8px 0;
+}
+
+.discount span:last-child {
+  color: #7b1f00;
+}
+
+.price-total {
+  display: flex;
+  justify-content: space-between;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+.confirm-order-btn {
+  width: 100%;
+  margin-top: 20px;
+  background: #7b1f00;
+  color: white;
+  border: none;
+  padding: 12px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+/* Overlay background */
+.address-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.6);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+/* Overlay box */
+.overlay-box {
+  background: #f5f5f5;
+  width: 900px;
+  max-width: 90%;
+  padding: 40px;
+  border: 2px solid #7b1f00;
+}
+
+/* Header */
+.overlay-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid #7b1f00;
+  padding-bottom: 10px;
+  margin-bottom: 25px;
+}
+
+.overlay-header h2 {
+  margin: 0;
+}
+
+#cancelOverlay {
+  color: #7b1f00;
+  cursor: pointer;
+}
+
+.side-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
+.side-link:hover {
+  color: #7b1f00;
+}
+
+.address-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid #7b1f00;
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+}
+
+.address-header h2 {
+  margin: 0;
+}
+
+.add-address {
+  color: #7b1f00;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.address-header h2{
+    border-bottom: none;
+}
+
+.add-address:hover {
+  text-decoration: underline;
+}
+
+.form-group {
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 12px 15px;
+  border: none;
+  background: #f2f2f2;
+  outline: 1px solid black;
+}
+
+
+.form-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #f2f2f2;
+  padding: 12px 15px;
+  margin-bottom: 15px;
+}
+
+.form-row input {
+  border: none;
+  background: transparent;
+  outline: none;
+  width: 100%;
+}
+
+.change-btn {
+  background: #d8c9aa;
+  border: none;
+  padding: 8px 20px;
+  cursor: pointer;
+}
+
+.save-btn {
+  width: 100%;
+  background: #7b1f00;
+  color: white;
+  padding: 12px;
+  border: none;
+  margin-top: 15px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.form-row.split {
+  display: flex;
+  gap: 30px;
+}
+
+.form-row.split div {
+  flex: 1;
+}
+
+.form-row.split input {
+  width: 100%;
+  padding: 12px 10px;
+  border: none;
+  background: #f2f2f2;
+  outline: 1px solid black;
+}
+
+.top-message {
+  position: fixed;
+  top: -60px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #7b1f00;
+  color: white;
+  padding: 12px 25px;
+  border-radius: 5px;
+  transition: 0.3s ease;
+  z-index: 5000;
+}
+
+.top-message.show {
+  top: 20px;
+}

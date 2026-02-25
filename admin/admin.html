@@ -789,7 +789,6 @@
                 <li class="nav-item" data-page="inventory">Inventory</li>
                 <li class="nav-item" data-page="payments">Payments</li>
                 <li class="nav-item" data-page="offers">Offers</li>
-                <li class="nav-item" data-page="settings">Settings</li>
             </ul>
         </aside>
 
@@ -808,263 +807,153 @@
 
             <div class="content">
                 <!-- Dashboard Page -->
-                <div class="page active" id="dashboard">
-                    <div class="stats-grid">
-                        <div class="stat-card">
-                            <div class="stat-label">Total Sales</div>
-                            <div class="stat-value">Rs. 1,00,000</div>
-                            <div class="stat-period">This Month</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-label">New Orders</div>
-                            <div class="stat-value">25</div>
-                            <div class="stat-period">DD/MM/YYYY</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-label">New Customers</div>
-                            <div class="stat-value">4</div>
-                            <div class="stat-period">This Month</div>
-                        </div>
-                        <div class="stat-card">
-                            <div class="stat-label">Low Stock Alerts</div>
-                            <div class="stat-value">25</div>
-                            <div class="stat-period">DD/MM/YYYY</div>
-                        </div>
-                    </div>
+                <div class="content">
+<div class="page active" id="dashboard">
 
-                    <div class="dashboard-grid">
-                        <div class="card">
-                            <h3 class="card-header">Sales Overview</h3>
-                            <div class="tabs">
-                                <button class="tab active">Daily</button>
-                                <button class="tab">Weekly</button>
-                                <button class="tab">Monthly</button>
-                            </div>
-                            <div class="chart-container">
-                                <canvas id="salesChart" class="chart"></canvas>
-                            </div>
-                        </div>
+    <!-- STATS -->
+    <div class="stats-grid">
+        <div class="stat-card">
+            <div class="stat-label">Total Sales</div>
+            <div class="stat-value">Rs. 1,00,000</div>
+            <div class="stat-period">This Month</div>
+        </div>
 
-                        <div>
-                            <div class="card" style="margin-bottom: 20px;">
-                                <h3 class="card-header">Bestsellers</h3>
-                                <ol class="bestsellers-list">
-                                    <li>1. Red Ethnic Suit &nbsp;&nbsp; Rs.2,499</li>
-                                    <li>2. Blue Ethnic Suit &nbsp;&nbsp; Rs.2,499</li>
-                                    <li>3. Pink Ethnic Suit &nbsp;&nbsp; Rs.2,499</li>
-                                </ol>
-                            </div>
-                            <div class="card">
-                                <h3 class="card-header">Recent Orders</h3>
-                                <ul class="recent-orders-list">
-                                    <li>#10244 - John Doe &nbsp;&nbsp; Rs.2,499</li>
-                                    <li>#10245 - John Doe &nbsp;&nbsp; Rs.2,499</li>
-                                    <li>#10246 - John Doe &nbsp;&nbsp; Rs.2,499</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
+        <div class="stat-card">
+            <div class="stat-label">New Orders</div>
+            <div class="stat-value">25</div>
+        </div>
 
-                    <div class="two-col-grid">
-                        <div class="card">
-                            <h3 class="card-header">Product Management</h3>
-                            <div style="margin-bottom: 15px;">
-                                <button class="btn">Add New Product</button>
-                                <button class="btn" style="margin-left: 10px;">Edit / Delete</button>
-                            </div>
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th>Product Name</th>
-                                        <th>Category</th>
-                                        <th>Sizes</th>
-                                        <th>Price</th>
-                                        <th>Stock</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>Green Ethnic suit</td>
-                                        <td>Kurti</td>
-                                        <td>S, M, L</td>
-                                        <td>Rs.2,499</td>
-                                        <td>Available</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Green Ethnic suit</td>
-                                        <td>Kurti</td>
-                                        <td>XL, L</td>
-                                        <td>Rs.2,499</td>
-                                        <td>Available</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Green Ethnic suit</td>
-                                        <td>Kurti</td>
-                                        <td>S, M, L</td>
-                                        <td>Rs.2,499</td>
-                                        <td>Available</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Green Ethnic suit</td>
-                                        <td>Kurti</td>
-                                        <td>S, L</td>
-                                        <td>Rs.2,499</td>
-                                        <td>Low Stock</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
+        <div class="stat-card">
+            <div class="stat-label">New Customers</div>
+            <div class="stat-value">4</div>
+            <div class="stat-period">This Month</div>
+        </div>
 
-                        <div>
-                            <div class="card" style="margin-bottom: 20px;">
-                                <h3 class="card-header">Order Management</h3>
-                                <div class="tabs" style="margin-bottom: 15px;">
-                                    <button class="tab active">View All Orders</button>
-                                    <button class="tab">Update Status</button>
-                                </div>
-                                <table>
-                                    <thead>
-                                        <tr>
-                                            <th>Order ID</th>
-                                            <th>Customer</th>
-                                            <th>Total</th>
-                                            <th>Status</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>#10244</td>
-                                            <td>John</td>
-                                            <td>Rs. 2400</td>
-                                            <td>Available</td>
-                                        </tr>
-                                        <tr>
-                                            <td>#10245</td>
-                                            <td>John</td>
-                                            <td>Rs.2400</td>
-                                            <td>Available</td>
-                                        </tr>
-                                        <tr>
-                                            <td>#10246</td>
-                                            <td>John</td>
-                                            <td>Rs.2400</td>
-                                            <td>Available</td>
-                                        </tr>
-                                        <tr>
-                                            <td>#10247</td>
-                                            <td>John</td>
-                                            <td>Rs.2400</td>
-                                            <td>Available</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div class="card">
-                                <h3 class="card-header">Offers & Discounts</h3>
-                                <table>
-                                    <thead>
-                                        <tr>
-                                            <th>Coupon Code</th>
-                                            <th>Date</th>
-                                            <th>Amount</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>SPRING20</td>
-                                            <td>01/01/2026</td>
-                                            <td>Rs.2400</td>
-                                        </tr>
-                                        <tr>
-                                            <td>BEST10</td>
-                                            <td>01/01/2026</td>
-                                            <td>Rs.2400</td>
-                                        </tr>
-                                        <tr>
-                                            <td>NEW20</td>
-                                            <td>01/01/2026</td>
-                                            <td>Rs.2400</td>
-                                        </tr>
-                                        <tr>
-                                            <td>FIRST10</td>
-                                            <td>01/01/2026</td>
-                                            <td>Rs.2400</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
+        <div class="stat-card">
+            <div class="stat-label">Low Stock Alerts</div>
+            <div class="stat-value">25</div>
+        </div>
+    </div>
 
-                    <div class="two-col-grid">
-                        <div class="card">
-                            <h3 class="card-header">Payment Transaction</h3>
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th>Transaction ID</th>
-                                        <th>Status</th>
-                                        <th>Payment Method</th>
-                                        <th>Amount</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>#TK727629</td>
-                                        <td>Pending</td>
-                                        <td>Online</td>
-                                        <td>Rs.2400</td>
-                                    </tr>
-                                    <tr>
-                                        <td>#TK727629</td>
-                                        <td>Complete</td>
-                                        <td>Online</td>
-                                        <td>Rs.2400</td>
-                                    </tr>
-                                    <tr>
-                                        <td>#TK727629</td>
-                                        <td>Complete</td>
-                                        <td>Cash</td>
-                                        <td>Rs.2400</td>
-                                    </tr>
-                                    <tr>
-                                        <td>#TK727629</td>
-                                        <td>Refund</td>
-                                        <td>Online</td>
-                                        <td>Rs.2400</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
+    <!-- SALES + BESTSELLERS -->
+    <div class="dashboard-grid">
+        <div class="card">
+            <h3 class="card-header">Sales Overview</h3>
+            <div class="tabs">
+                <button class="tab active">Weekly</button>
+                <button class="tab">Monthly</button>
+            </div>
+            <div class="chart-container">
+                <canvas id="salesChart" class="chart"></canvas>
+            </div>
+        </div>
 
-                        <div>
-                            <div class="card" style="margin-bottom: 20px;">
-                                <h3 class="card-header">Inventory Management</h3>
-                                <ul style="list-style: disc; margin-left: 20px; font-size: 14px;">
-                                    <li style="padding: 5px 0;">Low Stock Alerts: 8 Items</li>
-                                    <li style="padding: 5px 0;">Restock Notifications</li>
-                                    <li style="padding: 5px 0;">Update Stock</li>
-                                </ul>
-                            </div>
-                            <div class="card" style="margin-bottom: 20px;">
-                                <h3 class="card-header">Reports & Analytics</h3>
-                                <ul style="list-style: disc; margin-left: 20px; font-size: 14px;">
-                                    <li style="padding: 5px 0;">Sales Reports</li>
-                                    <li style="padding: 5px 0;">Payment Reports</li>
-                                </ul>
-                            </div>
-                            <div class="card">
-                                <h3 class="card-header">Settings & Configuration</h3>
-                                <ul style="list-style: disc; margin-left: 20px; font-size: 14px;">
-                                    <li style="padding: 5px 0;">Store Settings</li>
-                                    <li style="padding: 5px 0;">Tax & Shipping Rates</li>
-                                    <li style="padding: 5px 0;">Admin Permissions</li>
-                                    <li style="padding: 5px 0;">Security Settings</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+        <div class="card">
+            <h3 class="card-header">Bestsellers</h3>
+            <ol class="bestsellers-list">
+                <li>Red Ethnic Suit</li>
+                <li>Blue Ethnic Suit</li>
+                <li>Pink Ethnic Suit</li>
+            </ol>
+        </div>
+    </div>
+
+    <!-- EXCHANGE + OFFERS -->
+    <div class="two-col-grid">
+        <div class="card">
+            <h3 class="card-header">Exchange Requests</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Request ID</th>
+                        <th>Order ID</th>
+                        <th>Customer</th>
+                        <th>Product</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>#EX001</td>
+                        <td>#10244</td>
+                        <td>John Doe</td>
+                        <td>Green Ethnic Suit</td>
+                        <td>Pending</td>
+                        <td><button class="btn">Approve</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="card">
+            <h3 class="card-header">Offers & Discounts</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Coupon</th>
+                        <th>Date</th>
+                        <th>Amount</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>SPRING20</td>
+                        <td>01/01/2026</td>
+                        <td>Rs.2400</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- PAYMENTS + SIDE CARDS -->
+    <div class="two-col-grid">
+        <div class="card">
+            <h3 class="card-header">Payment Transactions</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Status</th>
+                        <th>Method</th>
+                        <th>Amount</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>#TK727629</td>
+                        <td>Pending</td>
+                        <td>Online</td>
+                        <td>Rs.2400</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="side-stack">
+            <div class="card">
+                <h3 class="card-header">Reports & Analytics</h3>
+                <ul class="simple-list">
+                    <li>Sales Reports</li>
+                    <li>Payment Reports</li>
+                </ul>
+            </div>
+
+            <div class="card">
+                <h3 class="card-header">Settings & Configuration</h3>
+                <ul class="simple-list">
+                    <li>Store Settings</li>
+                    <li>Tax & Shipping</li>
+                    <li>Admin Permissions</li>
+                    <li>Security Settings</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+</div>
+</div>
 
                 <!-- Products Page -->
                 <div class="page" id="products">
@@ -1225,7 +1114,7 @@
                             <option>Status: All Statuses</option>
                             <option>Active</option>
                             <option>Inactive</option>
-                            <option>Blocked</option>
+                            
                         </select>
                     </div>
 
@@ -1245,10 +1134,7 @@
             <div class="customer-stat-label">Inactive</div>
         </div>
 
-        <div class="customer-stat">
-            <div class="customer-stat-value">2</div>
-            <div class="customer-stat-label">Blocked</div>
-        </div>
+        
     </div>
 </div>
 
@@ -1261,7 +1147,7 @@
                                     <th>Customer Name</th>
                                     <th>Email</th>
                                     <th>Orders</th>
-                                    <th>Actions</th>
+                                    <th>Status</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -1269,19 +1155,19 @@
                                     <td>John Doe</td>
                                     <td><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="5d17323533731932381d3a303c3431733e3230">[email&#160;protected]</a></td>
                                     <td>4</td>
-                                    <td><button class="btn">Block</button></td>
+                                    <td>Active</td>
                                 </tr>
                                 <tr>
                                     <td>John Doe</td>
                                     <td><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="6c26030402422803092c0b010d0500420f0301">[email&#160;protected]</a></td>
                                     <td>2</td>
-                                    <td><button class="btn">Block</button></td>
+                                    <td>Active</td>
                                 </tr>
                                 <tr>
                                     <td>John Doe</td>
                                     <td><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="a9e3c6c1c787edc6cce9cec4c8c0c587cac6c4">[email&#160;protected]</a></td>
                                     <td>2</td>
-                                    <td><button class="btn">Block</button></td>
+                                    <td>Active</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -1505,44 +1391,7 @@
                         </ul>
                     </div>
                 </div>
-
-                <!-- Settings Page -->
-                <div class="page" id="settings">
-                    <h2 style="margin-bottom: 20px;">Settings</h2>
-                    
-                    <div class="settings-tabs">
-                        <button class="settings-tab active">General</button>
-                        <button class="settings-tab">Shipping</button>
-                        <button class="settings-tab">Taxes</button>
-                        <button class="settings-tab">Payment</button>
-                    </div>
-
-                    <div class="settings-section">
-                        <h3>Website Settings</h3>
-                        <div class="form-group">
-                            <label>Store Name</label>
-                            <input type="text" placeholder="Enter store name">
-                        </div>
-                        <div class="form-group">
-                            <label>Email</label>
-                            <input type="email" placeholder="Enter email">
-                        </div>
-                        <div class="form-group">
-                            <label>Phone Number</label>
-                            <input type="tel" placeholder="Enter phone number">
-                        </div>
-                        <button class="btn btn-primary">Login</button>
-                    </div>
-
-                    <div class="settings-section security-section">
-                        <h3>Security</h3>
-                        <ul>
-                            <li>Change Password</li>
-                            <li>Manage Admin Users</li>
-                            <li>Advanced Security Settings</li>
-                        </ul>
-                    </div>
-                </div>
+                
             </div>
         </main>
 
@@ -1781,12 +1630,7 @@
                         <textarea id="offerDescription" name="offerDescription" placeholder="Enter offer terms and conditions (optional)"></textarea>
                     </div>
 
-                    <div class="form-group-full">
-                        <div class="checkbox-group">
-                            <input type="checkbox" id="isActive" name="isActive" checked>
-                            <label for="isActive">Active (Make this offer available immediately)</label>
-                        </div>
-                    </div>
+                    
 
                     <div class="modal-footer">
                         <button type="button" class="btn btn-cancel" id="cancelOfferBtn">Cancel</button>
@@ -1888,14 +1732,7 @@
             });
         });
 
-        // Settings tabs
-        const settingsTabs = document.querySelectorAll('.settings-tab');
-        settingsTabs.forEach(tab => {
-            tab.addEventListener('click', function() {
-                settingsTabs.forEach(t => t.classList.remove('active'));
-                this.classList.add('active');
-            });
-        });
+        
 
         // Add Product Modal
         const addProductBtn = document.getElementById('addProductBtn');
@@ -2045,8 +1882,7 @@
                     minPurchase: formData.get('minPurchase'),
                     maxDiscount: formData.get('maxDiscount'),
                     applicableTo: Array.from(document.querySelectorAll('input[name="applicableTo"]:checked')).map(cb => cb.value),
-                    description: formData.get('offerDescription'),
-                    isActive: document.getElementById('isActive').checked
+                    description: formData.get('offerDescription')
                 };
 
                 // Validate dates

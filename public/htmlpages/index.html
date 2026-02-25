@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <title>GS Ethnic Store</title>
-  <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="home.css">
+  <link rel="stylesheet" href="../csspages/style.css">
+  <link rel="stylesheet" href="../csspages/home.css">
   <link href="https://fonts.cdnfonts.com/css/rowdies" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Corben">
@@ -19,21 +19,31 @@
 <!-- HEADER -->
 <header class="header">
   <div class="logo">
-  <img src="gsd.png" alt="GS Logo">
+  <img src="../images/gsd.png" alt="GS Logo">
 </div>
   <nav class="nav">
-    <a href="#">HOME</a>
+    <a href="../htmlpages/index.html">HOME</a>
     <a href="javascript:void(0)" id="categoryBtn">CATEGORIES</a>
     <a href="#">SALE</a>
     <a href="#">ABOUT</a>
     <a href="#">CONTACT</a>
   </nav>
- <div class="nav-icons">
+<div class="nav-icons">
   <i class="fa-solid fa-magnifying-glass"></i>
+
   <i class="fa-regular fa-user" id="profileBtn"></i>
-  <i class="fa-regular fa-heart"></i>
-  <i class="fa-solid fa-bag-shopping"></i>
+
+  <!-- Wishlist Icon -->
+  <a href="../htmlpages/wishlist.html">
+    <i class="fa-regular fa-heart"></i>
+  </a>
+
+  <!-- Cart Icon -->
+  <a href="../htmlpages/cart.html">
+    <i class="fa-solid fa-bag-shopping"></i>
+  </a>
 </div>
+
 </header>
 
 <!-- Categories Overlay -->
@@ -58,16 +68,16 @@
 <div class="profile-overlay" id="profileOverlay">
   <div class="profile-box">
     <ul>
-      <li><a href="orders.html">My Orders</a></li>
-      <li><a href="wishlist.html">My Wishlist</a></li>
-      <li><a href="address.html">Saved Addresses</a></li>
+      <li><a href="../htmlpages/userprofile.html?section=orders">My Orders</a></li>
+      <li><a href="../htmlpages/wishlist.html">My Wishlist</a></li>
+      <li><a href="../htmlpages/userprofile.html?section=savedAddress">Saved Addresses</a></li>
     </ul>
 
     <hr>
 
     <ul>
-      <li><a href="profile.html">Edit Profile</a></li>
-      <li><a href="logout.html">Logout</a></li>
+      <li><a href="../htmlpages/userprofile.html?section=editProfile">Edit Profile</a></li>
+      <li><a href="../htmlpages/logout.html">Logout</a></li>
     </ul>
   </div>
 </div>
@@ -84,9 +94,9 @@
   <!-- Slides -->
   <div class="slides">
     <div class="slide-track">
-    <img src="hero-banner.png" class="slide active">
-    <img src="hero-banner.png" class="slide">
-    <img src="hero-banner.png" class="slide">
+    <img src="../images/hero-banner.png" class="slide active">
+    <img src="../images/hero-banner.png" class="slide">
+    <img src="../images/hero-banner.png" class="slide">
     </div>
   </div>
 
@@ -112,7 +122,7 @@
       <h2>LIMITED COLLECTION</h2>
       <p>Catch Them Before You Lose Them</p>
     </div>
-    <a href="limited.html">View All</a>
+    <a href="../htmlpages/limited.html">View All</a>
   </div>
 
   <div class="product-slider">
@@ -130,7 +140,7 @@
       <div class="discount-tag">30% OFF</div>
 
       <!-- IMAGE -->
-      <img src="product.jpg" alt="">
+      <img src="../images/product.jpg" alt="">
 
       <!-- RIGHT SIDE INFO -->
       <div class="right-info">
@@ -165,7 +175,7 @@
       <div class="discount-tag">30% OFF</div>
 
       <!-- IMAGE -->
-      <img src="product.jpg" alt="">
+      <img src="../images/product.jpg" alt="">
 
       <!-- RIGHT SIDE INFO -->
       <div class="right-info">
@@ -199,7 +209,7 @@
       <div class="discount-tag">30% OFF</div>
 
       <!-- IMAGE -->
-      <img src="product.jpg" alt="">
+      <img src="../images/product.jpg" alt="">
 
       <!-- RIGHT SIDE INFO -->
       <div class="right-info">
@@ -253,7 +263,7 @@
       <h2>Newly Added</h2>
       <p>fresh collection at fresh prices</p>
     </div>
-    <a href="newly.html">View All</a>
+    <a href="../htmlpages/newly.html">View All</a>
   </div>
 <div class="product-slider">
 
@@ -270,7 +280,7 @@
       <div class="new-tag">NEW</div>
 
       <!-- IMAGE -->
-      <img src="product.jpg" alt="">
+      <img src="../images/product.jpg" alt="">
 
       <!-- RIGHT SIDE INFO -->
       <div class="right-info">
@@ -304,7 +314,7 @@
       <!-- DISCOUNT TAG -->
       <div class="new-tag">NEW</div>
       <!-- IMAGE -->
-      <img src="product.jpg" alt="">
+      <img src="../images/product.jpg" alt="">
 
       <!-- RIGHT SIDE INFO -->
       <div class="right-info">
@@ -338,7 +348,7 @@
       <div class="new-tag">NEW</div>
 
       <!-- IMAGE -->
-      <img src="product.jpg" alt="">
+      <img src="../images/product.jpg" alt="">
 
       <!-- RIGHT SIDE INFO -->
       <div class="right-info">
@@ -384,7 +394,7 @@
       <h2>Bestsellers</h2>
       <p>Most loved for a reason </p>
     </div>
-    <a href="bestseller.html">View All</a>
+    <a href="../htmlpages/bestseller.html">View All</a>
   </div>
 <div class="product-slider">
 
@@ -401,7 +411,7 @@
       <div class="discount-tag">60% OFF</div>
 
       <!-- IMAGE -->
-      <img src="product.jpg" alt="">
+      <img src="../images/product.jpg" alt="">
 
       <!-- RIGHT SIDE INFO -->
       <div class="right-info">
@@ -435,7 +445,7 @@
       <!-- DISCOUNT TAG -->
       <div class="discount-tag">60% OFF</div>
       <!-- IMAGE -->
-      <img src="product.jpg" alt="">
+      <img src="../images/product.jpg" alt="">
 
       <!-- RIGHT SIDE INFO -->
       <div class="right-info">
@@ -469,7 +479,7 @@
       <div class="discount-tag">60% OFF</div>
 
       <!-- IMAGE -->
-      <img src="product.jpg" alt="">
+      <img src="../images/product.jpg" alt="">
 
       <!-- RIGHT SIDE INFO -->
       <div class="right-info">
@@ -523,7 +533,7 @@
     <div class="testimonial-product-card">
 
       <div class="testimonial-img-box">
-        <img src="product.jpg" alt="">
+        <img src="../images/product.jpg" alt="">
 
       <div class="product-overlay">
 
@@ -585,9 +595,9 @@
     <div class="footer-box">
       <h3>Menu</h3>
       <ul>
-        <li><a href="#">Track Your Order</a></li>
-        <li><a href="#">Return Order</a></li>
-        <li><a href="#">Exchange Order</a></li>
+        <li><a href="../htmlpages/track.html">Track Your Order</a></li>
+        <li><a href="../htmlpages/exchange.html">Return Order</a></li>
+        <li><a href="../htmlpages/exchange.html">Exchange Order</a></li>
       </ul>
     </div>
 
@@ -595,10 +605,10 @@
     <div class="footer-box">
       <h3>Our Policies</h3>
       <ul>
-        <li><a href="#">Return and Exchange Policy</a></li>
-        <li><a href="#">Shipping Policy</a></li>
-        <li><a href="#">Privacy Policy</a></li>
-        <li><a href="#">Terms and Conditions</a></li>
+        <li><a href="../htmlpages/return.html">Return and Exchange Policy</a></li>
+        <li><a href="../htmlpages/policy.html">Shipping Policy</a></li>
+        <li><a href="../htmlpages/policy.html">Privacy Policy</a></li>
+        <li><a href="../htmlpages/policy.html">Terms and Conditions</a></li>
       </ul>
     </div>
 
@@ -622,7 +632,7 @@
   </div>
 </footer>
 
-
-<script src="script.js"></script>
+<script src="../jspages/homepage.js"></script>
+<script src="../jspages/script.js"></script>
 </body>
 </html>
