@@ -241,3 +241,9 @@
 .policy-section p, ol, li {
     font-family: 'Crimson Text', serif !important;
 }
+
+.resend-link {
+  cursor: pointer;
+  color: #6b2f1a;
+  font-weight: 600;
+}

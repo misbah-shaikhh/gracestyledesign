@@ -105,6 +105,18 @@ body {
   color: #6b2f1a;
 }
 
+/* Remove default link styling but KEEP font */
+.category-box a,
+.category-box a:visited,
+.category-box a:active {
+  text-decoration: none;
+  color: inherit;
+  font-family: inherit;   /* 👈 This fixes your font issue */
+}
+
+.category-box a:visited {
+  color: inherit;
+}
 
 /* PROFILE OVERLAY (same as category overlay) */
 .profile-overlay {
@@ -255,4 +267,8 @@ body {
 
 .profile-overlay.show {
   display: block;
+}
+
+html {
+  scroll-behavior: smooth;
 }

@@ -25,11 +25,10 @@
     <a href="../htmlpages/index.html">HOME</a>
     <a href="javascript:void(0)" id="categoryBtn">CATEGORIES</a>
     <a href="#">SALE</a>
-    <a href="#">ABOUT</a>
-    <a href="#">CONTACT</a>
+    <a href="../htmlpages/about.html">ABOUT</a>
+    <a href="#contact">CONTACT</a>
   </nav>
 <div class="nav-icons">
-  <i class="fa-solid fa-magnifying-glass"></i>
 
   <i class="fa-regular fa-user" id="profileBtn"></i>
 
@@ -49,18 +48,20 @@
 <!-- Categories Overlay -->
 <div class="category-overlay" id="categoryOverlay">
   <div class="category-box">
-    <h4>Kurtis</h4>
+
+    <h4><a href="../htmlpages/productcatalogue.html?category=kurtis">Kurtis</a></h4>
     <ul>
-      <li>Cotton Kurtis</li>
-      <li>Designer Kurtis</li>
-      <li>Traditional Kurtis</li>
-      <li>Festive Kurtis</li>
-      <li>Office Wear Kurtis</li>
-      <li>Everyday Kurtis</li>
+      <li><a href="../htmlpages/productcatalogue.html">Cotton Kurtis</a></li>
+      <li><a href="../htmlpages/productcatalogue.html">Designer Kurtis</a></li>
+      <li><a href="../htmlpages/productcatalogue.html">Traditional Kurtis</a></li>
+      <li><a href="../htmlpages/productcatalogue.html">Festive Kurtis</a></li>
+      <li><a href="../htmlpages/productcatalogue.html">Office Wear Kurtis</a></li>
+      <li><a href="../htmlpages/productcatalogue.html">Everyday Kurtis</a></li>
     </ul>
 
-    <h4>Sarees</h4>
-    <h4>Ethnic Wear</h4>
+    <h4><a href="../htmlpages/productcatalogue.html">Sarees</a></h4>
+    <h4><a href="../htmlpages/productcatalogue.html">Ethnic Wear</a></h4>
+
   </div>
 </div>
 
@@ -93,6 +94,38 @@
       <input type="text" placeholder="Enter Mobile Number">
     </div>
 
+  <div class="otp-section" id="otpSection" style="display: none;">
+
+  <h2 id="otpHeading">Verify With OTP</h2>
+  <p class="otp-subtitle" id="otpSubtitle">
+    Sent to <span id="userNumber"></span>
+  </p>
+
+<div id="otpContainer">
+  <div class="otp-inputs">
+    <input type="text" maxlength="1">
+    <input type="text" maxlength="1">
+    <input type="text" maxlength="1">
+    <input type="text" maxlength="1">
+    <input type="text" maxlength="1">
+  </div>
+</div>
+
+<p class="resend" id="resendWrapper">
+  <span id="resendBtn" class="resend-link">Resend OTP</span>
+  (<span id="timer">30</span> Sec)
+</p>
+
+  <button class="verify-btn" onclick="window.location.href='index.html'">
+    Verify
+  </button>
+
+<p class="password-login">
+  Log in Using <span id="passwordToggle" style="cursor:pointer; color:#6b2f1a;">Password</span> Instead
+</p>
+
+</div>
+
     <div class="terms">
       <input type="checkbox" id="terms">
       <label for="terms">
@@ -101,11 +134,12 @@
       </label>
     </div>
 
-    <button class="login-btn" onclick="window.location.href='otp.html'">Continue</button>
+    <button class="login-btn" onclick="showOTP()">Continue</button>
   </div>
 
 </div>
-
+<script src="../jspages/login.js"></script>
 <script src="../jspages/script.js"></script>
+
 </body>
 </html>

@@ -65,3 +65,13 @@ if (profileIcon && profileOverlay) {
   });
 
 }
+
+// redirecting every product card to prod view html for now 
+function redirectToProduct() {
+    window.location.href = "prodview.html";
+}
+
+// Apply click event to all product cards
+document.querySelectorAll(".product-card").forEach(card => {
+    card.addEventListener("click", redirectToProduct);
+});
