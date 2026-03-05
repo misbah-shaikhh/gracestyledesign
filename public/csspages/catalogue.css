@@ -132,20 +132,33 @@
 
 /* RANGE SLIDER - DYNAMIC COLOR */
 
-.filter-box input[type="range"] {
+.filter-box input[type="range"]::-webkit-slider-thumb {
   -webkit-appearance: none;
-  width: 90%;
-  height: 6px;
-  border-radius: 10px;
-  background: linear-gradient(
-    to right,
-    #6b2f1a 0%,
-    #6b2f1a 40%,
-    #fff 40%,
-    #fff 100%
-  );
-  outline: none;
+  height: 18px;
+  width: 18px;
+  border-radius: 50%;
+  background: #6b2f1a;
   cursor: pointer;
+  border: none;
+  margin-top: -6px; /* centers the thumb on the track */
+}
+
+.filter-box input[type="range"]::-moz-range-thumb {
+  height: 18px;
+  width: 18px;
+  border-radius: 50%;
+  background: #6b2f1a;
+  cursor: pointer;
+  border: none;
+}
+
+.filter-box input[type="range"]::-ms-thumb {
+  height: 18px;
+  width: 18px;
+  border-radius: 50%;
+  background: #6b2f1a;
+  cursor: pointer;
+  border: none;
 }
 
 /* Thumb */
@@ -485,4 +498,3 @@
 
 
 }
-
