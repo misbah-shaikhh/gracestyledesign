@@ -1,72 +1,48 @@
 const express = require("express");
-const connectDB = require("./config/db");
-const User = require("./models/user");
-const bcrypt = require("bcryptjs");
+const cors = require("cors");
+require("dotenv").config();
 
-connectDB();
+const connectDB = require("./config/db");
+const authRoutes = require("./routes/authRoutes");
 
 const app = express();
+
+/* ---------------- DATABASE ---------------- */
+
+// Connect MongoDB Atlas
+connectDB();
+
+/* ---------------- MIDDLEWARE ---------------- */
+
+// Allow frontend requests
+app.use(cors({
+  origin: "*"
+}));
+
+// Parse JSON
 app.use(express.json());
+
+// Parse form data
+app.use(express.urlencoded({ extended: true }));
+
+// Serve frontend files
 app.use(express.static("public"));
 
-// ================= REGISTER =================
-app.post("/register", async (req, res) => {
-  try {
-    const { name, contactNo, email, dob, gender, password } = req.body;
+/* ---------------- ROUTES ---------------- */
 
-    const existingUser = await User.findOne({
-      $or: [{ email }, { contactNo }]
-    });
+// API routes
+app.use("/api", authRoutes);
 
-    if (existingUser) {
-      return res.status(400).json({ message: "User already exists" });
-    }
+/* ---------------- TEST ROUTE ---------------- */
 
-    const hashedPassword = await bcrypt.hash(password, 10);
-
-    const newUser = new User({
-      name,
-      contactNo,
-      email,
-      dob,
-      gender,
-      password: hashedPassword,
-    });
-
-    await newUser.save();
-
-    res.status(201).json({ message: "Registration successful" });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: "Server error" });
-  }
+app.get("/", (req, res) => {
+  res.send("API Running...");
 });
 
-// ================= LOGIN =================
-app.post("/login", async (req, res) => {
-  try {
-    const { email, password } = req.body;
+/* ---------------- SERVER ---------------- */
 
-    const user = await User.findOne({ email });
-    if (!user) {
-      return res.status(401).json({ message: "Invalid email or password" });
-    }
+const PORT = process.env.PORT || 5000;
 
-    const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) {
-      return res.status(401).json({ message: "Invalid email or password" });
-    }
-
-    res.status(200).json({ message: "Login successful" });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: "Server error" });
-  }
+app.listen(PORT, () => {
+  console.log(`🚀 Server running on port ${PORT}`);
 });
-
-// ================= SERVER =================
-const PORT = 3000;
-app.listen(PORT, () =>
-  console.log(`Server running on http://localhost:${PORT}`)
-);
-

@@ -362,3 +362,127 @@
 .right-info {
   display: none;
 }
+
+/* ========================= */
+/* MOBILE FIX */
+/* ========================= */
+
+/* =================================
+   CLEAN MOBILE VERSION (CATALOGUE)
+================================= */
+@media (max-width: 768px) {
+
+  /* HERO */
+  .hero-slider {
+    height: 220px;
+    margin: 10px;
+    border-radius: 12px;
+  }
+
+  /* STACK LAYOUT */
+  .catalogue-section {
+    flex-direction: column;
+  }
+
+  /* MOBILE FILTER BUTTON */
+   .mobile-filter-btn {
+    display: inline-block;
+    padding: 6px 12px;
+    font-size: 14px;
+    background: #6b2f1a;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+
+  /* SIDEBAR AS SLIDE DRAWER */
+  .filter-sidebar {
+    position: fixed;
+    top: 0;
+    left: -100%;
+    width: 260px;
+    height: 100%;
+    background: #e9d7b3;
+    z-index: 2000;
+    transition: 0.4s ease;
+    overflow-y: auto;
+  }
+
+  .filter-sidebar.active {
+    left: 0;
+  }
+.filter-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+  display: none;
+  z-index: 1500;
+}
+
+.filter-overlay.active {
+  display: block;
+}
+.close-filter {
+  font-size: 20px;
+  cursor: pointer;
+  color: #6b2f1a;
+}
+  /* PRODUCTS AREA FULL WIDTH */
+  .catalogue-products {
+    min-width: 100%;
+    padding: 15px;
+  }
+
+  /* TOP BAR */
+  .catalogue-topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .catalogue-topbar select {
+    font-size: 14px;
+    padding: 4px 8px;
+  }
+
+  /* PRODUCT GRID */
+  .product-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+  }
+
+  /* PRODUCT CARD */
+  .product-card {
+    width: 100%;
+    height: auto;
+  }
+
+  .product-img {
+    height: 220px;
+  }
+
+  .product-info {
+    position: relative;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 10px 12px 15px;
+  }
+
+  .product-info h3 {
+    font-size: 14px;
+  }
+
+  .price {
+    font-size: 14px;
+  }
+
+  /* Adjust header padding */
+  .header {
+    padding: 12px 15px;
+  }
+
+
+}
+

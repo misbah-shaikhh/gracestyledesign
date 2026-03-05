@@ -1,121 +1,3 @@
- /* 
- // Input elements
-const nameInput = document.getElementById("name");
-const contactNoInput = document.getElementById("contactNo");
-const emailInput = document.getElementById("email");
-const dobInput = document.getElementById("dob");
-const genderInput = document.getElementById("gender");
-const loginEmailInput = document.getElementById("loginEmail");
-
-// Validation functions
-function isValidName(name) {
-  return /^[A-Za-z ]+$/.test(name);
-}
-
-function isValidPhone(phone) {
-  return /^[0-9]{10}$/.test(phone);
-}
-
-function isValidEmail(email) {
-  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-}
-
-function isValidDate(date) {
-  return !isNaN(new Date(date).getTime());
-}
-
-// ================= REGISTER =================
-document.getElementById("registerForm").addEventListener("submit", async (e) => {
-  e.preventDefault();
-
-  const name = document.getElementById("name").value.trim();
-  const contactNo = document.getElementById("contactNo").value.trim();
-  const email = document.getElementById("email").value.trim();
-  const dob = document.getElementById("dob").value;
-  const gender = document.getElementById("gender").value;
-  const password = document.getElementById("password").value;
-  const confirmPassword = document.getElementById("confirmPassword").value;
-
-  if (!isValidName(name)) {
-    alert("Invalid name");
-    return;
-  }
-
-  if (!isValidPhone(contactNo)) {
-    alert("Invalid phone number");
-    return;
-  }
-
-  if (!isValidEmail(email)) {
-    alert("Invalid email");
-    return;
-  }
-
-  if (!isValidDate(dob)) {
-    alert("Invalid DOB");
-    return;
-  }
-
-  if (password.length < 6) {
-    alert("Password must be at least 6 characters");
-    return;
-  }
-
-  if (password !== confirmPassword) {
-    alert("Passwords do not match");
-    return;
-  }
-
-  try {
-    const res = await fetch("/register", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        name,
-        contactNo,
-        email,
-        dob,
-        gender,
-        password
-      }),
-    });
-
-    const data = await res.json();
-    alert(data.message);
-  } catch (err) {
-    console.error(err);
-    alert("Registration failed");
-  }
-});
-
-
-// ================= LOGIN =================
-document.getElementById("loginForm").addEventListener("submit", async (e) => {
-  e.preventDefault();
-
-  const email = document.getElementById("loginEmail").value.trim();
-  const password = document.getElementById("loginPassword").value;
-
-  if (!email || !password) {
-    alert("Please enter email and password");
-    return;
-  }
-
-  try {
-    const res = await fetch("/login", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password }),
-    });
-
-    const data = await res.json();
-    alert(data.message);
-  } catch (err) {
-    console.error(err);
-    alert("Login failed");
-  }
-}); */
-
 /* ---------------- TIMER VARIABLES (GLOBAL) ---------------- */
 
 let countdown;
@@ -149,9 +31,9 @@ function startTimer() {
 }
 
 
-/* ---------------- SHOW OTP (GLOBAL because HTML calls it) ---------------- */
+/* ---------------- SHOW OTP ---------------- */
 
-function showOTP() {
+async function showOTP() {
 
     const phoneInput = document.querySelector(".phone-input input").value;
     const termsChecked = document.getElementById("terms").checked;
@@ -166,11 +48,49 @@ function showOTP() {
         return;
     }
 
-    document.getElementById("otpSection").style.display = "block";
-    document.getElementById("userNumber").innerText = phoneInput;
-    document.querySelector(".login-btn").style.display = "none";
+    try {
 
-    startTimer();   // ✅ Now works
+          const response = await fetch("http://localhost:5000/api/check-user", {
+              method: "POST",
+              headers: {
+                  "Content-Type": "application/json"
+              },
+              body: JSON.stringify({
+                  phone: phoneInput
+              })
+          });
+
+        const data = await response.json();
+
+        /* USER DOES NOT EXIST */
+
+        if (response.status === 404) {
+
+            alert("Account not found. Redirecting to signup...");
+            window.location.href = "signup.html";
+            return;
+
+        }
+
+        /* USER EXISTS */
+
+        if (response.status === 200) {
+
+            document.getElementById("otpSection").style.display = "block";
+            document.getElementById("userNumber").innerText = phoneInput;
+            document.querySelector(".login-btn").style.display = "none";
+
+            startTimer();
+
+        }
+
+    } catch (error) {
+
+        console.error("Login Error:", error);
+        alert("Server error. Please try again.");
+
+    }
+
 }
 
 
@@ -198,14 +118,52 @@ document.addEventListener("DOMContentLoaded", function () {
 
         otpContainer.innerHTML = `
             <input type="password" 
+                   id="passwordInput"
                    placeholder="Enter Password" 
                    style="width:100%; padding:10px; border-radius:6px; border:1px solid #b89c6a;">
         `;
 
         const verifyBtn = document.querySelector(".verify-btn");
+
         verifyBtn.textContent = "Login";
-        verifyBtn.onclick = function () {
-            window.location.href = "index.html";
+
+        verifyBtn.onclick = async function () {
+
+            const phoneInput = document.querySelector(".phone-input input").value;
+            const password = document.getElementById("passwordInput").value;
+
+            try {
+
+                const response = await fetch("http://localhost:5000/api/login", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        phone: phoneInput,
+                        password: password
+                    })
+                });
+
+                const data = await response.json();
+
+                if (response.status === 200) {
+
+                    window.location.href = "index.html";
+
+                } else {
+
+                    alert(data.message);
+
+                }
+
+            } catch (error) {
+
+                console.error("Login Error:", error);
+                alert("Server error");
+
+            }
+
         };
     });
 

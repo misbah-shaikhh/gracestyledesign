@@ -395,3 +395,53 @@
 .filter-dropdown div:hover {
   background: #f3f3f3;
 }
+
+@media (max-width: 784px) {
+
+  /* Sidebar hidden off-screen */
+  .profile-sidebar {
+    position: fixed;
+    top: 0;
+    left: -280px;
+    width: 260px;
+    height: 100vh;
+    z-index: 3000;
+    transition: 0.3s ease;
+  }
+
+  .profile-sidebar.active {
+    left: 0;
+  }
+
+  /* Show mobile button */
+  .mobile-sidebar-btn {
+    display: block;
+    width: 100%;
+    margin-bottom: 20px;
+    background: #7b1f00;
+    color: white;
+    border: none;
+    padding: 12px;
+    cursor: pointer;
+    font-weight: 500;
+    border-radius: 4px;
+  }
+
+  /* Layout fixes */
+  .profile-content {
+    padding: 20px;
+    width: 100%;
+    display: block;
+  }
+
+  .edit-box {
+    padding: 20px;
+    width: 100%;
+  }
+
+  .form-row.split {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+}

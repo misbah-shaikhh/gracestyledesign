@@ -247,3 +247,57 @@
   color: #6b2f1a;
   font-weight: 600;
 }
+
+@media (max-width: 768px) {
+
+  /* Reduce outer spacing */
+  .login-wrapper,
+  .otp-wrapper {
+    padding: 40px 15px;
+  }
+
+  /* Make box fluid */
+  .login-box,
+  .otp-box {
+    width: 100%;
+    max-width: 100%;
+    height: auto;              /* IMPORTANT */
+    padding: 25px 20px;
+  }
+
+  /* Title smaller */
+  .login-box h2,
+  .otp-box h2 {
+    font-size: 20px;
+    margin-bottom: 20px;
+  }
+
+  /* Inputs slightly smaller */
+  .normal-input,
+  .phone-input input {
+    font-size: 14px;
+  }
+
+  /* OTP boxes smaller */
+  .otp-inputs input {
+    width: 38px;
+    height: 38px;
+    font-size: 16px;
+  }
+
+  /* Button adjustment */
+  .login-btn,
+  .verify-btn {
+    font-size: 14px;
+    padding: 10px;
+  }
+
+  /* Small text tighter */
+  .small-text,
+  .otp-subtitle,
+  .resend,
+  .password-login {
+    font-size: 12px;
+  }
+
+}
