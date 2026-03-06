@@ -1,38 +1,66 @@
 const profileContent = document.getElementById("profileContent");
 const menuItems = document.querySelectorAll(".profile-sidebar li");
 
-function loadEditProfile() {
-  profileContent.innerHTML = `
-    <div class="edit-box">
-      <h2>Edit Profile</h2>
+async function loadEditProfile() {
 
-      <div class="form-row">
-        <div>
-          <label>Mobile Number</label>
-          <input type="text" value="121046822154" disabled>
+  const token = localStorage.getItem("token");
+
+  try {
+
+    const response = await fetch("http://localhost:5000/api/profile", {
+      method: "GET",
+      headers: {
+        "Authorization": `Bearer ${token}`
+      }
+    });
+
+    const user = await response.json();
+    const welcomeUser = document.getElementById("welcomeUser");
+    if (welcomeUser) {
+      welcomeUser.innerText = `Welcome ${user.name}!`;
+    }
+
+    profileContent.innerHTML = `
+      <div class="edit-box">
+
+        <h2>Edit Profile</h2>
+
+        <div class="form-row">
+          <div>
+            <label>Mobile Number</label>
+            <input type="text" value="${user.phone}" disabled>
+          </div>
         </div>
-      </div>
 
-      <div class="form-row">
-        <div>
-          <label>Email</label>
-          <input type="text" value="ajskdkgusdushh" disabled>
+        <div class="form-row">
+          <div>
+            <label>Email</label>
+            <input type="text" value="${user.email}" disabled>
+          </div>
         </div>
-      </div>
 
-      <div class="form-group">
-        <label>Full Name</label>
-        <input type="text" placeholder="">
-      </div>
+        <div class="form-group">
+          <label>Full Name</label>
+          <input type="text" value="${user.name}" disabled>
+        </div>
 
-      <div class="form-group">
-        <label>Birthday</label>
-        <input type="date">
-      </div>
+        <div class="form-group">
+          <label>Birthday</label>
+          <input type="date" id="birthdayInput"
+            value="${user.birthdate ? user.birthdate.split('T')[0] : ''}">
+        </div>
 
-      <button class="save-btn">Save Details</button>
-    </div>
-  `;
+        <button class="save-btn" onclick="saveProfile()">Save Details</button>
+
+      </div>
+    `;
+
+  } catch (error) {
+
+    console.error("Profile Load Error:", error);
+
+  }
+
 }
 
 // Load default page
@@ -315,3 +343,39 @@ function loadSectionFromURL() {
 }
 
 loadSectionFromURL();
+
+// birthday
+
+async function saveProfile() {
+
+  const token = localStorage.getItem("token");
+  const birthdate = document.getElementById("birthdayInput").value;
+
+  try {
+
+    const response = await fetch("http://localhost:5000/api/profile", {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`
+      },
+      body: JSON.stringify({
+        birthdate: birthdate
+      })
+    });
+
+    const data = await response.json();
+
+    if (response.ok) {
+      alert("Profile updated successfully");
+      loadEditProfile(); // reload updated data
+    } else {
+      alert(data.message || "Update failed");
+    }
+
+  } catch (error) {
+    console.error("Update error:", error);
+  }
+
+}
+

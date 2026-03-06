@@ -149,12 +149,18 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 if (response.status === 200) {
 
-                    window.location.href = "index.html";
+                    // store JWT token
+                    localStorage.setItem("token", data.token);
+
+                    // redirect based on role
+                    if (data.role === "admin") {
+                        window.location.href = "/admin/admin.html";
+                    } else {
+                        window.location.href = "index.html";
+                    }
 
                 } else {
-
                     alert(data.message);
-
                 }
 
             } catch (error) {

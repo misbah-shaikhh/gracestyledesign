@@ -1,37 +1,39 @@
 const express = require("express");
 const cors = require("cors");
+const path = require("path");
 require("dotenv").config();
 
 const connectDB = require("./config/db");
 const authRoutes = require("./routes/authRoutes");
+const adminRoutes = require("./routes/adminRoutes");
 
 const app = express();
 
 /* ---------------- DATABASE ---------------- */
 
-// Connect MongoDB Atlas
 connectDB();
 
 /* ---------------- MIDDLEWARE ---------------- */
 
-// Allow frontend requests
 app.use(cors({
   origin: "*"
 }));
 
-// Parse JSON
 app.use(express.json());
-
-// Parse form data
 app.use(express.urlencoded({ extended: true }));
 
-// Serve frontend files
-app.use(express.static("public"));
+/* ---------------- STATIC FILES ---------------- */
 
-/* ---------------- ROUTES ---------------- */
+// Public frontend
+app.use(express.static(path.join(__dirname, "public")));
 
-// API routes
+// Admin panel
+app.use("/admin", express.static(path.join(__dirname, "admin")));
+
+/* ---------------- API ROUTES ---------------- */
+
 app.use("/api", authRoutes);
+app.use("/api/admin", adminRoutes);
 
 /* ---------------- TEST ROUTE ---------------- */
 
