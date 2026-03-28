@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>GS Ethnic Store - Bestsellers</title>
+  <link rel="stylesheet" href="../csspages/style.css">
+  <link rel="stylesheet" href="../csspages/catalogue.css">
+  <link href="https://fonts.cdnfonts.com/css/rowdies" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Corben">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Crimson+Text">
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="header">
+  <div class="logo">
+    <img src="../images/gsd.png" alt="GS Logo">
+  </div>
+  <nav class="nav">
+    <a href="../htmlpages/index.html">HOME</a>
+    <a href="javascript:void(0)" id="categoryBtn">CATEGORIES</a>
+    <a href="#">SALE</a>
+    <a href="../htmlpages/about.html">ABOUT</a>
+    <a href="#contact">CONTACT</a>
+  </nav>
+  <div class="nav-icons">
+    <i class="fa-regular fa-user" id="profileBtn"></i>
+    <a href="../htmlpages/wishlist.html"><i class="fa-regular fa-heart"></i></a>
+    <a href="../htmlpages/cart.html"><i class="fa-solid fa-bag-shopping"></i></a>
+  </div>
+</header>
+
+<!-- Categories Overlay -->
+<div class="category-overlay" id="categoryOverlay">
+  <div class="category-box">
+
+<h4><a href="../htmlpages/productcatalogue.html?category=kurtis">Kurtis</a></h4>
+<h4><a href="../htmlpages/productcatalogue.html?category=saree">Saree</a></h4>
+<h4><a href="../htmlpages/productcatalogue.html?category=lehenga">Lehenga</a></h4>
+<h4><a href="../htmlpages/productcatalogue.html?category=dress">Dress</a></h4>
+<h4><a href="../htmlpages/productcatalogue.html?category=suit">Suit</a></h4>
+
+  </div>
+</div>
+
+<!-- Profile Overlay -->
+<div class="profile-overlay" id="profileOverlay">
+  <div class="profile-box">
+    <ul>
+      <li><a href="../htmlpages/userprofile.html?section=orders">My Orders</a></li>
+      <li><a href="../htmlpages/wishlist.html">My Wishlist</a></li>
+      <li><a href="../htmlpages/userprofile.html?section=savedAddress">Saved Addresses</a></li>
+    </ul>
+
+    <hr>
+
+    <ul>
+      <li><a href="../htmlpages/userprofile.html?section=editProfile">Edit Profile</a></li>
+      <li id="logoutBtn"><a href="../htmlpages/login.html">Logout</a></li>
+    </ul>
+  </div>
+</div>
+
+<!-- HERO SECTION -->
+<section class="hero-slider">
+  <button class="slider-btn left" onclick="prevSlide()">
+    <i class="fa-solid fa-chevron-left"></i>
+  </button>
+  <div class="slides">
+    <div class="slide-track">
+      <img src="../images/hero-banner.png" class="slide active">
+      <img src="../images/hero-banner.png" class="slide">
+      <img src="../images/hero-banner.png" class="slide">
+    </div>
+  </div>
+  <button class="slider-btn right" onclick="nextSlide()">
+    <i class="fa-solid fa-chevron-right"></i>
+  </button>
+</section>
+
+<section class="catalogue-section">
+
+  <!-- SIDEBAR FILTER -->
+  <aside class="filter-sidebar">
+
+    <div class="filter-header">
+      <h3>Filters</h3>
+      <span class="clear-filter">Clear All</span>
+    </div>
+
+    <div class="filter-box">
+      <h4>Price</h4>
+      <input type="range" id="priceRange" min="100" max="10000" value="2000">
+      <p style="font-family: 'Corben', serif;">
+        ₹100 - ₹<span id="priceValue">2000</span>+
+      </p>
+    </div>
+
+    <div class="filter-box">
+      <h4>Filter By Size Availability</h4>
+      <div class="size-options">
+        <span data-size="XS">XS</span>
+        <span data-size="S">S</span>
+        <span data-size="M">M</span>
+        <span data-size="L">L</span>
+        <span data-size="XL">XL</span>
+        <span data-size="XXL">XXL</span>
+      </div>
+    </div>
+
+  </aside>
+
+  <!-- PRODUCTS AREA -->
+  <div class="catalogue-products">
+
+    <div class="catalogue-topbar">
+      <select>
+        <option>Sort By : Recommended</option>
+        <option>Bestselling</option>
+        <option>Discount</option>
+        <option>Price : Low to High</option>
+        <option>Price : High to Low</option>
+      </select>
+    </div>
+
+    <div id="productGrid" class="product-grid">
+      <!-- Products will be dynamically rendered here -->
+    </div>
+
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-container">
+
+    <!-- Menu -->
+    <div class="footer-box">
+      <h3>Menu</h3>
+      <ul>
+        <li><a href="../htmlpages/track.html">Track Your Order</a></li>
+      </ul>
+    </div>
+
+    <!-- Policies -->
+    <div class="footer-box">
+      <h3>Our Policies</h3>
+      <ul>
+        <li><a href="../htmlpages/return.html">Return and Exchange Policy</a></li>
+        <li><a href="../htmlpages/policy.html">Shipping Policy</a></li>
+        <li><a href="../htmlpages/policy.html">Privacy Policy</a></li>
+        <li><a href="../htmlpages/policy.html">Terms and Conditions</a></li>
+      </ul>
+    </div>
+
+    <!-- Contact -->
+    <div id="contact" class="footer-box">
+      <h3>Contact Us</h3>
+      <p>Support Contact: 8287440077</p>
+      <p>(12PM To 6PM, Mon-Sat)</p>
+
+      <div class="social-icons">
+        <a href="#"><i class="fab fa-instagram"></i></a>
+        <a href="#"><i class="fab fa-whatsapp"></i></a>
+        <a href="#"><i class="fab fa-facebook"></i></a>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="footer-bottom">
+    <p>© 2026, Grace Style Design.</p>
+  </div>
+</footer>
+
+<script src="../jspages/bestseller.js"></script>
+<script src="../jspages/script.js"></script>
+</body>
+</html>

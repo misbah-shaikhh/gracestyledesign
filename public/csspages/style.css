@@ -1,0 +1,464 @@
+body {
+  font-family: Arial;
+  padding: 30px;
+}
+
+input, select, button {
+  display: block;
+  margin: 10px 0;
+  padding: 8px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+body {
+  background: #f6efe6;
+  color: #333;
+}
+
+/* HEADER */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 50px;
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.logo img {
+  height: 50px;   /* adjust size */
+  width: auto;
+  object-fit: contain;
+}
+
+.nav a {
+  margin: 0 15px;
+  text-decoration: none;
+  color: #333;
+  font-weight: 500;
+  font-family: 'Rowdies', sans-serif;
+}
+
+.nav-icons i {
+  font-size: 18px;
+  margin-left: 15px;
+  cursor: pointer;
+  color: #333;
+}
+
+.nav-icons i:hover {
+  color: #b68b5a;
+}
+
+/* CATEGORY OVERLAY */
+.category-overlay {
+  position: fixed;
+  top: 90px; /* adjust based on header height */
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.4);
+  display: none;
+  z-index: 999;
+}
+
+/* Dropdown box */
+.category-box {
+  background: #e9d7b3;
+  width: 220px;
+  padding: 15px;
+  margin-left: 570px; /* align under CATEGORIES */
+  border-radius: 6px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+}
+
+/* Text styles */
+.category-box h4 {
+  margin: 10px 0;
+  font-size: 20px;
+  font-weight: bold;
+  border-bottom: 1px solid #b89c6a;
+  padding-bottom: 4px;
+  font-family: 'Corben', serif;
+}
+
+.category-box ul {
+  list-style: none;
+  padding: 0;
+  margin: 8px 0;
+}
+
+.category-box ul li {
+  font-size: 13px;
+  margin: 6px 0;
+  cursor: pointer;
+  font-family: 'Corben', serif;
+}
+
+.category-box ul li:hover {
+  color: #6b2f1a;
+}
+
+/* Remove default link styling but KEEP font */
+.category-box a,
+.category-box a:visited,
+.category-box a:active {
+  text-decoration: none;
+  color: inherit;
+  font-family: inherit;   /* 👈 This fixes your font issue */
+}
+
+.category-box a:visited {
+  color: inherit;
+}
+
+/* PROFILE OVERLAY (same as category overlay) */
+.profile-overlay {
+  position: fixed;
+  top: 90px; /* adjust based on header height */
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.4);
+  display: none;
+  z-index: 999;
+}
+
+/* PROFILE BOX */
+.profile-box {
+  background: #e9d7b3;
+  width: 180px;
+  padding: 15px;
+  margin-left: 1450px; /* align under CATEGORIES */
+  border-radius: 6px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+}
+
+/* LIST STYLE */
+.profile-box ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  font-family: 'Corben', serif;
+}
+
+.profile-box li {
+  margin: 8px 0;
+  font-family: 'Corben', serif;
+}
+
+.profile-box a {
+  text-decoration: none;
+  color: #000;
+  font-size: 18px;
+  font-family: 'Corben', serif;
+}
+
+.profile-box a:hover {
+  color: rgba(113, 32, 0, 1);
+}
+
+/* DIVIDER */
+.profile-box hr {
+  border: none;
+  border-top: 1.5px solid rgba(113, 32, 0, 0.5);
+  margin: 12px 0;
+  font-family: 'Corben', serif;
+}
+
+
+
+
+/* FOOTER */
+.footer {
+  background-color: #6b2f1a; /* brown shade */
+  color: #fff;
+  padding: 50px 0 0 0;
+  font-family: 'Inter', sans-serif;
+  width: 100%;
+  margin: 0;
+}
+
+/* Inner container */
+.footer-container {
+  width: 100%;
+  max-width: 1200px; /* optional: keeps content neat */
+  margin: 0 auto;
+  padding: 0 40px; /* inner spacing only */
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  box-sizing: border-box;
+}
+
+.footer-box {
+  width: 30%;
+  min-width: 220px;
+}
+
+.footer-box h3 {
+  font-size: 25px;
+  margin-bottom: 15px;
+  font-weight: bold;
+}
+
+.footer-box ul {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-box ul li {
+  margin-bottom: 8px;
+}
+
+.footer-box ul li a {
+  text-decoration: none;
+  color: #f5f5f5;
+  font-size: 18px;
+}
+
+.footer-box ul li a:hover {
+  text-decoration: underline;
+}
+
+.footer-box p {
+  font-size: 18px;
+  margin: 5px 0;
+}
+
+.social-icons {
+  margin-top: 20px;
+  padding: 5px;
+}
+
+.social-icons a {
+  color: white;
+  font-size: 20px;
+  margin-right: 12px;
+  text-decoration: none;
+}
+
+.footer-bottom {
+  background-color: #e5dfd3; /* beige strip */
+  color: #000;
+  text-align: center;
+  padding: 12px 0;
+  margin-top: 30px;
+  font-size: 20px;
+  width: 100%;
+  font-family: 'Crimson text', sans-serif;
+}
+
+/* IMPORTANT: remove default body margin */
+body {
+  margin: 0;
+  padding: 0;
+}
+
+.profile-overlay {
+  display: none;
+}
+
+.profile-overlay.show {
+  display: block;
+}
+
+.wishlist-btn i.fa-solid {
+  color: red;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@media (max-width: 768px){
+
+  .orders-container{
+    max-width: 100%;
+    padding: 15px;
+    box-sizing: border-box;
+  }
+
+  .order-card{
+    width: 100%;
+  }
+
+  .order-product{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .order-product img{
+    width: 120px;
+    margin-bottom: 10px;
+  }
+
+  .order-details{
+    width: 100%;
+  }
+
+  .order-actions{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    width: 100%;
+  }
+
+  .order-actions button{
+    flex: 1;
+    min-width: 120px;
+  }
+
+}
+/* EXTRA SMALL PHONES */
+@media (max-width: 400px){
+
+  .order-actions{
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .order-actions button{
+    width: 100%;
+    min-width: unset;
+  }
+
+  .order-product img{
+    width: 100px;
+  }
+
+}
+.cart-container{
+  width: 100%;
+  max-width: 1000px;
+  margin: auto;
+  padding: 15px;
+  box-sizing: border-box;
+}
+.cart-item{
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+  border: 1px solid #8b3a1a;
+  padding: 15px;
+  margin-bottom: 20px;
+  background: #e9d7b3;
+  width: 100%;
+  box-sizing: border-box;
+}
+.cart-item img{
+  width: 120px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 6px;
+  flex-shrink: 0;
+}
+@media (max-width:768px){
+
+  .cart-item{
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .cart-item img{
+    width: 140px;
+    height: auto;
+  }
+
+  .cart-details{
+    width: 100%;
+  }
+
+  .cart-buttons{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .cart-buttons button{
+    width: 100%;
+  }
+}
+@media (max-width:400px){
+
+  .cart-container{
+    padding: 10px;
+  }
+
+  .cart-item{
+    padding: 12px;
+  }
+
+  .cart-item img{
+    width: 120px;
+  }
+}
+.product-container{
+display: grid;
+grid-template-columns: 90px 1fr 420px;
+gap: 40px;
+align-items: start;
+max-width: 1200px;
+margin: auto;
+}
+
+.product-images{
+flex:1;
+}
+
+.product-info{
+flex:1;
+}
+
+.product-details{
+flex:1;
+}
+.product-details{
+max-width:300px;
+margin-top:120px;
+}
+@media (max-width:900px){
+
+.product-container{
+flex-direction:column;
+}
+
+.product-details{
+margin-top:20px;
+}
+
+}
+
+.profile-overlay {
+  transition: opacity 0.2s ease-in-out;
+}
+
+/* Wishlist heart default */
+.wishlist-btn {
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+/* red heart when wishlisted */
+.fa-solid.fa-heart {
+  color: #e63946;
+}
+
+/* default heart */
+.fa-regular.fa-heart {
+  color: #444;
+}
+
+/* Optional hover effect */
+.wishlist-btn:hover {
+  transform: scale(1.1);
+}

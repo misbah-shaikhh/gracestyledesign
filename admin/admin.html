@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="admin.css">
+    <title>GS Admin Panel</title>
+
+</head>
+
+<body>
+    <div class="container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h3>Admin Panel</h3>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item active" data-page="dashboard">Dashboard</li>
+                <li class="nav-item" data-page="products">Products</li>
+                <li class="nav-item" data-page="orders">Orders</li>
+                <li class="nav-item" data-page="customers">Customers</li>
+                <li class="nav-item" data-page="inventory">Inventory</li>
+                <li class="nav-item" data-page="payments">Payments</li>
+                <li class="nav-item" data-page="offers">Offers</li>
+            </ul>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="header">
+                <div class="header-left">
+                    <span class="menu-icon">☰</span>
+                    <span class="logo">GS</span>
+                </div>
+                <div class="header-right">
+                    <button class="header-btn">🔔 Notifications</button>
+                    <button class="header-btn">👤 Admin Profile</button>
+                </div>
+            </header>
+
+            <div class="content">
+                <!-- Dashboard Page -->
+                <div class="content">
+                    <div class="page active" id="dashboard">
+
+                        <!-- STATS -->
+                        <div class="stats-grid">
+                            <div class="stat-card">
+                                <div class="stat-label">Total Sales</div>
+                                <div class="stat-value">Rs. 1,00,000</div>
+                                <div class="stat-period">This Month</div>
+                            </div>
+
+                            <div class="stat-card">
+                                <div class="stat-label">New Orders</div>
+                                <div class="stat-value">25</div>
+                            </div>
+
+                            <div class="stat-card">
+                                <div class="stat-label">New Customers</div>
+                                <div class="stat-value" id="newCustomers">0</div>
+                                <div class="stat-period">This Month</div>
+                            </div>
+
+                            <div class="stat-card">
+                                <div class="stat-label">Low Stock Alerts</div>
+                                <div class="stat-value">25</div>
+                            </div>
+                        </div>
+
+                        <!-- EXCHANGE + BESTSELLERS -->
+                        <div class="two-col-grid">
+                            <div class="card">
+                                <h3 class="card-header">Exchange & Return Requests</h3>
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Request ID</th>
+                                            <th>Order ID</th>
+                                            <th>Customer</th>
+                                            <th>Product</th>
+                                            <th>Type</th>
+                                            <th>Status</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="exchangeTableBody">
+                                        <!-- Populated by JS -->
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <div class="card">
+                                <h3 class="card-header">Bestsellers</h3>
+                                <ol class="bestsellers-list">
+                                    <li>Red Ethnic Suit</li>
+                                    <li>Blue Ethnic Suit</li>
+                                    <li>Pink Ethnic Suit</li>
+                                </ol>
+                            </div>
+                        </div>
+
+                        <!-- PAYMENTS -->
+                        <div class="two-col-grid">
+                            <div class="card">
+                                <h3 class="card-header">Payment Transactions</h3>
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th>
+                                            <th>Customer</th>
+                                            <th>Method</th>
+                                            <th>Amount</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="dashboardPaymentsBody">
+                                        <!-- Populated by JS -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Products Page -->
+                <div class="page" id="products">
+                    <h2 style="margin-bottom: 20px;">Products</h2>
+
+                    <div
+                        style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                        <div class="filters" style="margin-bottom: 0;">
+                            <input type="text" class="search-box" placeholder="Search Products">
+                            <select class="filter-select" id="filterCategory">
+                                <option>All Categories</option>
+                            </select>
+                            <select class="filter-select" id="filterPrice">
+                                <option>Price Range</option>
+                                <option>Under 1000</option>
+                                <option>1000-2000</option>
+                                <option>2000-5000</option>
+                            </select>
+                        </div>
+                        <button class="btn btn-primary" id="addProductBtn">+ Add Product</button>
+                        <button class="btn btn-secondary" id="addCategoryBtn">+ Add Category</button>
+                    </div>
+
+                    <table id="productsTable">
+                        <thead>
+                            <tr>
+                                <th>Product Name</th>
+                                <th>Category</th>
+                                <th>Available Colors</th>
+                                <th>Price</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Rows will be generated here by JS -->
+                        </tbody>
+                    </table>
+                </div>
+                <!-- Orders Page -->
+                <div class="page" id="orders">
+
+                    <div class="order-wrapper">
+
+                        <p class="order-heading">All Orders</p>
+
+                        <!-- OVERVIEW TABLE -->
+                        <table id="overviewTable">
+                            <thead>
+                                <tr>
+                                    <th>Order ID</th>
+                                    <th>Customer Name</th>
+                                    <th>Transaction Method</th>
+                                    <th>Total Amount</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody id="overviewBody">
+                                <!-- Rows injected by JS -->
+                            </tbody>
+                        </table>
+
+                        <div class="no-result" id="noResult">No orders found.</div>
+
+                    </div>
+
+                    <!-- ORDER DETAIL MODAL -->
+                    <div class="order-modal-overlay" id="orderModalOverlay" onclick="closeOrderModal(event)">
+                        <div class="order-modal-box">
+
+                            <div class="order-modal-header">
+                                <p class="order-modal-title">Order Details</p>
+                                <span class="order-modal-close" onclick="closeOrderModalDirect()">✕</span>
+                            </div>
+
+                            <div class="order-meta" id="modalMeta"></div>
+
+                            <table id="modalTable">
+                                <thead>
+                                    <tr>
+                                        <th>Product</th>
+                                        <th>Product ID</th>
+                                        <th>Variant ID</th>
+                                        <th>Original Price</th>
+                                        <th>Price Paid</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="modalBody"></tbody>
+                            </table>
+
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Customers Page -->
+                <div class="page" id="customers">
+
+                    <h2 style="margin-bottom: 20px;">Customer Management</h2>
+
+                    <!-- Filters -->
+                    <div class="filters">
+                        <input type="text" id="customerSearch" class="search-box" placeholder="Search Customer">
+                    </div>
+
+
+                    <!-- Customer Stats -->
+                    <div class="customer-stats-wrapper">
+
+                        <div class="customer-title">
+                            Total Customers
+                        </div>
+
+                        <div class="customer-stats">
+
+                            <div class="customer-stat">
+                                <!-- JS will update this -->
+                                <div class="customer-stat-value" id="totalCustomers">0</div>
+                                <div class="customer-stat-label">Customers</div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Customer Table -->
+                    <div class="card">
+
+                        <div class="detail-header">Customer details</div>
+
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Customer Name</th>
+                                    <th>Email</th>
+                                    <th>Orders</th>
+                                </tr>
+                            </thead>
+
+                            <!-- JS will populate this -->
+                            <tbody id="customerTableBody">
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </div>
+                <!-- Inventory Page -->
+                <div class="page" id="inventory">
+                    <h2 style="margin-bottom: 20px;">Inventory Management</h2>
+
+                    <div class="card">
+                        <h3 class="card-header">Stock Overview</h3>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Product Name</th>
+                                    <th>Category</th>
+                                    <th>Size</th>
+                                    <th>Current Stock</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Green Ethnic suit</td>
+                                    <td>Kurti</td>
+                                    <td>S, M, L</td>
+                                    <td>50</td>
+                                    <td>Available</td>
+                                    <td><button class="btn">Update</button></td>
+                                </tr>
+                                <tr>
+                                    <td>Green Ethnic suit</td>
+                                    <td>Kurti</td>
+                                    <td>XL, L</td>
+                                    <td>30</td>
+                                    <td>Available</td>
+                                    <td><button class="btn">Update</button></td>
+                                </tr>
+                                <tr>
+                                    <td>Green Ethnic suit</td>
+                                    <td>Kurti</td>
+                                    <td>S, L</td>
+                                    <td>5</td>
+                                    <td>Low Stock</td>
+                                    <td><button class="btn">Update</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="card" style="margin-top: 20px;">
+                        <h3 class="card-header">Low Stock Alerts</h3>
+                        <p
+                            style="font-size: 14px; color: #e74c3c; padding: 10px; background: #ffeaea; border-radius: 4px;">
+                            ⚠️ 8 items are running low on stock and need restocking soon.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Payments Page -->
+                <div class="page" id="payments">
+                    <h2 style="margin-bottom: 20px;">Payments</h2>
+
+                    <div class="filters">
+                        <select class="filter-select">
+                            <option>All Methods</option>
+                            <option>Credit Card</option>
+                            <option>Online</option>
+                            <option>COD</option>
+                        </select>
+                        <select class="filter-select">
+                            <option>All Statuses</option>
+                            <option>Shipped</option>
+                            <option>Refund</option>
+                        </select>
+                        <select class="filter-select">
+                            <option>Date Range</option>
+                        </select>
+                    </div>
+
+                    <div class="payment-summary">
+                        <div class="payment-summary-item">
+                            <strong>Total Revenue:</strong> <span id="totalRevenue">-</span>
+                        </div>
+                        <div class="payment-summary-item">
+                            <strong>Successful Payments:</strong> <span id="successfulPayments">-</span>
+                        </div>
+                        <div class="payment-summary-item">
+                            <strong>Failed:</strong> <span id="failedPayments">-</span>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="detail-header">Payment details</div>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Transaction ID</th>
+                                    <th>Customer Name</th>
+                                    <th>Payment Method</th>
+                                    <th>Amount</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="paymentsTableBody">
+                                <!-- Populated by JS -->
+                            </tbody>
+                        </table>
+
+                        <div class="pagination">
+                            <button>«</button>
+                            <button>‹</button>
+                            <span class="page-num">1</span>
+                            <button>›</button>
+                            <button>»</button>
+                            <span style="margin-left: 10px; font-size: 13px;">Page 1 of 25</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Offers Page -->
+                <div class="page" id="offers">
+                    <h2 style="margin-bottom: 20px;">Offers</h2>
+
+                    <div style="text-align: right; margin-bottom: 20px;">
+                        <button class="btn btn-primary" id="addOfferBtn">+ Add New Offer</button>
+                    </div>
+
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Coupon Code</th>
+                                <th>Offer</th>
+                                <th>Usage</th>
+                                <th>Start Date</th>
+                                <th>End Date</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="offersTableBody">
+                            <tr>
+                                <td>SPRING20</td>
+                                <td>20% OFF</td>
+                                <td>87/100</td>
+                                <td>01/01/2026</td>
+                                <td>30/01/2026</td>
+                                <td>
+                                    <button class="btn" style="margin-right: 5px;">Edit</button>
+                                    <button class="btn">Delete</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>SALE10</td>
+                                <td>10% OFF</td>
+                                <td>50/100</td>
+                                <td>01/01/2026</td>
+                                <td>30/01/2026</td>
+                                <td>
+                                    <button class="btn" style="margin-right: 5px;">Edit</button>
+                                    <button class="btn">Delete</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>FESTIVE20</td>
+                                <td>20% OFF</td>
+                                <td>60/100</td>
+                                <td>01/01/2026</td>
+                                <td>30/01/2026</td>
+                                <td>
+                                    <button class="btn" style="margin-right: 5px;">Edit</button>
+                                    <button class="btn">Delete</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>NEWOFF20</td>
+                                <td>20% OFF</td>
+                                <td>150/200</td>
+                                <td>01/01/2026</td>
+                                <td>30/01/2026</td>
+                                <td>
+                                    <button class="btn" style="margin-right: 5px;">Edit</button>
+                                    <button class="btn">Delete</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="offer-campaigns">
+                        <h3>Discounts & Campaigns</h3>
+                        <ul>
+                            <li>Seasonal Sales</li>
+                            <li>Clearance Offers</li>
+                            <li>First Shopping Offer</li>
+                            <li>20% OFF</li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+
+        <!-- ADD NEW PRODUCT MODAL -->
+        <div class="modal" id="addProductModal">
+
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h2>Add New Product</h2>
+                    <button class="close-modal" id="closeModal">&times;</button>
+                </div>
+
+                <!-- Modal Form -->
+                <form id="addProductForm">
+
+                    <!-- Basic Info -->
+                    <div class="form-group-full">
+                        <label>Product Name *</label>
+                        <input type="text" name="productName" required>
+                    </div>
+
+                    <div class="form-group-full">
+                        <label>Category *</label>
+                        <select name="category" required id="categoryDropdown">
+                            <option value="">Select Category</option>
+                        </select>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Original Price (Rs.) *</label>
+                            <input type="number" name="originalPrice" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Discount % (optional)</label>
+                            <input type="number" name="discountPercentage">
+                        </div>
+                    </div>
+
+                    <div class="form-group-full">
+                        <label>Discounted Price</label>
+                        <input type="number" name="discountedPrice" readonly>
+                    </div>
+
+                    <div class="form-group-full">
+                        <label>Total Stock *</label>
+                        <input type="number" name="totalStock" required>
+                    </div>
+
+                    <!-- Product Description -->
+                    <h3>Product Description</h3>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Material Composition</label>
+                            <input type="text" name="material" placeholder="Material Composition">
+                        </div>
+                        <div class="form-group">
+                            <label>Neck Type</label>
+                            <input type="text" name="neckType" placeholder="Neck Type">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Sleeve Type</label>
+                            <input type="text" name="sleeveType" placeholder="Sleeve Type">
+                        </div>
+                        <div class="form-group">
+                            <label>Country of Origin</label>
+                            <input type="text" name="countryOfOrigin" placeholder="Country of Origin">
+                        </div>
+                    </div>
+
+                    <h3>Product Images</h3>
+
+                    <div class="form-group-full">
+                        <label>Upload Image</label>
+                        <input type="file" name="image" accept="image/*" multiple>
+                    </div>
+                    <!-- Product Variants -->
+                    <h3>Product Variants</h3>
+                    <table id="variantTable">
+                        <thead>
+                            <tr>
+                                <th>Color</th>
+                                <th>Size</th>
+                                <th>Stock</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                    <button type="button" id="addVariantBtn">+ Add Variant</button>
+
+                    <!-- Modal Footer -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn-cancel" id="cancelBtn">Cancel</button>
+                        <button type="submit" class="btn-submit">Add Product</button>
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+        <!-- Category Modal -->
+        <div class="modal" id="categoryModal">
+            <div class="modal-content category-modal">
+
+                <!-- HEADER -->
+                <div class="modal-header">
+                    <h2>Manage Categories</h2>
+                    <button class="close-modal" id="closeCategoryModal">&times;</button>
+                </div>
+
+                <!-- ADD CATEGORY SECTION -->
+                <div class="category-input-group">
+                    <input type="text" id="newCategoryInput" placeholder="Enter category name">
+                    <button id="saveCategoryBtn">Add Category</button>
+                </div>
+
+                <!-- CATEGORY LIST -->
+                <div class="category-table-container">
+                    <table class="category-table">
+                        <thead>
+                            <tr>
+                                <th>Category Name</th>
+                            </tr>
+                        </thead>
+                        <tbody id="categoryTableBody"></tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+        <!-- Add Offer Modal -->
+        <div id="addOfferModal" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>Add New Offer</h2>
+                    <button class="close-modal" id="closeOfferModal">&times;</button>
+                </div>
+
+                <form id="addOfferForm">
+                    <div class="form-group-full">
+                        <label for="offerName">Offer Name / Title *</label>
+                        <input type="text" id="offerName" name="offerName" required
+                            placeholder="e.g., Summer Sale, Festival Discount">
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="couponCode">Coupon Code *</label>
+                            <input type="text" id="couponCode" name="couponCode" required placeholder="e.g., SUMMER20"
+                                style="text-transform: uppercase;">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="offerType">Offer Type *</label>
+                            <select id="offerType" name="offerType" required>
+                                <option value="">Select Offer Type</option>
+                                <option value="percentage">Percentage Off</option>
+                                <option value="fixed">Fixed Amount Off</option>
+                                <option value="buy_one_get_one">Buy One Get One</option>
+                                <option value="free_shipping">Free Shipping</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="discountValue">Discount Value *</label>
+                            <input type="number" id="discountValue" name="discountValue" required
+                                placeholder="e.g., 20 for 20%" step="0.01" min="0">
+                            <small style="color: #666; font-size: 12px; display: block; margin-top: 5px;">Enter
+                                percentage (e.g., 20 for 20%) or amount in Rs.</small>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="usageLimit">Usage Limit *</label>
+                            <input type="number" id="usageLimit" name="usageLimit" required placeholder="e.g., 100"
+                                min="1">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="startDate">Start Date *</label>
+                            <input type="date" id="startDate" name="startDate" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="endDate">End Date *</label>
+                            <input type="date" id="endDate" name="endDate" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="minPurchase">Minimum Purchase Amount (Rs.)</label>
+                            <input type="number" id="minPurchase" name="minPurchase" placeholder="Optional" step="0.01"
+                                min="0">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="maxDiscount">Maximum Discount Amount (Rs.)</label>
+                            <input type="number" id="maxDiscount" name="maxDiscount" placeholder="Optional" step="0.01"
+                                min="0">
+                        </div>
+                    </div>
+
+                    <div class="form-group-full">
+                        <label>Applicable To</label>
+                        <div style="display: flex; gap: 15px; flex-wrap: wrap;">
+                            <div class="checkbox-group">
+                                <input type="checkbox" id="allProducts" name="applicableTo" value="all" checked>
+                                <label for="allProducts">All Products</label>
+                            </div>
+                            <div class="checkbox-group">
+                                <input type="checkbox" id="kurti" name="applicableTo" value="kurti">
+                                <label for="kurti">Kurti</label>
+                            </div>
+                            <div class="checkbox-group">
+                                <input type="checkbox" id="saree" name="applicableTo" value="saree">
+                                <label for="saree">Saree</label>
+                            </div>
+                            <div class="checkbox-group">
+                                <input type="checkbox" id="suit" name="applicableTo" value="suit">
+                                <label for="suit">Suit</label>
+                            </div>
+                            <div class="checkbox-group">
+                                <input type="checkbox" id="lehenga" name="applicableTo" value="lehenga">
+                                <label for="lehenga">Lehenga</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group-full">
+                        <label for="offerDescription">Offer Description</label>
+                        <textarea id="offerDescription" name="offerDescription"
+                            placeholder="Enter offer terms and conditions (optional)"></textarea>
+                    </div>
+
+
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-cancel" id="cancelOfferBtn">Cancel</button>
+                        <button type="submit" class="btn btn-submit">Add Offer</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+    <script src="admin.js"></script>
+</body>
+
+</html>

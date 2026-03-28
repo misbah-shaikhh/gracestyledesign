@@ -1,0 +1,1012 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Pink Ethnic Suit - GS Store</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="stylesheet" href="../csspages/style.css"> 
+    <!--- <link rel="stylesheet" href="cart.css"> -->
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.cdnfonts.com/css/rowdies" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Corben">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Crimson+Text">
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Aref+Ruqaa+Ink:wght@400;700&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', 'Segoe UI', sans-serif;
+            background-color: #fff;
+        }
+
+        /* Product Section */
+        .product-container {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 40px 40px; /* ✅ slightly less padding */
+        display: grid;
+        grid-template-columns: 90px 500px 1fr; /* ✅ balanced */
+        gap: 30px;
+        background-color: #fff;
+        align-items: start; /* ✅ align properly */
+        }
+
+
+        /* Thumbnail Gallery */
+        .thumbnail-gallery {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .thumbnail {
+            width: 55px;
+            height: 75px;
+            border: 1px solid #d0d0d0;
+            border-radius: 3px;
+            cursor: pointer;
+            overflow: hidden;
+            transition: all 0.3s;
+            background-color: #fafafa;
+        }
+
+        .thumbnail:hover {
+            border-color: #999;
+        }
+
+        .thumbnail.active {
+            border: 2px solid #000;
+        }
+
+        .thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Main Image */
+            .main-image {
+            position: relative;
+            background-color: #f8f8f8;
+            border: 3px solid #ffeed7;
+            border-radius: 8px;
+            overflow: hidden;
+            height: 700px;
+            width: 100%;   
+            max-width: 700px; 
+            }
+
+
+
+        .main-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Product Info */
+        .product-info {
+            padding: 10px 0;
+             overflow: hidden;
+        }
+
+        .product-title {
+        font-size: 34px;
+        font-weight: 600;
+        color: #000;
+        margin-bottom: 10px;
+        font-family: 'Crimson Text', serif;
+        }
+
+
+        .rating {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        .stars {
+            color: #ffa500;
+            font-size: 18px;
+            letter-spacing: 2px;
+        }
+
+        .rating-text {
+            color: #666;
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        .price-container {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 22px;
+        }
+
+        .price {
+        font-size: 24px;
+        font-weight: 700;
+        color: #000;
+        }
+
+        .original-price {
+        font-size: 15px;
+        color: #b08c6a;
+        text-decoration: line-through;
+        }
+
+        .discount-badge {
+        background-color: #7a2e00;
+        color: #fff;
+        padding: 3px 10px;
+        border-radius: 4px;
+        font-size: 11px;
+        font-weight: 600;
+        }
+
+
+        .option-group {
+            margin-bottom: 25px;
+        }
+
+        .option-label {
+            font-size: 15px;
+            font-weight: 700;
+            color: #000;
+            margin-bottom: 14px;
+            display: block;
+        }
+
+        .size-options,
+        .color-options {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        padding: 14px 16px;
+        border-radius: 6px;
+        background-color: #f7ecd9;
+        }
+
+
+            .size-btn {
+            padding: 8px 16px;
+            border: none;
+            background-color: #7a2e00;
+            color: #fff;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 600;
+            transition: 0.2s ease;
+            }
+
+            .size-btn:hover {
+            background-color: #5c2100;
+            }
+
+
+        .size-chart-link {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            color: #000;
+            font-size: 12px;
+            text-decoration: none;
+            margin-top: 8px;
+            cursor: pointer;
+        }
+
+        .size-chart-link i {
+            font-size: 10px;
+        }
+
+        .size-chart-link:hover {
+            text-decoration: underline;
+        }
+
+        /* Color Options */
+        .color-label-container {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.option-label,
+.color-name {
+    margin: 0;
+    padding: 0;
+    line-height: 1;
+}
+
+
+        .color-name {
+            font-size: 14px;
+            color: #666;
+            font-weight: 400;
+            text-align: center;
+        }
+
+
+        .color-option {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        cursor: pointer;
+        border: 2px solid #ddd;
+        transition: 0.2s ease;
+        }
+
+
+        .color-option:hover {
+            border-color: #999;
+            transform: scale(1.05);
+        }
+
+        .color-option.active {
+            border-color: #000;
+            box-shadow: 0 0 0 2px #fff, 0 0 0 4px #000;
+        }
+
+        .color-option.beige { background-color: #c9b59a; }
+        .color-option.cream { background-color: #f5e6d3; }
+        .color-option.lavender { background-color: #b8a9d4; }
+        .color-option.yellow { background-color: #f4d47a; }
+
+        /* Buttons */
+        .action-buttons {
+        display: flex;
+        gap: 18px;
+        margin-top: 20px;
+        }
+
+        .btn {
+        padding: 12px 38px;
+        border-radius: 8px;
+        font-size: 15px;
+        font-family: 'Crimson Text', serif;
+        cursor: pointer;
+        transition: 0.2s ease;
+        }
+
+        .btn-secondary {
+        background-color: #f3d9b5;
+        border: 2px solid #7a2e00;
+        color: #7a2e00;
+        }
+
+        .btn-secondary:hover {
+        background-color: #eac79c;
+        }
+
+        .btn-primary {
+        background-color: #7a2e00;
+        border: none;
+        color: #fff;
+        }
+
+        .btn-primary:hover {
+        background-color: #5c2100;
+        }
+
+
+        /* Product Details */
+        .product-details {
+        margin-top: 25px;
+        padding: 18px 20px;
+        border: 1.5px solid #b07a4a;
+        border-radius: 8px;
+        background-color: #fff7ec;
+        }
+
+        .details-title {
+            font-size: 15px;
+            font-weight: 700;
+            color: #000;
+            margin-bottom: 18px;
+        }
+
+        .details-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+            row-gap: 12px;
+        }
+
+        .detail-item {
+            font-size: 13px;
+            color: #333;
+            line-height: 1.5;
+        }
+
+        .detail-label {
+            font-weight: 600;
+            color: #000;
+            display: block;
+            margin-bottom: 2px;
+        }
+
+        .detail-value {
+            color: #555;
+        }
+
+/* ============================= */
+/* REVIEWS SECTION */
+/* ============================= */
+
+.reviews-section {
+    width: 100%;
+    max-width: 1200px;
+    margin: 60px auto;
+    padding: 0 20px;
+}
+
+.reviews-container {
+    width: 100%;
+}
+
+/* Header */
+.reviews-header {
+    margin-bottom: 30px;
+}
+
+.reviews-title {
+    font-size: 26px;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+.total-reviews {
+    font-size: 14px;
+    color: #666;
+}
+
+/* MAIN GRID LAYOUT */
+.rating-breakdown {
+    display: grid;
+    grid-template-columns: 360px 1fr; /* wider left side like screenshot */
+    gap: 50px;
+    align-items: start;
+}
+
+/* LEFT COLUMN WRAPPER */
+.rating-left {
+    width: 100%;
+}
+
+/* Overall Rating */
+.overall-score {
+    font-size: 48px;
+    font-weight: 700;
+    line-height: 1;
+    margin-bottom: 6px;
+}
+
+.overall-stars {
+    color: #f4a100;
+    font-size: 18px;
+    margin-bottom: 6px;
+}
+
+.out-of-text {
+    font-size: 14px;
+    color: #666;
+}
+
+/* Rating Bars */
+.rating-bars {
+    margin-top: 20px;
+}
+
+.rating-bar {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 10px;
+}
+
+.bar-label {
+    color: #f4a100;
+    font-size: 14px;
+    min-width: 90px;
+}
+
+.bar-container {
+    flex: 1;
+    height: 8px;
+    background: #e5e5e5;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.bar-fill {
+    height: 100%;
+    background: #f4a100;
+    border-radius: 20px;
+}
+
+.bar-count {
+    font-size: 13px;
+    color: #444;
+    min-width: 25px;
+    text-align: right;
+}
+
+/* RIGHT SIDE PANEL */
+.review-list {
+    background: #f3e8dc;
+    border: 1px solid #d6c2a8;
+    border-radius: 8px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+/* Review Card */
+.review-item {
+    background: #eadbcc;
+    border: 1px solid #d2bfa6;
+    border-radius: 6px;
+    padding: 16px;
+}
+
+.review-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 10px;
+}
+
+.reviewer-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #c9b49a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-weight: 600;
+}
+
+.reviewer-info {
+    flex: 1;
+}
+
+.reviewer-name {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.review-stars {
+    font-size: 13px;
+    color: #f4a100;
+}
+
+.review-date {
+    font-size: 12px;
+    color: #777;
+}
+
+.review-title {
+    font-weight: 600;
+    font-size: 14px;
+    margin-bottom: 6px;
+}
+
+.review-text {
+    font-size: 13px;
+    color: #555;
+    line-height: 1.6;
+}
+
+.related-products .product-track {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); 
+  gap: 40px;
+  padding: 20px;
+  justify-items: center;
+}
+
+.related-products .product-card {
+  width: 443px;
+  height: 578px;
+  background: #fff;
+  overflow: hidden;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+  transition: 0.3s ease;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.related-products .product-card:hover {
+  transform: translateY(-6px);
+}
+
+.related-products .product-card img {
+  width: 434px;
+  height: 470px;
+  object-fit: cover;
+  display: block;
+  margin: 5px auto 0;
+}
+
+.related-products .cart-tag {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  background: #7a2d00;
+  color: #fff;
+  font-size: 10px;
+  padding: 5px 10px;
+  border-radius: 20px;
+  font-weight: 600;
+}
+
+.related-products .right-info {
+  position: absolute;
+  right: 14px;
+  top: 485px;
+  text-align: right;
+}
+
+.related-products .product-info {
+  position: absolute;
+  left: 18px;
+  bottom: 18px;
+}
+
+.related-products .product-info h3 {
+  font-size: 17px;
+  margin-bottom: 4px;
+}
+
+.related-products .price {
+  font-size: 17px;
+  font-weight: 600;
+  color: #7a2d00;
+}
+
+.related-products .price span {
+  font-size: 14px;
+  color: #999;
+  text-decoration: line-through;
+  margin-left: 6px;
+}
+
+.related-products .heart {
+  font-size: 22px;
+  cursor: pointer;
+  color: #777;
+  transition: 0.2s;
+}
+
+.related-products .heart.active {
+  color: red;
+}
+
+.related-products .rating {
+  font-size: 14px;
+  color: #333;
+  margin-bottom: 6px;
+}
+
+.related-products .colors {
+  display: flex;
+  gap: 6px;
+  margin-top: 6px;
+}
+
+.related-products .colors span {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 1px solid #ccc;
+}
+
+.related-products .colors .c1 {
+  background: #000;
+}
+
+.related-products .colors .c2 {
+  background: #6b2f2f;
+}
+
+.related-products .wishlist-title{
+    text-align: center;
+    font-family: 'Rowdies',serif;
+    margin-bottom: 30px;
+    font-weight: 500;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+    .rating-breakdown {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+}
+      
+    .wishlist-section {
+      padding: 40px 80px; /* same as grid padding for perfect alignment */
+    }
+
+        
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .product-container {
+                grid-template-columns: 1fr;
+            }
+
+            .thumbnail-gallery {
+                flex-direction: row;
+                overflow-x: auto;
+            }
+
+            .products-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+
+            header {
+                padding: 15px 20px;
+            }
+
+            .product-container,
+            .reviews-section,
+            .related-products {
+                padding: 0 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+<!-- HEADER -->
+<header class="header">
+  <div class="logo">
+  <img src="../images/gsd.png" alt="GS Logo">
+</div>
+  <nav class="nav">
+    <a href="../htmlpages/index.html">HOME</a>
+    <a href="javascript:void(0)" id="categoryBtn">CATEGORIES</a>
+    <a href="#">SALE</a>
+    <a href="../htmlpages/about.html">ABOUT</a>
+    <a href="#contact">CONTACT</a>
+  </nav>
+<div class="nav-icons">
+
+  <i class="fa-regular fa-user" id="profileBtn"></i>
+
+  <!-- Wishlist Icon -->
+  <a href="../htmlpages/wishlist.html">
+    <i class="fa-regular fa-heart"></i>
+  </a>
+
+  <!-- Cart Icon -->
+  <a href="../htmlpages/cart.html">
+    <i class="fa-solid fa-bag-shopping"></i>
+  </a>
+</div>
+
+</header>
+
+<!-- Categories Overlay -->
+<div class="category-overlay" id="categoryOverlay">
+  <div class="category-box">
+
+<h4><a href="../htmlpages/productcatalogue.html?category=kurtis">Kurtis</a></h4>
+<h4><a href="../htmlpages/productcatalogue.html?category=saree">Saree</a></h4>
+<h4><a href="../htmlpages/productcatalogue.html?category=lehenga">Lehenga</a></h4>
+<h4><a href="../htmlpages/productcatalogue.html?category=dress">Dress</a></h4>
+<h4><a href="../htmlpages/productcatalogue.html?category=suit">Suit</a></h4>
+
+  </div>
+</div>
+
+<!-- Profile Overlay -->
+<div class="profile-overlay" id="profileOverlay">
+  <div class="profile-box">
+    <ul>
+      <li><a href="../htmlpages/userprofile.html?section=orders">My Orders</a></li>
+      <li><a href="../htmlpages/wishlist.html">My Wishlist</a></li>
+      <li><a href="../htmlpages/userprofile.html?section=savedAddress">Saved Addresses</a></li>
+    </ul>
+
+    <hr>
+
+    <ul>
+      <li><a href="../htmlpages/userprofile.html?section=editProfile">Edit Profile</a></li>
+      <li id="logoutBtn"><a href="../htmlpages/login.html">Logout</a></li>
+    </ul>
+  </div>
+</div>
+
+
+
+    <!-- Product Section -->
+    <div class="product-container">
+        <!-- Thumbnail Gallery -->
+        <div class="thumbnail-gallery">
+            <div class="thumbnail active">
+                <img src="../images/product.jpg" alt="Thumbnail 1">
+            </div>
+            <div class="thumbnail">
+                <img src="../mages/product.jpg" alt="Thumbnail 2">
+            </div>
+            <div class="thumbnail">
+                <img src="../images/product.jpg" alt="Thumbnail 3">
+            </div>
+            <div class="thumbnail">
+                <img src="../images/product.jpg" alt="Thumbnail 4">
+            </div>
+        </div>
+
+        <!-- Main Image -->
+        <div class="main-image">
+            <img id="mainImage" src="../images/product.jpg" alt="Pink Ethnic Suit">
+        </div>
+
+        <!-- Product Info -->
+        <div class="product-info">
+            <h1 class="product-title">Pink Ethnic Suit</h1>
+            <div class="rating">
+                <span class="stars">★★★★★</span>
+                <span class="rating-text">( 3 Reviews )</span>
+            </div>
+            <div class="price-container">
+                <div class="price">Rs. 2,499.00</div>
+                <div class="original-price">Rs. 4,599.00</div>
+                <div class="discount-badge">Save 3,000</div>
+            </div>
+
+            <!-- Size Selection -->
+            <div class="option-group">
+                <label class="option-label">Sizes</label>
+                <div class="size-options size-selector">
+                    <button class="size-btn">XS</button>
+                    <button class="size-btn">S</button>
+                    <button class="size-btn">M</button>
+                    <button class="size-btn">L</button>
+                    <button class="size-btn">XL</button>
+                    <button class="size-btn">XXL</button>
+                </div>
+                <a href="#" class="size-chart-link">
+                    <i class="fas fa-ruler"></i>
+                    Click Here For Size Chart
+                </a>
+            </div>
+
+            <!-- Color Selection -->
+            <div class="option-group">
+                <div class="color-label-container">
+                    <label class="option-label">Color :</label>
+                    <span class="color-name">Beige</span>
+                </div>
+                <div class="color-options">
+                    <div class="color-option beige active"></div>
+                    <div class="color-option cream"></div>
+                    <div class="color-option lavender"></div>
+                    <div class="color-option yellow"></div>
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="action-buttons">
+                <button class="btn btn-secondary">Add To Cart</button>
+                <button class="btn btn-primary">Buy Now</button>
+            </div>
+
+            <!-- Product Details -->
+            <div class="product-details">
+                <h3 class="details-title">Product Details</h3>
+                <div class="details-grid">
+                    <div class="detail-item">
+                        <span class="detail-label">Material Composition</span>
+                        <span class="detail-value">100% Cotton</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Sleeve Type</span>
+                        <span class="detail-value">Short Sleeve</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Neck Style</span>
+                        <span class="detail-value">Crew Neck</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Country Of Origin</span>
+                        <span class="detail-value">India</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Reviews Section -->
+<div class="reviews-section">
+    <div class="reviews-container">
+
+        <!-- Header -->
+        <div class="reviews-header">
+            <h2 class="reviews-title">Customer Reviews</h2>
+            <span class="total-reviews">83 Ratings</span>
+        </div>
+
+        <!-- 2 Column Layout -->
+        <div class="rating-breakdown">
+
+            <!-- LEFT SIDE -->
+            <div class="rating-left">
+
+                <div class="overall-rating">
+                    <div class="overall-score">5</div>
+                    <div class="overall-stars">★★★★★</div>
+                    <div class="out-of-text">5 Out Of 5</div>
+                </div>
+
+                <div class="rating-bars">
+
+                    <div class="rating-bar">
+                        <span class="bar-label">★★★★★</span>
+                        <div class="bar-container">
+                            <div class="bar-fill" style="width: 30%"></div>
+                        </div>
+                        <span class="bar-count">2</span>
+                    </div>
+
+                    <div class="rating-bar">
+                        <span class="bar-label">★★★★☆</span>
+                        <div class="bar-container">
+                            <div class="bar-fill" style="width: 15%"></div>
+                        </div>
+                        <span class="bar-count">1</span>
+                    </div>
+
+                    <div class="rating-bar">
+                        <span class="bar-label">★★★☆☆</span>
+                        <div class="bar-container">
+                            <div class="bar-fill" style="width: 0%"></div>
+                        </div>
+                        <span class="bar-count">0</span>
+                    </div>
+
+                    <div class="rating-bar">
+                        <span class="bar-label">★★☆☆☆</span>
+                        <div class="bar-container">
+                            <div class="bar-fill" style="width: 0%"></div>
+                        </div>
+                        <span class="bar-count">0</span>
+                    </div>
+
+                    <div class="rating-bar">
+                        <span class="bar-label">★☆☆☆☆</span>
+                        <div class="bar-container">
+                            <div class="bar-fill" style="width: 0%"></div>
+                        </div>
+                        <span class="bar-count">0</span>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- RIGHT SIDE -->
+            <div class="review-list">
+
+                <div class="review-item">
+                    <div class="review-header">
+                        <div class="reviewer-avatar">E</div>
+                        <div class="reviewer-info">
+                            <div class="reviewer-name">Eirene</div>
+                            <div class="review-stars">★★★☆☆</div>
+                        </div>
+                        <div class="review-date">06/03/2026</div>
+                    </div>
+                    <div class="review-title">Customer Service And Product</div>
+                    <div class="review-text">
+                        The Customer Service Is Really Helpful And The Product Quality Is Very Good Worth The Money
+                    </div>
+                </div>
+
+                <div class="review-item">
+                    <div class="review-header">
+                        <div class="reviewer-avatar">E</div>
+                        <div class="reviewer-info">
+                            <div class="reviewer-name">Eirene</div>
+                            <div class="review-stars">★★★☆☆</div>
+                        </div>
+                        <div class="review-date">06/03/2026</div>
+                    </div>
+                    <div class="review-title">Customer Service And Product</div>
+                    <div class="review-text">
+                        The Customer Service Is Really Helpful And The Product Quality Is Very Good Worth The Money
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+
+    <!-- Related Products -->
+<section class="wishlist-section related-products">
+  <h2 class="wishlist-title">You May Also Like</h2>
+
+  <div class="product-track">
+    <!-- JS will insert 6 products here -->
+  </div>
+</section>
+
+
+    <!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-container">
+
+    <!-- Menu -->
+    <div class="footer-box">
+      <h3>Menu</h3>
+      <ul>
+        <li><a href="../htmlpages/track.html">Track Your Order</a></li>
+      </ul>
+    </div>
+
+    <!-- Policies -->
+    <div class="footer-box">
+      <h3>Our Policies</h3>
+      <ul>
+        <li><a href="../htmlpages/return.html">Return and Exchange Policy</a></li>
+        <li><a href="../htmlpages/policy.html">Shipping Policy</a></li>
+        <li><a href="../htmlpages/policy.html">Privacy Policy</a></li>
+        <li><a href="../htmlpages/policy.html">Terms and Conditions</a></li>
+      </ul>
+    </div>
+
+    <!-- Contact -->
+    <div id="contact" class="footer-box">
+      <h3>Contact Us</h3>
+      <p>Support Contact: 8287440077</p>
+      <p>(12PM To 6PM, Mon-Sat)</p>
+
+      <div class="social-icons">
+        <a href="#"><i class="fab fa-instagram"></i></a>
+        <a href="#"><i class="fab fa-whatsapp"></i></a>
+        <a href="#"><i class="fab fa-facebook"></i></a>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="footer-bottom">
+    <p>© 2026, Grace Style Design.</p>
+  </div>
+</footer>
+
+     <script src="../jspages/prod.js"></script>
+     <script src="../jspages/script.js"></script>
+     </body>
+</html>
+
