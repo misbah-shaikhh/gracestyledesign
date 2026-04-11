@@ -4,19 +4,26 @@ const upload = require("../middleware/upload");
 const cloudinary = require("../config/cloudinary");
 const fs = require("fs");
 
-// SINGLE IMAGE UPLOAD
-router.post("/", upload.single("image"), async (req, res) => {
+// MULTIPLE IMAGE UPLOAD (MAX 3)
+router.post("/", upload.array("image", 3), async (req, res) => {
   try {
-    const result = await cloudinary.uploader.upload(req.file.path, {
-      folder: "products",
-    });
 
-    // delete local file after upload (important)
-    fs.unlinkSync(req.file.path);
+    const imageUrls = [];
+
+    for (const file of req.files) {
+      const result = await cloudinary.uploader.upload(file.path, {
+        folder: "products",
+      });
+
+      // delete local file
+      fs.unlinkSync(file.path);
+
+      imageUrls.push(result.secure_url);
+    }
 
     res.status(200).json({
-      message: "Image uploaded",
-      imageUrl: result.secure_url,
+      message: "Images uploaded",
+      imageUrls
     });
 
   } catch (err) {

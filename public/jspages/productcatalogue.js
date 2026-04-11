@@ -4,6 +4,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const priceValue = document.getElementById("priceValue");
     const sizeOptions = document.querySelectorAll(".size-options span");
     const clearFilterBtn = document.querySelector(".clear-filter");
+    const urlParams = new URLSearchParams(window.location.search);
+    const selectedCategory = urlParams.get("category")?.toLowerCase();
 
     let maxPrice = Number(range?.value || 10000);
     let selectedSizes = [];
@@ -84,6 +86,17 @@ document.addEventListener("DOMContentLoaded", () => {
             if (!res.ok) throw new Error("Failed to fetch products");
 
             let products = await res.json();
+
+            // --- FILTER BY CATEGORY ---
+            if (selectedCategory) {
+                products = products.filter(p => {
+                    const productCategory = typeof p.category === "object"
+                        ? p.category.name
+                        : p.category;
+
+                    return productCategory?.toLowerCase() === selectedCategory;
+                });
+            }
 
             // --- FILTER BY PRICE ---
             products = products.filter(p => {

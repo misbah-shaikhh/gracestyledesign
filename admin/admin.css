@@ -1184,3 +1184,91 @@
     margin-top: 10px;
 }
 
+/* ===== EDIT PRODUCT MODAL ONLY ===== */
+#editProductModal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+
+  display: none;
+  justify-content: center;
+  align-items: center;
+
+  z-index: 9999;
+}
+
+/* Modal box */
+#editProductModal .modal-content {
+  background: #fff;
+  padding: 25px;
+  border-radius: 12px;
+  width: 420px;
+  max-height: 80vh;
+  overflow-y: auto;
+
+  box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+}
+
+/* Title */
+#editProductModal h3 {
+  margin-bottom: 15px;
+}
+
+/* Inputs */
+#editProductModal input,
+#editProductModal select {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+/* Variant rows */
+#variantsContainer div {
+  display: flex;
+  gap: 8px;
+}
+
+/* Variant inputs */
+#variantsContainer input {
+  flex: 1;
+}
+
+/* Delete button */
+#variantsContainer button {
+  background: #ff4d4d;
+  color: white;
+  border: none;
+  padding: 5px 8px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* Add variant button */
+#addVariantBtn {
+  margin-top: 5px;
+  background: #eee;
+  border: none;
+  padding: 6px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+/* Update button */
+#updateProductBtn {
+  background: #000;
+  color: #fff;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+/* Cancel button */
+#editProductModal button:last-child {
+  background: #ccc;
+}

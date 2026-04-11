@@ -91,7 +91,23 @@ router.put('/:id', async (req, res) => {
     }
 });
 
+router.put("/:id", async (req, res) => {
+  try {
+    const updated = await Product.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      { new: true }
+    );
+
+    res.json(updated);
+  } catch (err) {
+    res.status(500).json({ message: "Update failed" });
+  }
+});
+
 router.get("/test", (req, res) => {
     res.json({ message: "Product routes are working" });
 });
+
+
 module.exports = router;

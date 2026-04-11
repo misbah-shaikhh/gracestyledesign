@@ -11,6 +11,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     if (!res.ok) throw new Error("Failed to fetch product");
 
     const p = await res.json();
+    const images = Array.isArray(p.images) ? p.images : [];
 
     const mainImage = document.getElementById("mainImage");
     if (mainImage) mainImage.src = (p.images && p.images.length > 0)
@@ -91,7 +92,9 @@ document.addEventListener("DOMContentLoaded", async () => {
 
           const variantImg = p.variants.find(v => v.color === color)?.image;
 
-          if (variantImg && mainImage) mainImage.src = variantImg;
+          if (mainImage && p.images?.length > 0) {
+            mainImage.src = p.images[0];
+          }
 
         });
 
@@ -104,40 +107,38 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 
     // ---------------- THUMBNAILS ----------------
-    const thumbnailGallery = document.querySelector(".thumbnail-gallery");
+const thumbnailGallery = document.querySelector(".thumbnail-gallery");
 
-    if (thumbnailGallery && p.variants) {
+if (thumbnailGallery) {
 
-      thumbnailGallery.innerHTML = "";
+  thumbnailGallery.innerHTML = "";
 
-      const thumbnails = p.variants.slice(0, 3);
+  if (images.length === 0) return;
 
-      thumbnails.forEach((v, i) => {
+  images.slice(0, 3).forEach((img, i) => {
 
-        const thumbDiv = document.createElement("div");
-        thumbDiv.classList.add("thumbnail");
+    const thumbDiv = document.createElement("div");
+    thumbDiv.classList.add("thumbnail");
 
-        if (i === 0) thumbDiv.classList.add("active");
+    if (i === 0) thumbDiv.classList.add("active");
 
-        const thumbImg = p.images?.[0] || "../images/product.jpg";
+    thumbDiv.innerHTML = `<img src="${img}" alt="${p.name} thumbnail">`;
 
-        thumbDiv.innerHTML = `<img src="${thumbImg}" alt="${p.name} thumbnail">`;
+    thumbDiv.addEventListener("click", () => {
 
-        thumbDiv.addEventListener("click", () => {
+      document.querySelectorAll(".thumbnail")
+        .forEach(t => t.classList.remove("active"));
 
-          document.querySelectorAll(".thumbnail")
-            .forEach(t => t.classList.remove("active"));
+      thumbDiv.classList.add("active");
 
-          thumbDiv.classList.add("active");
+      if (mainImage) mainImage.src = img;
 
-          if (mainImage) mainImage.src = thumbImg;
+    });
 
-        });
+    thumbnailGallery.appendChild(thumbDiv);
 
-        thumbnailGallery.appendChild(thumbDiv);
-
-      });
-    }
+  });
+}
 
 
 

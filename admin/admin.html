@@ -156,6 +156,7 @@
                                 <th>Available Colors</th>
                                 <th>Price</th>
                                 <th>Status</th>
+                                <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -601,6 +602,30 @@
                     </table>
                 </div>
 
+            </div>
+        </div>
+
+        <!-- EDIT PRODUCT MODAL -->
+        <div id="editProductModal" class="modal" style="display:none;">
+            <div class="modal-content">
+                <h3>Edit Product</h3>
+
+                <input type="text" id="editName" placeholder="Product Name">
+
+                <select id="editCategory"></select>
+
+                <input type="number" id="editPrice" placeholder="Price">
+
+                <!-- VARIANTS -->
+                <label style="margin-top:10px;">Variants (Color & Stock)</label>
+                <div id="variantsContainer"></div>
+
+                <button id="addVariantBtn" type="button">+ Add Variant</button>
+
+                <br><br>
+
+                <button id="updateProductBtn">Update</button>
+                <button onclick="closeEditModal()">Cancel</button>
             </div>
         </div>
         <!-- Add Offer Modal -->

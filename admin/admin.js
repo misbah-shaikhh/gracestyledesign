@@ -231,13 +231,22 @@ addProductForm?.addEventListener("submit", async (e) => {
     ? Math.round(originalPrice - (originalPrice * discountPercentage / 100))
     : originalPrice;
 
-let imageUrl = "";
+let imageUrls = [];
 
 const fileInput = addProductForm.querySelector('[name="image"]');
 
 if (fileInput && fileInput.files.length > 0) {
+
+  if (fileInput.files.length > 3) {
+    alert("Maximum 3 images allowed");
+    return;
+  }
+
   const uploadData = new FormData();
-  uploadData.append("image", fileInput.files[0]);
+
+  Array.from(fileInput.files).forEach(file => {
+    uploadData.append("image", file);
+  });
 
   const uploadRes = await fetch("http://localhost:5000/api/upload", {
     method: "POST",
@@ -245,7 +254,7 @@ if (fileInput && fileInput.files.length > 0) {
   });
 
   const uploadResult = await uploadRes.json();
-  imageUrl = uploadResult.imageUrl;
+  imageUrls = uploadResult.imageUrls || [];
 }
 
   const productData = {
@@ -255,7 +264,7 @@ if (fileInput && fileInput.files.length > 0) {
     discountPercentage,
     discountedPrice,
     totalStock, // you can also use totalVariantStock if you want it auto-calculated
-    images: imageUrl ? [imageUrl] : [],
+    images: imageUrls,
     description: {
       material: formData.get('material'),
       neckType: formData.get('neckType'),
@@ -316,6 +325,9 @@ async function loadProductsTable() {
                 <td>${colorStock}</td>
                 <td>Rs.${product.discountedPrice.toLocaleString()}</td>
                 <td>${stockStatus}</td>
+                 <td>
+                <button class="btn btn-secondary edit-btn" data-id="${product._id}">Edit</button>
+                </td>
             `;
       tableBody.appendChild(row);
     });
@@ -373,6 +385,9 @@ function renderProducts(products) {
             <td>${colorStock}</td>
             <td>Rs.${product.discountedPrice.toLocaleString()}</td>
             <td>${stockStatus}</td>
+                <td>
+                <button class="btn btn-secondary edit-btn" data-id="${product._id}">Edit</button>
+                </td>
         `;
     tableBody.appendChild(row);
   });
@@ -546,6 +561,174 @@ async function loadFilterCategories() {
 }
 loadCategoryDropdown();
 loadFilterCategories();
+
+// ----------------------
+// EDIT PRODUCT MODAL
+// ----------------------
+
+let currentProductId = null;
+
+// ✅ LOAD CATEGORIES FOR EDIT MODAL
+async function loadEditCategories(selectedId = null) {
+  const dropdown = document.getElementById("editCategory");
+
+  try {
+    const res = await fetch("http://localhost:5000/api/categories");
+    const categories = await res.json();
+
+    dropdown.innerHTML = `<option value="">Select Category</option>`;
+
+    categories.forEach(cat => {
+      const option = document.createElement("option");
+      option.value = cat._id;
+      option.textContent = cat.name;
+
+      if (selectedId && selectedId === cat._id) {
+        option.selected = true;
+      }
+
+      dropdown.appendChild(option);
+    });
+
+  } catch (err) {
+    console.error("Edit category load error:", err);
+  }
+}
+
+
+// OPEN MODAL
+document.addEventListener("click", async (e) => {
+
+  // ✅ EDIT BUTTON
+  const btn = e.target.closest(".edit-btn");
+  if (btn) {
+    try {
+      const id = btn.dataset.id;
+      currentProductId = id;
+
+      const res = await fetch(`http://localhost:5000/api/products/${id}`);
+      const product = await res.json();
+
+      // Prefill
+      document.getElementById("editName").value = product.name;
+      document.getElementById("editPrice").value = product.discountedPrice;
+
+      await loadEditCategories(product.category?._id || product.category);
+
+      // VARIANTS
+      const container = document.getElementById("variantsContainer");
+      container.innerHTML = "";
+
+      (product.variants || []).forEach(v => {
+        const div = document.createElement("div");
+        div.style.display = "flex";
+        div.style.gap = "10px";
+        div.style.marginBottom = "8px";
+
+        div.innerHTML = `
+          <input type="text" value="${v.color}" placeholder="Color">
+          <input type="number" value="${v.stock}" placeholder="Stock">
+          <button type="button" onclick="this.parentElement.remove()">❌</button>
+        `;
+
+        container.appendChild(div);
+      });
+
+      document.getElementById("editProductModal").style.display = "flex";
+
+    } catch (err) {
+      console.error("Edit modal error:", err);
+    }
+  }
+
+  // ✅ ADD VARIANT (FIXED)
+  if (e.target.id === "addVariantBtn") {
+    const div = document.createElement("div");
+
+    div.style.display = "flex";
+    div.style.gap = "10px";
+    div.style.marginBottom = "8px";
+
+    div.innerHTML = `
+      <input type="text" placeholder="Color">
+      <input type="number" placeholder="Stock">
+      <button type="button" onclick="this.parentElement.remove()">❌</button>
+    `;
+
+    document.getElementById("variantsContainer").appendChild(div);
+  }
+
+});
+
+
+// CLOSE MODAL
+function closeEditModal() {
+  document.getElementById("editProductModal").style.display = "none";
+}
+
+
+// ----------------------
+// UPDATE PRODUCT
+// ----------------------
+document.addEventListener("DOMContentLoaded", () => {
+
+  const updateBtn = document.getElementById("updateProductBtn");
+
+  if (updateBtn) {
+    updateBtn.addEventListener("click", async () => {
+
+      const variantDivs = document.querySelectorAll("#variantsContainer div");
+
+      const variants = Array.from(variantDivs)
+        .map(div => {
+          const inputs = div.querySelectorAll("input");
+
+          return {
+            color: inputs[0].value.trim(),
+            stock: Number(inputs[1].value)
+          };
+        })
+        .filter(v => v.color && v.stock >= 0);
+
+      // ✅ CALCULATE TOTAL STOCK
+      const totalStock = variants.reduce((sum, v) => sum + v.stock, 0);
+
+      const updatedProduct = {
+        name: document.getElementById("editName").value,
+        category: document.getElementById("editCategory").value,
+        discountedPrice: Number(document.getElementById("editPrice").value),
+        variants,
+        totalStock // ✅ IMPORTANT
+      };
+
+      console.log("SENDING:", updatedProduct);
+
+      try {
+        const res = await fetch(`http://localhost:5000/api/products/${currentProductId}`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(updatedProduct),
+        });
+
+        const data = await res.json();
+        console.log("UPDATE RESPONSE:", data);
+
+        closeEditModal();
+
+        // ✅ REFRESH TABLE ONLY
+        if (typeof loadProducts === "function") {
+          loadProducts();
+        }
+
+      } catch (err) {
+        console.error("Update failed:", err);
+      }
+    });
+  }
+
+});
 
 // Add Offer Modal
 const addOfferBtn = document.getElementById('addOfferBtn');
