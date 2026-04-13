@@ -9,7 +9,7 @@ router.get("/", verifyToken, async (req, res) => {
 
     const addresses = await Address.find({ userId: req.user.id });
 
-  res.json(addresses);
+    res.json(addresses);
 
 });
 
@@ -21,14 +21,14 @@ router.post("/", verifyToken, async (req, res) => {
     const existing = await Address.find({ userId: req.user.id });
 
     const newAddress = new Address({
-      userId: req.user.id,
-      ...req.body,
-    isDefault: existing.length === 0
+        userId: req.user.id,
+        ...req.body,
+        isDefault: existing.length === 0
     });
 
     await newAddress.save();
 
-  res.json({ message: "Address added" });
+    res.json({ message: "Address added" });
 
 });
 
@@ -38,45 +38,44 @@ router.post("/", verifyToken, async (req, res) => {
 router.put("/default/:id", verifyToken, async (req, res) => {
 
     await Address.updateMany(
-      { userId: req.user.id },
-      { isDefault: false }
+        { userId: req.user.id },
+        { isDefault: false }
     );
 
     await Address.findByIdAndUpdate(req.params.id, {
-      isDefault: true
+        isDefault: true
     });
 
-  res.json({ message: "Default address updated" });
+    res.json({ message: "Default address updated" });
 
 });
 
-// Update product
-router.put("/:id", async (req, res) => {
-    try {
-        const updatedProduct = await Product.findByIdAndUpdate(
-            req.params.id,
-            req.body,
-            { new: true }
-        );
-        res.status(200).json(updatedProduct);
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: "Server error" });
-    }
-});
+/* UPDATE ADDRESS */
+router.put("/:id", verifyToken, async (req, res) => {
 
-// Get single product by ID
-router.get('/:id', async (req, res) => {
     try {
-        const product = await Product.findById(req.params.id);
-        if (!product) {
-            return res.status(404).json({ message: "Product not found" });
+
+        // 🔥 if user sets this as default → reset others
+        if (req.body.isDefault) {
+            await Address.updateMany(
+                { userId: req.user.id },
+                { isDefault: false }
+            );
         }
-        res.status(200).json(product);
+
+        const updated = await Address.findOneAndUpdate(
+            { _id: req.params.id, userId: req.user.id },
+            req.body,
+            { returnDocument: "after" }
+        );
+
+        res.json(updated);
+
     } catch (err) {
         console.error(err);
-        res.status(500).json({ message: "Server error" });
+        res.status(500).json({ message: "Failed to update address" });
     }
+
 });
 
 module.exports = router;

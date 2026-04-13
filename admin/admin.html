@@ -201,15 +201,18 @@
                             </div>
 
                             <div class="order-meta" id="modalMeta"></div>
-
+                            <button class="update-status-btn" id="updateStatusBtn">
+                                Update Status
+                            </button>
+                            <div class="order-address" id="modalAddress"></div>
                             <table id="modalTable">
                                 <thead>
                                     <tr>
                                         <th>Product</th>
                                         <th>Product ID</th>
-                                        <th>Variant ID</th>
-                                        <th>Original Price</th>
-                                        <th>Price Paid</th>
+                                        <th>Variant</th>
+                                        <th>Price</th>
+                                        <th>Quantity / Total</th>
                                     </tr>
                                 </thead>
                                 <tbody id="modalBody"></tbody>
@@ -539,7 +542,7 @@
                         </div>
                         <div class="form-group">
                             <label>Country of Origin</label>
-                            <input type="text" name="countryOfOrigin" placeholder="Country of Origin">
+                            <input type="text" name="countryOfOrigin" value="India" readonly>
                         </div>
                     </div>
 

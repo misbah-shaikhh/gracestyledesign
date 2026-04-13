@@ -911,3 +911,121 @@
   padding: 4px 10px 10px;
 }
 }
+
+.payment-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+
+  display: none;
+  justify-content: center;
+  align-items: center;
+
+  background: rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(6px); /* 🔥 premium glass effect */
+
+  z-index: 99999;
+}
+.payment-box {
+  background: #fff;
+  width: 420px;
+  max-width: 90%;
+  border-radius: 16px;
+  padding: 25px;
+
+  box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+
+  animation: scaleUp 0.3s ease;
+}
+
+@keyframes scaleUp {
+  from {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.method-overlay {
+  z-index: 9998;
+}
+
+.method-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.method-header h3 {
+  font-family: 'Crimson Text', serif;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.cancel-btn {
+  font-size: 13px;
+  color: #8b5e3c;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.payment-option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  padding: 12px;
+  border: 1px solid #eee;
+  border-radius: 10px;
+  margin-bottom: 10px;
+
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.payment-option:hover {
+  border-color: #8b5e3c;
+  background: #faf7f3;
+}
+
+.delivery-info {
+  margin-top: 15px;
+  padding: 12px;
+
+  background: #faf7f3;
+  border-radius: 10px;
+
+  font-size: 13px;
+  color: #444;
+}
+
+.delivery-info h4 {
+  margin-bottom: 8px;
+  font-size: 14px;
+  color: #8b5e3c;
+}
+
+.final-order-btn {
+  width: 100%;
+  margin-top: 15px;
+  padding: 12px;
+
+  background: #8b3d2c; /* 🔥 your brand brown */
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.final-order-btn:hover {
+  background: #6f2f22;
+}

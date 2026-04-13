@@ -99,6 +99,21 @@ tabs.forEach(tab => {
   });
 });
 
+// global text only validation 
+document.addEventListener("input", (e) => {
+
+  if (
+    e.target.matches('[name="productName"], [name="material"], [name="neckType"], [name="sleeveType"], #newCategoryInput, .variantColor')
+  ) {
+    e.target.value = e.target.value.replace(/[^A-Za-z\s]/g, "");
+  }
+
+});
+
+function isValidString(str) {
+  return /^[A-Za-z\s]+$/.test(str);
+}
+
 // Inputs for discount calculation
 const originalPriceInput = document.querySelector('[name="originalPrice"]');
 const discountInput = document.querySelector('[name="discountPercentage"]');
@@ -202,6 +217,18 @@ addProductForm?.addEventListener("submit", async (e) => {
       stockInput.classList.remove("input-error");
     }
 
+    if (!isValidString(color)) {
+      invalidStock = true;
+      alert("Color must contain only letters");
+      return;
+    }
+
+    if (!isValidString(size)) {
+      invalidStock = true;
+      alert("Size must contain only letters");
+      return;
+    }
+
     if (color && size && !isNaN(stock)) {
       variants.push({ color, size, stock });
       totalVariantStock += stock;
@@ -231,32 +258,53 @@ addProductForm?.addEventListener("submit", async (e) => {
     ? Math.round(originalPrice - (originalPrice * discountPercentage / 100))
     : originalPrice;
 
-let imageUrls = [];
+  let imageUrls = [];
 
-const fileInput = addProductForm.querySelector('[name="image"]');
+  const fileInput = addProductForm.querySelector('[name="image"]');
 
-if (fileInput && fileInput.files.length > 0) {
+  if (fileInput && fileInput.files.length > 0) {
 
-  if (fileInput.files.length > 3) {
-    alert("Maximum 3 images allowed");
-    return;
+    if (fileInput.files.length > 3) {
+      alert("Maximum 3 images allowed");
+      return;
+    }
+
+    const uploadData = new FormData();
+
+    Array.from(fileInput.files).forEach(file => {
+      uploadData.append("image", file);
+    });
+
+    const uploadRes = await fetch("http://localhost:5000/api/upload", {
+      method: "POST",
+      body: uploadData
+    });
+
+    const uploadResult = await uploadRes.json();
+    imageUrls = uploadResult.imageUrls || [];
+  }
+  const productName = formData.get('productName').trim();
+  const material = formData.get('material')?.trim() || "";
+  const neckType = formData.get('neckType')?.trim() || "";
+  const sleeveType = formData.get('sleeveType')?.trim() || "";
+
+  // ✅ Product name validation
+  if (!isValidString(productName)) {
+    return alert("Product name must contain only letters");
   }
 
-  const uploadData = new FormData();
+  // ✅ Optional fields validation
+  if (material && !isValidString(material)) {
+    return alert("Material must contain only letters");
+  }
 
-  Array.from(fileInput.files).forEach(file => {
-    uploadData.append("image", file);
-  });
+  if (neckType && !isValidString(neckType)) {
+    return alert("Neck type must contain only letters");
+  }
 
-  const uploadRes = await fetch("http://localhost:5000/api/upload", {
-    method: "POST",
-    body: uploadData
-  });
-
-  const uploadResult = await uploadRes.json();
-  imageUrls = uploadResult.imageUrls || [];
-}
-
+  if (sleeveType && !isValidString(sleeveType)) {
+    return alert("Sleeve type must contain only letters");
+  }
   const productData = {
     name: formData.get('productName'),
     category: formData.get('category'),
@@ -477,6 +525,9 @@ saveCategoryBtn?.addEventListener("click", async () => {
 
   const name = newCategoryInput.value.trim();
   if (!name) return alert("Enter category name");
+  if (!isValidString(name)) {
+    return alert("Category must contain only letters");
+  }
   const exists = Array.from(categoryTableBody.children)
     .some(row => row.innerText.toLowerCase() === name.toLowerCase());
   if (exists) {
@@ -924,6 +975,7 @@ loadDashboardStats();
 // ORDERS - API
 // =============================================
 let allOrders = [];
+let currentOrderId = null;
 
 async function loadOrders() {
   try {
@@ -954,7 +1006,7 @@ function renderOverview(data) {
     tr.innerHTML = `
       <td><span class="id-badge">${order.orderId}</span></td>
       <td>${order.customerName}</td>
-      <td><span class="method-badge">${order.transactionMethod}</span></td>
+      <td><span class="method-badge">${order.paymentMethod}</span></td>
       <td><span class="amount-value">${order.totalAmount}</span></td>
       <td><button class="view-btn" onclick="openOrderModal('${order._id}')">View Details</button></td>
     `;
@@ -969,6 +1021,7 @@ function renderOverview(data) {
 function openOrderModal(id) {
   const order = allOrders.find(o => o._id === id);
   if (!order) return;
+  currentOrderId = id; // 🔥 ADD THIS
 
   document.getElementById('modalMeta').innerHTML = `
     <div class="meta-item">
@@ -980,12 +1033,45 @@ function openOrderModal(id) {
       <div class="meta-value brown">${order.orderId}</div>
     </div>
     <div class="meta-item">
-      <div class="meta-label">Transaction Method</div>
-      <div class="meta-value"><span class="method-badge">${order.transactionMethod}</span></div>
+      <div class="meta-label">Payment Method</div>
+      <div class="meta-value">
+        <span class="method-badge">${order.paymentMethod}</span>
+      </div>
     </div>
+
     <div class="meta-item">
-      <div class="meta-label">Transaction ID</div>
-      <div class="meta-value brown">${order.transactionId}</div>
+      <div class="meta-label">Status</div>
+      <div class="meta-value">
+        <select id="orderStatusSelect" class="status-dropdown">
+        <option value="Pending" ${order.status === "Pending" ? "selected" : ""}>Pending</option>
+        <option value="Confirmed" ${order.status === "Confirmed" ? "selected" : ""}>Confirmed</option>
+        <option value="Shipped" ${order.status === "Shipped" ? "selected" : ""}>Shipped</option>
+        <option value="Delivered" ${order.status === "Delivered" ? "selected" : ""}>Delivered</option>
+        <option value="Cancelled" ${order.status === "Cancelled" ? "selected" : ""}>Cancelled</option>
+        </select>
+      </div>
+    </div>
+  `;
+
+  // ✅ 🔥 ADD ADDRESS CODE RIGHT HERE
+  const address = order.addressId;
+
+  document.getElementById('modalAddress').innerHTML = `
+    <div class="address-box">
+      <p class="address-title">Delivery Address</p>
+
+      <p><b>${address?.name || ""}</b></p>
+      <p>${address?.phone || ""}</p>
+
+      <p>
+        ${address?.addressLine || ""}
+        ${address?.landmark ? ", " + address.landmark : ""}
+      </p>
+
+      <p>
+        ${address?.city || ""},
+        ${address?.state || ""} - ${address?.pincode || ""}
+      </p>
     </div>
   `;
 
@@ -993,28 +1079,48 @@ function openOrderModal(id) {
   tbody.innerHTML = '';
   order.items.forEach(item => {
     const tr = document.createElement('tr');
+
     tr.innerHTML = `
-      <td>
-        <div class="product-cell">
-          <img src="${item.image}" alt="${item.name}">
-          <span class="product-name">${item.name}</span>
-        </div>
-      </td>
-      <td><span class="id-badge">${item.productId}</span></td>
-      <td><span class="variant-badge">${item.variantId}</span></td>
-      <td><div class="price-cell"><span class="price-original">${item.originalPrice}</span></div></td>
-      <td>
-        <div class="price-cell">
-          <span class="price-paid">${item.pricePaid}</span>
-          <span class="price-saving">You saved ${item.saved}</span>
-        </div>
-      </td>
-    `;
+    <td>
+      <div class="product-cell">
+        <img src="${(item.productId?.images && item.productId.images.length > 0)
+        ? item.productId.images[0]
+        : '../images/product.jpg'
+      }">
+        <span class="product-name">${item.name}</span>
+      </div>
+    </td>
+
+    <td>
+      <span class="id-badge">${item.productId?.productId || item.productId?._id}</span>
+    </td>
+
+    <td>
+      <span class="variant-badge">
+        ${item.size} / ${item.color}
+      </span>
+    </td>
+
+    <td>
+      <div class="price-cell">
+        ₹${item.price}
+      </div>
+    </td>
+
+    <td>
+      <div class="price-cell">
+        Qty: ${item.quantity} <br>
+        Total: ₹${item.price * item.quantity}
+      </div>
+    </td>
+  `;
+
     tbody.appendChild(tr);
   });
 
   document.getElementById('orderModalOverlay').classList.add('active');
   document.body.style.overflow = 'hidden';
+  document.getElementById("updateStatusBtn").onclick = updateOrderStatus;
 }
 
 function closeOrderModalDirect() {
@@ -1039,6 +1145,44 @@ document.querySelectorAll('.nav-item').forEach(item => {
   }
 });
 
+async function updateOrderStatus() {
+  const newStatus = document
+    .getElementById("orderStatusSelect")
+    .value
+    .trim();
+  console.log("Selected status:", newStatus);
+  console.log("Order ID:", currentOrderId);
+
+  try {
+    const res = await fetch(
+      `http://localhost:5000/api/admin/orders/${currentOrderId}/status`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ status: newStatus })
+      }
+    );
+
+    const data = await res.json();
+
+    if (res.ok) {
+      alert("Status updated ✅");
+
+      const order = allOrders.find(o => o._id === currentOrderId);
+      if (order) order.status = newStatus;
+
+      closeOrderModalDirect();
+      loadOrders();
+    } else {
+      alert(data.message || "Update failed");
+    }
+  } catch (err) {
+    console.error(err);
+    alert("Server error");
+  }
+}
 // =============================================
 // PAYMENTS - API (linked from orders)
 // =============================================

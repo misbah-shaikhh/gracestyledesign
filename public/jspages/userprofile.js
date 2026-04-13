@@ -75,20 +75,38 @@ menuItems.forEach(item => {
 
     const page = item.getAttribute("data-page");
 
-      if (page === "editProfile") {
-        loadEditProfile();
-      }
-      else if (page === "savedAddress") {
-        loadSavedAddress();
-      }
-      else if (page === "myOrders") {
-        loadOrders();
-      }
-      else {
-        profileContent.innerHTML = `<h2>${page} page coming soon...</h2>`;
-      }
+    if (page === "editProfile") {
+      loadEditProfile();
+    }
+    else if (page === "savedAddress") {
+      loadSavedAddress();
+    }
+    else if (page === "myOrders") {
+      loadOrders();
+    }
+    else {
+      profileContent.innerHTML = `<h2>${page} page coming soon...</h2>`;
+    }
 
   });
+});
+// global string validation
+function isValidName(str) {
+  return /^[A-Za-z\s]+$/.test(str);
+}
+
+// Allow only numbers in mobile & pincode
+document.querySelector(".phoneInput")?.addEventListener("input", (e) => {
+  e.target.value = e.target.value.replace(/\D/g, "").slice(0, 10);
+});
+
+document.querySelector(".pincodeInput")?.addEventListener("input", (e) => {
+  e.target.value = e.target.value.replace(/\D/g, "").slice(0, 6);
+});
+
+// Allow only letters in name
+document.querySelector(".nameInput")?.addEventListener("input", (e) => {
+  e.target.value = e.target.value.replace(/[^A-Za-z\s]/g, "");
 });
 
 async function loadSavedAddress() {
@@ -108,12 +126,17 @@ async function loadSavedAddress() {
   // If no addresses → show empty editable form
   if (addresses.length === 0) {
 
-    addressHTML = createAddressForm();
+    addressHTML = `
+    <div class="no-address">
+      <p>No addresses added yet.</p>
+      <button class="add-address">+ Add New Address</button>
+    </div>
+  `;
 
   } else {
 
     addresses.forEach(addr => {
-      addressHTML += createAddressForm(addr);
+      addressHTML += createAddressCard(addr);
     });
 
   }
@@ -135,74 +158,34 @@ async function loadSavedAddress() {
 
 }
 
-function createAddressForm(addr = {}) {
-
+function createAddressCard(addr = {}) {
   return `
+  <div class="address-card">
 
-  <div class="address-block">
+    <div class="address-top">
+      <h4>${addr.name || ""}</h4>
+      ${addr.isDefault ? `<span class="default-badge">DEFAULT</span>` : ""}
+    </div>
 
-      <div class="form-group">
-        <label>Name</label>
-        <input type="text" value="${addr.name || ""}">
-      </div>
+    <p>${addr.addressLine || ""}</p>
+    <p>${addr.city || ""}, ${addr.state || ""} - ${addr.pincode || ""}</p>
+    <p>📞 ${addr.phone || ""}</p>
 
-      <div class="form-group">
-        <label>Mobile</label>
-        <input type="text" value="${addr.phone || ""}">
-      </div>
-
-      <div class="form-row split">
-        <div>
-          <label>Pincode</label>
-          <input type="text" value="${addr.pincode || ""}">
-        </div>
-
-        <div>
-          <label>State</label>
-          <input type="text" value="${addr.state || ""}">
-        </div>
-      </div>
-
-      <div class="form-group">
-        <label>Address (House no., Building, Street, Area)</label>
-        <input type="text" value="${addr.addressLine || ""}">
-      </div>
-
-      <div class="form-row split">
-        <div>
-          <label>Landmark</label>
-          <input type="text" value="${addr.landmark || ""}">
-        </div>
-
-        <div>
-          <label>City/District</label>
-          <input type="text" value="${addr.city || ""}">
-        </div>
-      </div>
-
-      <div style="margin-top:15px;">
-        <label style="display:flex; align-items:center; gap:10px;">
-          <input type="radio" name="defaultAddress"
-            ${addr.isDefault ? "checked" : ""}>
-          Default Address
-        </label>
-      </div>
-
-      <button class="save-btn saveAddressBtn"
-        data-id="${addr._id || ""}">
-        ${addr._id ? "Update Address" : "Save Address"}
-      </button>
-
-      <hr style="margin:25px 0;">
+    <div class="address-actions">
+      <button class="editAddressBtn" data-id="${addr._id}">Edit</button>
+      ${!addr.isDefault
+      ? `<button class="setDefaultBtn" data-id="${addr._id}">Set Default</button>`
+      : ""
+    }
+    </div>
 
   </div>
-
   `;
 }
 
-document.addEventListener("click", async function(e){
+document.addEventListener("click", async function (e) {
 
-  if(!e.target.classList.contains("saveAddressBtn")) return;
+  if (!e.target.classList.contains("saveAddressBtn")) return;
 
   const token = localStorage.getItem("token");
 
@@ -211,61 +194,82 @@ document.addEventListener("click", async function(e){
   const inputs = block.querySelectorAll("input");
 
   const data = {
-    name: inputs[0].value,
-    phone: inputs[1].value,
-    pincode: inputs[2].value,
-    state: inputs[3].value,
-    addressLine: inputs[4].value,
-    landmark: inputs[5].value,
-    city: inputs[6].value,
-    isDefault: block.querySelector(".defaultAddress").checked
+    name: inputs[0].value.trim(),
+    phone: inputs[1].value.trim(),
+    pincode: inputs[2].value.trim(),
+    state: inputs[3].value.trim(),
+    addressLine: inputs[4].value.trim(),
+    landmark: inputs[5].value.trim(),
+    city: inputs[6].value.trim(),
+    isDefault: block.querySelector(".defaultAddress")?.checked || false
   };
 
-  const phoneRegex = /^[0-9]{10}$/;
+  // ================= VALIDATIONS =================
 
-  if(!phoneRegex.test(data.phone)){
-    alert("Phone number must be exactly 10 digits");
+  // 1. All fields required
+  if (!data.name || !data.phone || !data.pincode || !data.state ||
+    !data.addressLine || !data.city) {
+    alert("All fields are required");
     return;
   }
 
-  const allBlocks = document.querySelectorAll(".address-block");
-
-let isDuplicate = false;
-
-allBlocks.forEach(b => {
-
-  if(b === block) return; // skip current form
-
-  const inputs = b.querySelectorAll("input");
-
-  const existing = {
-    name: inputs[0].value,
-    phone: inputs[1].value,
-    pincode: inputs[2].value,
-    state: inputs[3].value,
-    addressLine: inputs[4].value,
-    landmark: inputs[5].value,
-    city: inputs[6].value
-  };
-
-  if(
-    existing.name === data.name &&
-    existing.phone === data.phone &&
-    existing.pincode === data.pincode &&
-    existing.state === data.state &&
-    existing.addressLine === data.addressLine &&
-    existing.landmark === data.landmark &&
-    existing.city === data.city
-  ){
-    isDuplicate = true;
+  // 2. Name → only letters
+  if (!isValidName(data.name)) {
+    alert("Name must contain only alphabets");
+    return;
   }
 
-});
+  // 3. Mobile → Indian only (starts 6-9, 10 digits)
+  const phoneRegex = /^[6-9]\d{9}$/;
+  if (!phoneRegex.test(data.phone)) {
+    alert("Enter valid Indian mobile number");
+    return;
+  }
 
-if(isDuplicate){
-  alert("This address already exists. Please enter a different address.");
-  return;
-}
+  // 4. Pincode → Maharashtra only (starts with 4)
+  const pincodeRegex = /^4\d{5}$/;
+  if (!pincodeRegex.test(data.pincode)) {
+    alert("Enter valid Maharashtra pincode");
+    return;
+  }
+
+  // 5. Force state = Maharashtra
+  data.state = "Maharashtra";
+
+  const allCards = document.querySelectorAll(".address-card");
+
+  let isDuplicate = false;
+
+  allCards.forEach(card => {
+
+    const id = card.querySelector(".editAddressBtn")?.dataset.id;
+
+    // skip same address when editing
+    if (id === e.target.dataset.id) return;
+
+    const text = card.innerText.toLowerCase();
+
+    const combinedNew = `
+    ${data.name}
+    ${data.phone}
+    ${data.addressLine}
+    ${data.city}
+    ${data.state}
+    ${data.pincode}
+  `.toLowerCase();
+
+    if (text.includes(data.phone) &&
+      text.includes(data.addressLine.toLowerCase()) &&
+      text.includes(data.city.toLowerCase())) {
+      isDuplicate = true;
+    }
+
+  });
+
+  if (isDuplicate) {
+    alert("This address already exists. Please enter a different address.");
+    return;
+  }
   const id = e.target.dataset.id;
 
   const url = id
@@ -274,36 +278,38 @@ if(isDuplicate){
 
   const method = id ? "PUT" : "POST";
 
-  await fetch(url,{
-    method:method,
-    headers:{
-      "Content-Type":"application/json",
-      Authorization:`Bearer ${token}`
+  await fetch(url, {
+    method: method,
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`
     },
-    body:JSON.stringify(data)
+    body: JSON.stringify(data)
   });
 
   addressOverlay.style.display = "none";
-
+  // ✅ reset after save (IMPORTANT)
+  const saveBtn = addressOverlay.querySelector(".saveAddressBtn");
+  saveBtn.dataset.id = "";
   loadSavedAddress();
 
 });
 
-async function setDefaultAddress(id){
+async function setDefaultAddress(id) {
 
   const token = localStorage.getItem("token");
 
-  await fetch(`http://localhost:5000/api/addresses/default/${id}`,{
-    method:"PUT",
-    headers:{
-      Authorization:`Bearer ${token}`
+  await fetch(`http://localhost:5000/api/addresses/default/${id}`, {
+    method: "PUT",
+    headers: {
+      Authorization: `Bearer ${token}`
     }
   });
 
   loadSavedAddress();
 }
 
-function addNewAddress(){
+function addNewAddress() {
 
   const list = document.querySelector(".address-list");
 
@@ -317,7 +323,7 @@ function addNewAddress(){
 const addressOverlay = document.getElementById("addressOverlay");
 const cancelOverlay = document.getElementById("cancelOverlay");
 
-document.addEventListener("click", function(e) {
+document.addEventListener("click", function (e) {
 
   // OPEN OVERLAY
   if (e.target.classList.contains("add-address")) {
@@ -325,7 +331,11 @@ document.addEventListener("click", function(e) {
     // clear old values
     const inputs = addressOverlay.querySelectorAll("input");
     inputs.forEach(i => i.value = "");
-
+    addressOverlay.querySelector(".stateInput").value = "Maharashtra";
+    addressOverlay.querySelector(".stateInput").readOnly = true;
+    // ✅ RESET ID (CRITICAL FIX)
+    const saveBtn = addressOverlay.querySelector(".saveAddressBtn");
+    saveBtn.dataset.id = "";
     addressOverlay.style.display = "flex";
   }
 
@@ -338,68 +348,145 @@ document.addEventListener("click", function(e) {
 
 });
 
+document.addEventListener("click", (e) => {
+
+  if (!e.target.classList.contains("editAddressBtn")) return;
+
+  const id = e.target.dataset.id;
+
+  // find address from current list
+  const allCards = document.querySelectorAll(".address-card");
+
+  const selected = Array.from(allCards).find(card =>
+    card.querySelector(".editAddressBtn").dataset.id === id
+  );
+
+  // fetch full data again (clean way)
+  fetch(`http://localhost:5000/api/addresses`, {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem("token")}`
+    }
+  })
+    .then(res => res.json())
+    .then(addresses => {
+
+      const addr = addresses.find(a => a._id === id);
+      if (!addr) return;
+
+      // fill modal inputs
+      addressOverlay.querySelector(".nameInput").value = addr.name || "";
+      addressOverlay.querySelector(".phoneInput").value = addr.phone || "";
+      addressOverlay.querySelector(".pincodeInput").value = addr.pincode || "";
+      const stateInput = addressOverlay.querySelector(".stateInput");
+      // Force Maharashtra always
+      stateInput.value = "Maharashtra";
+      stateInput.readOnly = true;
+      addressOverlay.querySelector(".addressInput").value = addr.addressLine || "";
+      addressOverlay.querySelector(".landmarkInput").value = addr.landmark || "";
+      addressOverlay.querySelector(".cityInput").value = addr.city || "";
+      addressOverlay.querySelector(".defaultAddress").checked = addr.isDefault || false;
+
+      // attach ID to save button
+      const saveBtn = addressOverlay.querySelector(".saveAddressBtn");
+      saveBtn.dataset.id = addr._id;
+
+      // open modal
+      addressOverlay.style.display = "flex";
+
+    });
+
+});
+document.addEventListener("click", (e) => {
+
+  if (!e.target.classList.contains("setDefaultBtn")) return;
+
+  const id = e.target.dataset.id;
+
+  setDefaultAddress(id);
+
+});
+// orders section 
+let userOrders = [];
+
+async function fetchUserOrders() {
+  const res = await fetch("http://localhost:5000/api/orders");
+  const data = await res.json();
+  userOrders = data.orders;
+  renderOrders();
+}
 function loadOrders() {
   profileContent.innerHTML = `
     <div class="edit-box">
+      <div class="address-header order-header">
+        <h2>My Orders</h2>
 
-    <div class="address-header order-header">
-      <h2>My Orders</h2>
-
-      <div class="filter-wrapper">
-        <span class="order-filter" id="orderFilterBtn">FILTER</span>
-
-        <div class="filter-dropdown" id="filterDropdown">
-          <div data-filter="recent">Most Recent</div>
-          <div data-filter="returnable">Available for Return/Exchange</div>
-          <div data-filter="review">Yet To Be Reviewed</div>
-        </div>
-      </div>
-    </div>
-
-      <!-- Order Card 1 -->
-      <div class="order-card">
-        <div class="order-top">
-          <span>Successfully Delivered On 20th January 2026</span>
-          <span class="review-link">REVIEW PRODUCT</span>
-        </div>
-
-        <div class="order-body">
-          <img src="../images/product.jpg" class="order-img">
-
-          <div class="order-details">
-            <h3>Pink Ethnic Suit</h3>
-            <p>Colour: 05-BIHU BLISS</p>
-            <p>Size : M &nbsp;&nbsp; Quantity : 1</p>
-            <small>Exchange/Return Window Closed On Tue, 4 Oct 2022</small>
+        <div class="filter-wrapper">
+          <span class="order-filter" id="orderFilterBtn">FILTER</span>
+          <div class="filter-dropdown" id="filterDropdown">
+            <div data-filter="recent">Most Recent</div>
+            <div data-filter="returnable">Available for Return/Exchange</div>
+            <div data-filter="review">Yet To Be Reviewed</div>
           </div>
         </div>
       </div>
 
-      <!-- Order Card 2 -->
-      <div class="order-card">
-        <div class="order-top">
-          <span>Successfully Delivered On 20th January 2026</span>
-          <span class="review-link">REVIEW PRODUCT</span>
-        </div>
-
-        <div class="order-body">
-          <img src="../images/product.jpg" class="order-img">
-
-          <div class="order-details">
-            <h3>Pink Ethnic Suit</h3>
-            <p>Colour: 05-BIHU BLISS</p>
-            <p>Size : M &nbsp;&nbsp; Quantity : 1</p>
-
-            <div class="order-actions">
-              <button class="small-btn">Request Exchange</button>
-              <button class="small-btn">Request Return</button>
-            </div>
-          </div>
-        </div>
-      </div>
-
+      <div id="ordersContainer"></div>
     </div>
   `;
+
+  renderOrders();
+}
+
+function renderOrders() {
+  const container = document.getElementById("ordersContainer");
+  container.innerHTML = "";
+
+  userOrders.forEach(order => {
+
+    order.items.forEach(item => {
+
+      const card = document.createElement("div");
+      card.className = "order-card";
+
+      card.innerHTML = `
+        <div class="order-top">
+          <span>
+            ${getStatusText(order.status)}
+          </span>
+          <span class="review-link">REVIEW PRODUCT</span>
+        </div>
+
+        <div class="order-body">
+          <img src="${
+            item.productId?.images?.[0] || '../images/product.jpg'
+          }" class="order-img">
+
+          <div class="order-details">
+            <h3>${item.productId?.name}</h3>
+
+            <p>Colour: ${item.color || "N/A"}</p>
+            <p>Size: ${item.size || "N/A"} &nbsp;&nbsp; Quantity: ${item.quantity}</p>
+
+            <small>Order ID: ${order.orderId}</small>
+          </div>
+        </div>
+      `;
+
+      container.appendChild(card);
+    });
+
+  });
+}
+
+function getStatusText(status) {
+  switch(status) {
+    case "Pending": return "Order Placed";
+    case "Confirmed": return "Order Confirmed";
+    case "Shipped": return "Shipped";
+    case "Delivered": return "Successfully Delivered";
+    case "Cancelled": return "Cancelled";
+    default: return status;
+  }
 }
 
 document.addEventListener("click", function (e) {
@@ -438,14 +525,14 @@ const submitReview = document.getElementById("submitReview");
 let selectedRating = 0;
 
 /* Open Overlay */
-document.addEventListener("click", function(e) {
+document.addEventListener("click", function (e) {
   if (e.target.classList.contains("review-link")) {
     reviewOverlay.style.display = "flex";
   }
 });
 
 /* Close when clicking outside */
-reviewOverlay.addEventListener("click", function(e) {
+reviewOverlay.addEventListener("click", function (e) {
   if (!reviewBox.contains(e.target)) {
     reviewOverlay.style.display = "none";
   }
@@ -453,7 +540,7 @@ reviewOverlay.addEventListener("click", function(e) {
 
 /* Star Click Logic */
 stars.forEach(star => {
-  star.addEventListener("click", function() {
+  star.addEventListener("click", function () {
     selectedRating = this.getAttribute("data-value");
 
     stars.forEach(s => s.classList.remove("active"));
@@ -465,7 +552,7 @@ stars.forEach(star => {
 });
 
 /* Submit */
-submitReview.addEventListener("click", function() {
+submitReview.addEventListener("click", function () {
 
   const consent = document.getElementById("reviewConsent").checked;
 

@@ -384,14 +384,21 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 
 /* =============================
-   ADD TO CART
+   ADD TO CART (DB VERSION)
 ============================= */
 
-document.addEventListener("click", (e) => {
+document.addEventListener("click", async (e) => {
 
   if (!e.target.closest(".btn-secondary")) return;
 
   if (!currentProduct) return;
+
+  const userId = localStorage.getItem("userId");
+
+  if (!userId) {
+    alert("Please login first");
+    return;
+  }
 
   if (!selectedSize) {
     alert("Please select a size");
@@ -403,41 +410,27 @@ document.addEventListener("click", (e) => {
     return;
   }
 
-  const product = {
+  try {
 
-    productId: currentProduct._id,
-    name: currentProduct.name,
-    images: currentProduct.images,
-    price: currentProduct.discountedPrice,
-    originalPrice: currentProduct.originalPrice,
-    size: selectedSize,
-    color: selectedColor,
-    quantity: 1
+    await fetch("http://localhost:5000/api/cart/add", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        userId,
+        productId: currentProduct._id,
+        size: selectedSize,
+        color: selectedColor,
+        quantity: 1
+      })
+    });
 
-  };
+    alert("Product added to cart");
 
-  let cart = JSON.parse(localStorage.getItem("cart")) || [];
-
-
-  const existing = cart.find(item =>
-    item.productId === product.productId &&
-    item.size === product.size &&
-    item.color === product.color
-  );
-
-
-  if (existing) {
-
-    existing.quantity += 1;
-
-  } else {
-
-    cart.push(product);
-
+  } catch (err) {
+    console.error("Cart add error:", err);
+    alert("Failed to add to cart");
   }
-
-  localStorage.setItem("cart", JSON.stringify(cart));
-
-  alert("Product added to cart");
 
 });

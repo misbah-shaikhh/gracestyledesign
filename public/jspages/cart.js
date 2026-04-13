@@ -9,6 +9,10 @@ const addressOverlay = document.getElementById("addressOverlay");
 const cancelOverlay = document.getElementById("cancelOverlay");
 const saveBtn = document.querySelector(".saveAddressBtn");
 
+const paymentOverlay = document.getElementById("paymentOverlay");
+const paymentBox = document.getElementById("paymentBox");
+const closePaymentOverlay = document.getElementById("closePaymentOverlay");
+
 /* ADDRESS FORM INPUTS */
 
 const nameInput = document.querySelector(".nameInput");
@@ -21,6 +25,22 @@ const cityInput = document.querySelector(".cityInput");
 const defaultInput = document.querySelector(".defaultAddress");
 
 let selectedAddressId = null;
+let cart = [];
+
+// Mobile → numbers only
+phoneInput.addEventListener("input", (e) => {
+  e.target.value = e.target.value.replace(/\D/g, "").slice(0, 10);
+});
+
+// Pincode → numbers only
+pincodeInput.addEventListener("input", (e) => {
+  e.target.value = e.target.value.replace(/\D/g, "").slice(0, 6);
+});
+
+// Name → only letters
+nameInput.addEventListener("input", (e) => {
+  e.target.value = e.target.value.replace(/[^A-Za-z\s]/g, "");
+});
 
 /* -------------------- */
 /* OPEN METHOD OVERLAY */
@@ -61,6 +81,8 @@ document.addEventListener("click", function (e) {
 
     editAddressId = null;
     clearAddressForm();
+    stateInput.value = "Maharashtra";
+    stateInput.readOnly = true;
 
     methodOverlay.style.display = "none";
     addressOverlay.style.display = "flex";
@@ -76,7 +98,8 @@ document.addEventListener("click", function (e) {
     nameInput.value = card.dataset.name || "";
     phoneInput.value = card.dataset.phone || "";
     pincodeInput.value = card.dataset.pincode || "";
-    stateInput.value = card.dataset.state || "";
+    stateInput.value = "Maharashtra";
+    stateInput.readOnly = true;
     addressInput.value = card.dataset.address || "";
     localityInput.value = card.dataset.locality || "";
     cityInput.value = card.dataset.city || "";
@@ -135,13 +158,31 @@ if (saveBtn) {
 
     /* VALIDATION */
 
-    if (!addressData.name || !addressData.phone || !addressData.addressLine) {
-      return showTopMessage("Please fill required fields");
+    // ================= VALIDATIONS =================
+
+    // All fields required
+    if (!addressData.name || !addressData.phone || !addressData.pincode ||
+      !addressData.state || !addressData.addressLine || !addressData.city) {
+      return showTopMessage("All fields are required");
     }
 
-    if (!/^\d{10}$/.test(addressData.phone)) {
-      return showTopMessage("Phone number must be 10 digits");
+    // Name → only letters
+    if (!/^[A-Za-z\s]+$/.test(addressData.name)) {
+      return showTopMessage("Name must contain only alphabets");
     }
+
+    // Mobile → Indian only
+    if (!/^[6-9]\d{9}$/.test(addressData.phone)) {
+      return showTopMessage("Enter valid Indian mobile number");
+    }
+
+    // Pincode → Maharashtra only
+    if (!/^4\d{5}$/.test(addressData.pincode)) {
+      return showTopMessage("Enter valid Maharashtra pincode");
+    }
+
+    // Force Maharashtra
+    addressData.state = "Maharashtra";
 
     try {
 
@@ -193,7 +234,8 @@ function clearAddressForm() {
   nameInput.value = "";
   phoneInput.value = "";
   pincodeInput.value = "";
-  stateInput.value = "";
+  stateInput.value = "Maharashtra"; // 🔥 default
+  stateInput.readOnly = true;
   addressInput.value = "";
   localityInput.value = "";
   cityInput.value = "";
@@ -337,6 +379,109 @@ if (addBtn) {
 
   });
 }
+/* OPEN PAYMENT OVERLAY */
+document.addEventListener("click", (e) => {
+
+  const btn = e.target.closest(".confirm-order-btn");
+  if (!btn) return;
+
+  console.log("Opening payment overlay...");
+
+  if (!selectedAddressId) {
+    return showTopMessage("Please select an address");
+  }
+
+  methodOverlay.style.display = "none";
+
+  if (paymentOverlay) {
+    paymentOverlay.style.display = "flex";
+  } else {
+    console.error("paymentOverlay not found");
+  }
+
+});
+
+/* -------------------------- */
+/* CLOSE PAYMENT OVERLAY */
+/* -------------------------- */
+
+if (closePaymentOverlay) {
+  closePaymentOverlay.addEventListener("click", () => {
+    paymentOverlay.style.display = "none";
+  });
+}
+
+if (paymentOverlay && paymentBox) {
+  paymentOverlay.addEventListener("click", (e) => {
+    if (!paymentBox.contains(e.target)) {
+      paymentOverlay.style.display = "none";
+    }
+  });
+}
+
+/* -------------------------- */
+/* PLACE FINAL ORDER */
+/* -------------------------- */
+
+document.querySelector(".final-order-btn")
+  ?.addEventListener("click", async () => {
+
+    const userId = localStorage.getItem("userId");
+
+    if (!selectedAddressId) {
+      return showTopMessage("No address selected");
+    }
+
+    if (!cart.length) {
+      return showTopMessage("Cart is empty");
+    }
+
+    try {
+
+      const res = await fetch("http://localhost:5000/api/orders", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${localStorage.getItem("token")}` // 🔥 ADD THIS
+        },
+        body: JSON.stringify({
+          userId,
+          addressId: selectedAddressId,
+          items: cart,
+          paymentMethod: "COD"
+        })
+      });
+
+      const data = await res.json();
+
+      if (res.ok) {
+
+        showTopMessage("Order Placed Successfully 🎉");
+
+        // 🔥 CLEAR CART FROM DB
+        await fetch("http://localhost:5000/api/cart/clear", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({ userId })
+        });
+
+        paymentOverlay.style.display = "none";
+
+        setTimeout(() => {
+          window.location.href = "../htmlpages/userprofile.html?section=orders";
+        }, 1500);
+      } else {
+        showTopMessage(data.message || "Order failed");
+      }
+
+    } catch (err) {
+      console.error(err);
+      showTopMessage("Server error");
+    }
+
+  });
 
 /* ================================
    CART SYSTEM
@@ -353,9 +498,51 @@ document.addEventListener("DOMContentLoaded", () => {
   const cartCountEl = document.getElementById("cartCount");
   const overlayCountEl = document.getElementById("cartItemCount");
 
-  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+  async function loadCart() {
 
-  renderCart();
+    const userId = localStorage.getItem("userId");
+    if (!userId) return;
+
+    try {
+
+      const res = await fetch(`http://localhost:5000/api/cart/${userId}`);
+
+      if (!res.ok) {
+        console.error("Cart fetch failed");
+        return;
+      }
+
+      const data = await res.json();
+
+      if (!Array.isArray(data)) {
+        console.error("Cart is not array:", data);
+        return;
+      }
+
+      cart = data.map(item => ({
+        productId: item.productId._id,
+        name: item.productId.name,
+        images: item.productId.images,
+        price: item.productId.discountedPrice,
+        originalPrice: item.productId.originalPrice,
+        size: item.size,
+        color: item.color,
+        quantity: item.quantity,
+        sizes: [...new Set(
+          item.productId.variants
+            ?.filter(v => v.color === item.color && v.stock > 0)
+            .map(v => v.size)
+        )] || []
+      }));
+
+      renderCart();
+
+    } catch (err) {
+      console.error("Cart load error:", err);
+    }
+  }
+
+  loadCart();
 
 
   /* =====================
@@ -364,8 +551,22 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function renderCart() {
 
-    if (!cartItemsContainer) return;
+    if (cart.length === 0) {
+      cartItemsContainer.innerHTML = "<p>Your cart is empty</p>";
 
+      totalMRPEl.textContent = "₹0";
+      discountEl.textContent = "₹0";
+      totalAmountEl.textContent = "₹0";
+
+      document.querySelectorAll("#deliveryFee").forEach(el => {
+        el.textContent = "₹0";
+      });
+
+      if (cartCountEl) cartCountEl.textContent = 0;
+      if (overlayCountEl) overlayCountEl.textContent = 0;
+
+      return;
+    }
     cartItemsContainer.innerHTML = "";
 
     let totalMRP = 0;
@@ -381,6 +582,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const cartItem = document.createElement("div");
       cartItem.classList.add("cart-item");
+      cartItem.dataset.id = item.productId; // 🔥 IMPORTANT
 
       cartItem.innerHTML = `
 
@@ -402,8 +604,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
             <div>
               <label>Size:</label>
-              <select>
-                <option selected>${item.size}</option>
+              <select class="size-select" data-index="${index}">
+                ${item.sizes.map(s => `
+                  <option value="${s}" ${s === item.size ? "selected" : ""}>
+                    ${s}
+                  </option>
+                `).join("")}
               </select>
             </div>
 
@@ -433,7 +639,20 @@ document.addEventListener("DOMContentLoaded", () => {
         </div>
 
       `;
+      cartItem.addEventListener("click", (e) => {
 
+        // 🚫 Ignore clicks on interactive elements
+        if (
+          e.target.closest(".qty-input") ||
+          e.target.closest(".size-select") ||
+          e.target.closest(".remove-btn")
+        ) {
+          return;
+        }
+
+        // ✅ Only navigate if normal area clicked
+        window.location.href = `../htmlpages/prodview.html?id=${item.productId}`;
+      });
       cartItemsContainer.appendChild(cartItem);
 
     });
@@ -443,23 +662,31 @@ document.addEventListener("DOMContentLoaded", () => {
        PRICE CALCULATION
     ===================== */
 
-    const platformFee = 23;
-    const totalAmount = totalMRP - totalDiscount + platformFee;
+    const deliveryFee = 100;
+    const totalAmount = totalMRP - totalDiscount + deliveryFee;
 
-    if (totalMRPEl)
-      totalMRPEl.textContent = `₹${totalMRP.toLocaleString()}`;
+    document.querySelectorAll("#totalMRP").forEach(el => {
+      el.textContent = `₹${totalMRP.toLocaleString()}`;
+    });
 
-    if (discountEl)
-      discountEl.textContent = `-₹${totalDiscount.toLocaleString()}`;
+    document.querySelectorAll("#totalDiscount").forEach(el => {
+      el.textContent = `-₹${totalDiscount.toLocaleString()}`;
+    });
 
-    if (totalAmountEl)
-      totalAmountEl.textContent = `₹${totalAmount.toLocaleString()}`;
+    document.querySelectorAll("#deliveryFee").forEach(el => {
+      el.textContent = `₹${deliveryFee}`;
+    });
 
+    document.querySelectorAll("#totalAmount").forEach(el => {
+      el.textContent = `₹${totalAmount.toLocaleString()}`;
+    });
+
+    const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
     if (cartCountEl)
-      cartCountEl.textContent = cart.length;
+      cartCountEl.textContent = totalItems;
 
     if (overlayCountEl)
-      overlayCountEl.textContent = cart.length;
+      overlayCountEl.textContent = totalItems;
 
   }
 
@@ -468,18 +695,30 @@ document.addEventListener("DOMContentLoaded", () => {
      REMOVE ITEM
   ===================== */
 
-  document.addEventListener("click", (e) => {
+  document.addEventListener("click", async (e) => {
 
     if (!e.target.classList.contains("remove-btn")) return;
+    e.stopPropagation();
 
     const index = e.target.dataset.index;
+    const item = cart[index];
 
-    cart.splice(index, 1);
+    const userId = localStorage.getItem("userId");
 
-    localStorage.setItem("cart", JSON.stringify(cart));
+    await fetch("http://localhost:5000/api/cart/remove", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        userId,
+        productId: item.productId,
+        size: item.size,
+        color: item.color
+      })
+    });
 
-    renderCart();
-
+    loadCart(); // 🔥 reload from DB
   });
 
 
@@ -487,57 +726,109 @@ document.addEventListener("DOMContentLoaded", () => {
      UPDATE QUANTITY
   ===================== */
 
-  document.addEventListener("change", (e) => {
+  document.addEventListener("change", async (e) => {
 
     if (!e.target.classList.contains("qty-input")) return;
+    e.stopPropagation();
 
     const index = e.target.dataset.index;
+    const item = cart[index];
 
-    cart[index].quantity = parseInt(e.target.value) || 1;
+    const userId = localStorage.getItem("userId");
 
-    localStorage.setItem("cart", JSON.stringify(cart));
+    let newQty = parseInt(e.target.value);
 
-    renderCart();
+    // ❌ Invalid values handling
+    if (isNaN(newQty) || newQty < 1) {
+      newQty = 1;
+    }
+
+    // Update input visually also
+    e.target.value = newQty;
+
+    await fetch("http://localhost:5000/api/cart/update", {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        userId,
+        productId: item.productId,
+        size: item.size,
+        color: item.color,
+        quantity: newQty
+      })
+    });
+
+    loadCart(); // 🔥 reload
+  });
+
+  // Update size 
+  document.addEventListener("change", async (e) => {
+
+    if (!e.target.classList.contains("size-select")) return;
+
+    e.stopPropagation();
+
+    const index = e.target.dataset.index;
+    const item = cart[index];
+
+    const newSize = e.target.value;
+    const userId = localStorage.getItem("userId");
+
+    await fetch("http://localhost:5000/api/cart/update", {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        userId,
+        productId: item.productId,
+        size: item.size, // old size
+        color: item.color,
+        newSize: newSize
+      })
+    });
+
+    loadCart(); // refresh
 
   });
 
-});
+  /* =============================
+     YOU MAY ALSO LIKE PRODUCTS
+  ============================= */
 
-/* =============================
-   YOU MAY ALSO LIKE PRODUCTS
-============================= */
+  async function loadRecommendedProducts() {
 
-async function loadRecommendedProducts() {
+    const container = document.getElementById("recommendTrack");
+    if (!container) return;
 
-  const container = document.getElementById("recommendTrack");
-  if (!container) return;
+    try {
 
-  try {
+      const res = await fetch("http://localhost:5000/api/products");
+      const products = await res.json();
 
-    const res = await fetch("http://localhost:5000/api/products");
-    const products = await res.json();
+      if (!products.length) return;
 
-    if (!products.length) return;
+      /* RANDOMIZE PRODUCTS */
 
-    /* RANDOMIZE PRODUCTS */
+      const shuffled = products.sort(() => 0.5 - Math.random());
 
-    const shuffled = products.sort(() => 0.5 - Math.random());
+      const randomProducts = shuffled.slice(0, 3);
 
-    const randomProducts = shuffled.slice(0, 3);
+      container.innerHTML = "";
 
-    container.innerHTML = "";
+      randomProducts.forEach(product => {
 
-    randomProducts.forEach(product => {
+        const discount = Math.round(
+          ((product.originalPrice - product.discountedPrice) / product.originalPrice) * 100
+        );
 
-      const discount = Math.round(
-        ((product.originalPrice - product.discountedPrice) / product.originalPrice) * 100
-      );
+        const card = document.createElement("div");
+        card.classList.add("product-card");
+        card.dataset.id = product._id;
 
-      const card = document.createElement("div");
-      card.classList.add("product-card");
-      card.dataset.id = product._id;
-
-      card.innerHTML = `
+        card.innerHTML = `
 
         <div class="discount-tag">${discount}% OFF</div>
 
@@ -572,14 +863,15 @@ async function loadRecommendedProducts() {
 
       `;
 
-      container.appendChild(card);
+        container.appendChild(card);
 
-    });
+      });
 
-  } catch (err) {
-    console.error("Recommendation load error", err);
+    } catch (err) {
+      console.error("Recommendation load error", err);
+    }
+
   }
 
-}
-
-loadRecommendedProducts();
+  loadRecommendedProducts();
+});
