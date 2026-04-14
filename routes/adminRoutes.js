@@ -542,7 +542,7 @@ router.post("/payments/:id/send-invoice", async (req, res) => {
     });
 
     // 🔐 SECURE LINK
-    const invoiceUrl = `http://localhost:5000/api/admin/payments/${payment._id}/invoice?token=${payment.transactionId}`;
+    const invoiceUrl = `https://gsd-backend-i5gj.onrender.com/api/admin/payments/${payment._id}/invoice?token=${payment.transactionId}`;
 
     // 🔥 GENERATE PDF
     const pdfBuffer = await generateInvoicePDF(payment);
