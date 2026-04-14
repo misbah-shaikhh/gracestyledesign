@@ -6,7 +6,8 @@ const Order = require("../models/orders");
 const Product = require("../models/product"); // 🔥 ADD THIS
 
 const PDFDocument = require("pdfkit");
-const nodemailer = require("nodemailer");
+const { Resend } = require("resend");
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 async function generateInvoicePDF(payment) {
   return new Promise((resolve, reject) => {
@@ -483,24 +484,18 @@ router.post("/payments/:id/send-invoice", async (req, res) => {
       });
     }
 
-    const transporter = nodemailer.createTransport({
-      service: "gmail",
-      auth: {
-        user: process.env.EMAIL_USER,
-        pass: process.env.EMAIL_PASS
-      }
-    });
-
-    // 🔐 SECURE LINK
+    // 🔗 Invoice link (optional but good)
     const invoiceUrl = `https://gsd-backend-i5gj.onrender.com/api/admin/payments/${payment._id}/invoice?token=${payment.transactionId}`;
 
-    // 🔥 GENERATE PDF
+    // 📄 Generate PDF
     const pdfBuffer = await generateInvoicePDF(payment);
 
-    await transporter.sendMail({
-      from: process.env.EMAIL_USER,
+    // 🚀 SEND EMAIL USING RESEND
+    await resend.emails.send({
+      from: "onboarding@resend.dev", // later change to your domain
       to: payment.userId.email,
-      subject: "Your Invoice - Grace Style",
+      subject: "Your Invoice - Grace Style 💖",
+
       html: `
         <div style="font-family: Arial; padding: 20px;">
           <h2>Payment Confirmed ✅</h2>
@@ -520,12 +515,13 @@ router.post("/payments/:id/send-invoice", async (req, res) => {
           <p>Thank you for shopping with us 💖</p>
         </div>
       `,
+
       attachments: [
         {
           filename: `invoice-${payment.transactionId}.pdf`,
-          content: pdfBuffer
-        }
-      ]
+          content: pdfBuffer,
+        },
+      ],
     });
 
     res.json({ message: "Invoice sent successfully" });
