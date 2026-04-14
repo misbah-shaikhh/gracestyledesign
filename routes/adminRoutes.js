@@ -5,169 +5,119 @@ const Payment = require("../models/payment");
 const Order = require("../models/orders");
 const Product = require("../models/product"); // 🔥 ADD THIS
 
-const puppeteer = require("puppeteer");
+const PDFDocument = require("pdfkit");
 const nodemailer = require("nodemailer");
 
 async function generateInvoicePDF(payment) {
+  return new Promise((resolve, reject) => {
+    try {
+      const doc = new PDFDocument({ margin: 40 });
+      const buffers = [];
 
-  const html = `
-  <html>
-  <head>
-    <style>
-      body {
-        font-family: Arial, sans-serif;
-        padding: 40px;
-        color: #333;
-      }
+      doc.on("data", buffers.push.bind(buffers));
+      doc.on("end", () => resolve(Buffer.concat(buffers)));
 
-      .header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        border-bottom: 2px solid #000;
-        padding-bottom: 10px;
-      }
+      // =========================
+      // HEADER
+      // =========================
+      doc
+        .fontSize(22)
+        .font("Helvetica-Bold")
+        .text("GRACE STYLE", { align: "left" });
 
-      .brand {
-        font-size: 26px;
-        font-weight: 700;
-        letter-spacing: 2px;
-      }
+      doc
+        .fontSize(12)
+        .font("Helvetica")
+        .text("INVOICE", { align: "right" });
 
-      .invoice-title {
-        font-size: 14px;
-        letter-spacing: 3px;
-        color: #777;
-      }
+      doc.moveDown();
 
-      .section {
-        margin-top: 30px;
-      }
+      // =========================
+      // ORDER INFO
+      // =========================
+      doc.fontSize(10);
+      doc.text(`Transaction ID: ${payment.transactionId}`);
+      doc.text(`Date: ${new Date().toLocaleDateString()}`);
+      doc.text(`Payment: Cash on Delivery`);
 
-      .section h3 {
-        margin-bottom: 10px;
-        border-bottom: 1px solid #ddd;
-        padding-bottom: 5px;
-      }
+      doc.moveDown();
 
-      table {
-        width: 100%;
-        border-collapse: collapse;
-        margin-top: 15px;
-      }
+      // =========================
+      // CUSTOMER
+      // =========================
+      doc.font("Helvetica-Bold").text("Customer Details");
+      doc.font("Helvetica");
+      doc.text(payment.userId.name);
+      doc.text(payment.userId.email);
 
-      table th, table td {
-        padding: 10px;
-        border-bottom: 1px solid #eee;
-      }
+      doc.moveDown();
 
-      table th {
-        background: #f8f8f8;
-      }
+      // =========================
+      // ADDRESS
+      // =========================
+      doc.font("Helvetica-Bold").text("Shipping Address");
+      doc.font("Helvetica");
+      doc.text(payment.orderId?.addressId?.street || "");
+      doc.text(
+        `${payment.orderId?.addressId?.city || ""}, ${payment.orderId?.addressId?.state || ""} - ${payment.orderId?.addressId?.pincode || ""}`
+      );
 
-      .total {
-        text-align: right;
-        margin-top: 20px;
-        font-size: 18px;
-        font-weight: bold;
-      }
+      doc.moveDown();
 
-      .footer {
-        margin-top: 40px;
-        text-align: center;
-        color: #777;
-        font-size: 12px;
-      }
-    </style>
-  </head>
+      // =========================
+      // TABLE HEADER
+      // =========================
+      doc.font("Helvetica-Bold");
+      doc.text("Item", 40, doc.y, { continued: true });
+      doc.text("Size", 200, doc.y, { continued: true });
+      doc.text("Color", 250, doc.y, { continued: true });
+      doc.text("Qty", 320, doc.y, { continued: true });
+      doc.text("Price", 370, doc.y, { continued: true });
+      doc.text("Total", 450);
 
-  <body>
+      doc.moveDown(0.5);
+      doc.moveTo(40, doc.y).lineTo(550, doc.y).stroke();
 
-    <div class="header">
-      <div class="brand">GRACE STYLE</div>
-      <div class="invoice-title">INVOICE</div>
-    </div>
+      // =========================
+      // ITEMS
+      // =========================
+      doc.font("Helvetica");
 
-    <div class="section">
-      <p><strong>Transaction ID:</strong> ${payment.transactionId}</p>
-      <p><strong>Date:</strong> ${new Date().toLocaleDateString()}</p>
-      <p><strong>Payment:</strong> Cash on Delivery</p>
-    </div>
+      payment.items.forEach((item) => {
+        doc.moveDown(0.5);
 
-    <div class="section">
-      <h3>Customer Details</h3>
-      <p>${payment.userId.name}</p>
-      <p>${payment.userId.email}</p>
-    </div>
+        doc.text(item.name, 40, doc.y, { continued: true });
+        doc.text(item.size, 200, doc.y, { continued: true });
+        doc.text(item.color, 250, doc.y, { continued: true });
+        doc.text(item.quantity.toString(), 320, doc.y, { continued: true });
+        doc.text(`₹${item.price}`, 370, doc.y, { continued: true });
+        doc.text(`₹${item.price * item.quantity}`, 450);
+      });
 
-    <div class="section">
-      <h3>Shipping Address</h3>
-      <p>
-        ${payment.orderId?.addressId?.street || ""}<br/>
-        ${payment.orderId?.addressId?.city || ""}<br/>
-        ${payment.orderId?.addressId?.state || ""} - ${payment.orderId?.addressId?.pincode || ""}
-      </p>
-    </div>
+      doc.moveDown();
+      doc.moveTo(40, doc.y).lineTo(550, doc.y).stroke();
 
-    <div class="section">
-      <h3>Order Items</h3>
+      // =========================
+      // TOTAL
+      // =========================
+      doc.moveDown();
+      doc.font("Helvetica-Bold").fontSize(14);
+      doc.text(`Total: ₹${payment.totalAmount}`, { align: "right" });
 
-      <table>
-        <thead>
-          <tr>
-            <th>Item</th>
-            <th>Size</th>
-            <th>Color</th>
-            <th>Qty</th>
-            <th>Price</th>
-            <th>Total</th>
-          </tr>
-        </thead>
+      // =========================
+      // FOOTER
+      // =========================
+      doc.moveDown(2);
+      doc.fontSize(10).font("Helvetica").text(
+        "Thank you for shopping with GRACE STYLE ❤️",
+        { align: "center" }
+      );
 
-        <tbody>
-          ${payment.items.map(item => `
-            <tr>
-              <td>${item.name}</td>
-              <td>${item.size}</td>
-              <td>${item.color}</td>
-              <td>${item.quantity}</td>
-              <td>₹${item.price}</td>
-              <td>₹${item.price * item.quantity}</td>
-            </tr>
-          `).join("")}
-        </tbody>
-      </table>
-
-      <div class="total">
-        Total: ₹${payment.totalAmount}
-      </div>
-    </div>
-
-    <div class="footer">
-      Thank you for shopping with GRACE STYLE ❤️ <br/>
-      support@gracestyle.com
-    </div>
-
-  </body>
-  </html>
-  `;
-
-  const browser = await puppeteer.launch({
-    headless: true,
-    args: ["--no-sandbox", "--disable-setuid-sandbox"],
+      doc.end();
+    } catch (err) {
+      reject(err);
+    }
   });
-
-  const page = await browser.newPage();
-  await page.setContent(html, { waitUntil: "domcontentloaded" });
-
-  const pdfBuffer = await page.pdf({
-    format: "A4",
-    printBackground: true
-  });
-
-  await browser.close();
-
-  return pdfBuffer;
 }
 
 /* ---------------- GET ALL USERS (ADMIN) ---------------- */
