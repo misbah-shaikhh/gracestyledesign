@@ -88,7 +88,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   async function loadHomepageProducts() {
     try {
-      const res = await fetch("http://localhost:5000/api/products");
+      const res = await fetch("https://gsd-backend-i5gj.onrender.com/api/products");
       allProducts = await res.json();
 
       renderLimitedCollection();
@@ -164,7 +164,7 @@ async function syncWishlistHearts() {
 
   try {
 
-    const res = await fetch(`http://localhost:5000/api/wishlist/${userId}`);
+    const res = await fetch(`https://gsd-backend-i5gj.onrender.com/api/wishlist/${userId}`);
     const wishlist = await res.json();
 
     // convert ids to strings
@@ -225,7 +225,7 @@ document.addEventListener("click", (e) => {
     const card = heartBtn.closest(".product-card");
     const productId = card.dataset.id;
 
-    fetch("http://localhost:5000/api/wishlist/toggle", {
+    fetch("https://gsd-backend-i5gj.onrender.com/api/wishlist/toggle", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
