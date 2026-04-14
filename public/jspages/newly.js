@@ -107,7 +107,7 @@ async function fetchAndRenderNewlyAdded() {
   if (!productGrid) return;
 
   try {
-    const res = await fetch("/api/products"); // fetch all products
+    const res = await fetch("https://gsd-backend-i5gj.onrender.com/api/products"); // fetch all products
     let products = await res.json();
 
   // --- FILTER BY PRICE ---

@@ -69,7 +69,7 @@ async function fetchAndRenderBestsellers() {
   if (!productGrid) return;
 
   try {
-    const res = await fetch("/api/products");
+    const res = await fetch("https://gsd-backend-i5gj.onrender.com/api/products");
     let products = await res.json();
 
     // --- PICK 6 RANDOM PRODUCTS ---

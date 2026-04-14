@@ -108,7 +108,7 @@ async function fetchAndRenderProducts() {
   if (!productGrid) return;
 
   try {
-    const res = await fetch("/api/products/low-stock");
+    const res = await fetch("https://gsd-backend-i5gj.onrender.com/api/products/low-stock");
     let products = await res.json();
     if (!Array.isArray(products)) products = [];
 

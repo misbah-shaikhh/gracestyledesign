@@ -50,7 +50,7 @@ async function showOTP() {
 
     try {
 
-        const response = await fetch("http://localhost:5000/api/check-user", {
+        const response = await fetch("https://gsd-backend-i5gj.onrender.com/api/check-user", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -134,7 +134,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
             try {
 
-                const response = await fetch("http://localhost:5000/api/login", {
+                const response = await fetch("https://gsd-backend-i5gj.onrender.com/api/login", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json"

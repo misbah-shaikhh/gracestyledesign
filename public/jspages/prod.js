@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   try {
 
     // ---------------- CURRENT PRODUCT ----------------
-    const res = await fetch(`/api/products/${productId}`);
+    const res = await fetch(`https://gsd-backend-i5gj.onrender.com/api/products/${productId}`);
     if (!res.ok) throw new Error("Failed to fetch product");
 
     const p = await res.json();
@@ -260,7 +260,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   try {
 
-    const res = await fetch(`/api/products/${productId}`);
+    const res = await fetch(`https://gsd-backend-i5gj.onrender.com/api/products/${productId}`);
     const p = await res.json();
 
     currentProduct = p;
@@ -412,7 +412,7 @@ document.addEventListener("click", async (e) => {
 
   try {
 
-    await fetch("http://localhost:5000/api/cart/add", {
+    await fetch("hhttps://gsd-backend-i5gj.onrender.com/api/cart/add", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"

@@ -82,7 +82,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!productGrid) return;
 
         try {
-            const res = await fetch("/api/products");
+            const res = await fetch("https://gsd-backend-i5gj.onrender.com/api/products");
             if (!res.ok) throw new Error("Failed to fetch products");
 
             let products = await res.json();

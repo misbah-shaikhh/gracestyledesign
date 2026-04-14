@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   try {
 
-    const res = await fetch(`http://localhost:5000/api/wishlist/${userId}`);
+    const res = await fetch(`https://gsd-backend-i5gj.onrender.com/api/wishlist/${userId}`);
 
     if (!res.ok) {
       throw new Error("Failed to load wishlist");
@@ -74,7 +74,7 @@ products.forEach(product => {
       e.stopPropagation();
       // Your existing toggle logic, e.g.
       if (!isLoggedIn()) return redirectLogin();
-      fetch("http://localhost:5000/api/wishlist/toggle", {
+      fetch("https://gsd-backend-i5gj.onrender.com/api/wishlist/toggle", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ userId, productId: product._id })

@@ -7,7 +7,7 @@ async function loadEditProfile() {
 
   try {
 
-    const response = await fetch("http://localhost:5000/api/profile", {
+    const response = await fetch("https://gsd-backend-i5gj.onrender.com/api/profile", {
       method: "GET",
       headers: {
         "Authorization": `Bearer ${token}`
@@ -113,7 +113,7 @@ async function loadSavedAddress() {
 
   const token = localStorage.getItem("token");
 
-  const res = await fetch("http://localhost:5000/api/addresses", {
+  const res = await fetch("https://gsd-backend-i5gj.onrender.com/api/addresses", {
     headers: {
       Authorization: `Bearer ${token}`
     }
@@ -273,8 +273,8 @@ document.addEventListener("click", async function (e) {
   const id = e.target.dataset.id;
 
   const url = id
-    ? `http://localhost:5000/api/addresses/${id}`
-    : "http://localhost:5000/api/addresses";
+    ? `https://gsd-backend-i5gj.onrender.com/api/addresses/${id}`
+    : "https://gsd-backend-i5gj.onrender.com/api/addresses";
 
   const method = id ? "PUT" : "POST";
 
@@ -299,7 +299,7 @@ async function setDefaultAddress(id) {
 
   const token = localStorage.getItem("token");
 
-  await fetch(`http://localhost:5000/api/addresses/default/${id}`, {
+  await fetch(`https://gsd-backend-i5gj.onrender.com/api/addresses/default/${id}`, {
     method: "PUT",
     headers: {
       Authorization: `Bearer ${token}`
@@ -362,7 +362,7 @@ document.addEventListener("click", (e) => {
   );
 
   // fetch full data again (clean way)
-  fetch(`http://localhost:5000/api/addresses`, {
+  fetch(`https://gsd-backend-i5gj.onrender.com/api/addresses`, {
     headers: {
       Authorization: `Bearer ${localStorage.getItem("token")}`
     }
@@ -411,7 +411,7 @@ let userOrders = [];
 async function fetchUserOrders() {
   const userId = localStorage.getItem("userId");
 
-  const res = await fetch(`http://localhost:5000/api/orders?userId=${userId}`);
+  const res = await fetch(`https://gsd-backend-i5gj.onrender.com/api/orders?userId=${userId}`);
   const data = await res.json();
 
   console.log("Orders:", data.orders); // 🔥 debug

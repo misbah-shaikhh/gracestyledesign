@@ -23,7 +23,7 @@ async function syncWishlistHearts() {
 
   try {
 
-    const res = await fetch(`http://localhost:5000/api/wishlist/${userId}`);
+    const res = await fetch(`https://gsd-backend-i5gj.onrender.com/api/wishlist/${userId}`);
     const wishlist = await res.json();
 
     const wishlistIds = wishlist.map(p => p._id);
@@ -76,7 +76,7 @@ if (!isLoggedIn()) {
 
   try {
 
-    const res = await fetch("http://localhost:5000/api/wishlist/toggle", {
+    const res = await fetch("https://gsd-backend-i5gj.onrender.com/api/wishlist/toggle", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -234,7 +234,7 @@ document.addEventListener("click", (e) => {
 // category overlay 
 async function loadCategories() {
   try {
-    const res = await fetch("http://localhost:5000/api/categories");
+    const res = await fetch("https://gsd-backend-i5gj.onrender.com/api/categories");
     const data = await res.json();
 
     console.log("🔥 FULL RESPONSE:", data);

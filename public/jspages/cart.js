@@ -187,8 +187,8 @@ if (saveBtn) {
     try {
 
       const url = editAddressId
-        ? `http://localhost:5000/api/addresses/${editAddressId}`
-        : `http://localhost:5000/api/addresses`;
+        ? `https://gsd-backend-i5gj.onrender.com/api/addresses/${editAddressId}`
+        : `https://gsd-backend-i5gj.onrender.com/api/addresses`;
 
       const res = await fetch(url, {
         method: editAddressId ? "PUT" : "POST",
@@ -277,7 +277,7 @@ async function loadAddresses() {
     const container = document.getElementById("addressList");
     if (!container) return;
 
-    const res = await fetch("http://localhost:5000/api/addresses", {
+    const res = await fetch("https://gsd-backend-i5gj.onrender.com/api/addresses", {
       headers: {
         "Authorization": `Bearer ${localStorage.getItem("token")}`
       }
@@ -446,7 +446,7 @@ document.querySelector(".final-order-btn")
 
     try {
 
-      const res = await fetch("http://localhost:5000/api/orders", {
+      const res = await fetch("https://gsd-backend-i5gj.onrender.com/api/orders", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -467,7 +467,7 @@ document.querySelector(".final-order-btn")
         showTopMessage("Order Placed Successfully 🎉");
 
         // 🔥 CLEAR CART FROM DB
-        await fetch("http://localhost:5000/api/cart/clear", {
+        await fetch("https://gsd-backend-i5gj.onrender.com/api/cart/clear", {
           method: "POST",
           headers: {
             "Content-Type": "application/json"
@@ -513,7 +513,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     try {
 
-      const res = await fetch(`http://localhost:5000/api/cart/${userId}`);
+      const res = await fetch(`https://gsd-backend-i5gj.onrender.comapi/cart/${userId}`);
 
       if (!res.ok) {
         console.error("Cart fetch failed");
@@ -735,7 +735,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const userId = localStorage.getItem("userId");
 
-    await fetch("http://localhost:5000/api/cart/remove", {
+    await fetch("https://gsd-backend-i5gj.onrender.com/api/cart/remove", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -780,7 +780,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // Update input visually also
     e.target.value = newQty;
 
-    await fetch("http://localhost:5000/api/cart/update", {
+    await fetch("https://gsd-backend-i5gj.onrender.com/api/cart/update", {
       method: "PUT",
       headers: {
         "Content-Type": "application/json"
@@ -810,7 +810,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const newSize = e.target.value;
     const userId = localStorage.getItem("userId");
 
-    await fetch("http://localhost:5000/api/cart/update", {
+    await fetch("https://gsd-backend-i5gj.onrender.com/api/cart/update", {
       method: "PUT",
       headers: {
         "Content-Type": "application/json"
@@ -839,7 +839,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     try {
 
-      const res = await fetch("http://localhost:5000/api/products");
+      const res = await fetch("https://gsd-backend-i5gj.onrender.com/api/products");
       const products = await res.json();
 
       if (!products.length) return;
