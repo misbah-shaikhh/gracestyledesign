@@ -8,6 +8,8 @@ const Address = require("../models/address");
    CREATE ORDER
 ========================= */
 
+const Product = require("../models/product"); // 🔥 ADD THIS
+
 router.post("/", async (req, res) => {
 
     try {
@@ -18,41 +20,88 @@ router.post("/", async (req, res) => {
             return res.status(400).json({ message: "Missing required fields" });
         }
 
-        // Get address
         const address = await Address.findById(addressId);
         if (!address) {
             return res.status(404).json({ message: "Address not found" });
         }
 
-        // Calculate total
         let totalAmount = 0;
 
-        const formattedItems = items.map(item => {
+        const formattedItems = [];
+
+        // 🔥 STEP 1: LOOP ITEMS + UPDATE STOCK
+        for (const item of items) {
+
             totalAmount += item.price * item.quantity;
 
-            return {
+            // 🔥 GET PRODUCT
+            const product = await Product.findById(item.productId);
+
+            if (!product) {
+                return res.status(404).json({ message: "Product not found" });
+            }
+
+            // 🔥 FIND MATCHING VARIANT
+            const variant = product.variants.find(v =>
+                v.size === item.size && v.color === item.color
+            );
+
+            if (!variant) {
+                return res.status(400).json({ message: "Variant not found" });
+            }
+
+            // ❌ STOCK CHECK
+            if (variant.stock < item.quantity) {
+                return res.status(400).json({
+                    message: `Not enough stock for ${product.name} (${item.size}, ${item.color})`
+                });
+            }
+
+            // 🔥 SUBTRACT STOCK
+            variant.stock -= item.quantity;
+
+            // 🔥 SAVE PRODUCT
+            await product.save();
+
+            // PUSH ITEM
+            formattedItems.push({
                 productId: item.productId,
                 name: item.name,
                 price: item.price,
                 quantity: item.quantity,
                 size: item.size,
                 color: item.color
-            };
-        });
+            });
+        }
 
-        const uniqueOrderId = "ORD" + Date.now(); // 🔥 simple unique id
+        // 🔥 STEP 2: CREATE ORDER
+        const uniqueOrderId = "ORD" + Date.now();
 
         const order = new Order({
             userId,
             addressId,
             customerName: address.name,
-            orderId: uniqueOrderId, // ✅ ADD THIS
+            orderId: uniqueOrderId,
             paymentMethod,
             totalAmount,
             items: formattedItems
         });
 
         await order.save();
+
+        const Payment = require("../models/payment");
+
+        const payment = new Payment({
+            orderId: order._id,
+            userId: userId,
+            transactionId: "TXN" + Date.now(),
+            items: formattedItems, // 🔥 snapshot of items
+            totalAmount,
+            paymentMethod: paymentMethod || "COD",
+            paymentStatus: "Pending"
+        });
+
+        await payment.save();
 
         res.status(201).json({
             message: "Order placed successfully",
@@ -64,6 +113,30 @@ router.post("/", async (req, res) => {
         res.status(500).json({ message: "Server error" });
     }
 
+});
+
+// =========================
+// GET USER ORDERS
+// =========================
+router.get("/", async (req, res) => {
+    try {
+
+        const { userId } = req.query;
+
+        if (!userId) {
+            return res.status(400).json({ message: "User ID required" });
+        }
+
+        const orders = await Order.find({ userId })
+            .populate("items.productId")
+            .sort({ orderDate: -1 });
+
+        res.status(200).json({ orders });
+
+    } catch (err) {
+        console.error("Fetch user orders error:", err);
+        res.status(500).json({ message: "Server error" });
+    }
 });
 
 module.exports = router;

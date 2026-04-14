@@ -121,6 +121,7 @@ if (categoryBtn && overlay && categoryBox) {
   categoryBtn.addEventListener("click", (e) => {
     e.stopPropagation();
     overlay.style.display = "block";
+      loadCategories();
   });
 
   overlay.addEventListener("click", () => {
@@ -229,3 +230,49 @@ document.addEventListener("click", (e) => {
     logoutUser();
   }
 });
+
+// category overlay 
+async function loadCategories() {
+  try {
+    const res = await fetch("http://localhost:5000/api/categories");
+    const data = await res.json();
+
+    console.log("🔥 FULL RESPONSE:", data);
+
+    const box = document.getElementById("categoryBox");
+    if (!box) return;
+
+    box.innerHTML = "";
+
+    // 🔥 SAFE HANDLING
+    let categories = [];
+
+    if (Array.isArray(data)) {
+      categories = data;
+    } else if (Array.isArray(data.categories)) {
+      categories = data.categories;
+    } else {
+      console.error("❌ Invalid categories format:", data);
+      return;
+    }
+
+    categories.forEach(cat => {
+      const h4 = document.createElement("h4");
+
+      h4.innerHTML = `
+        <a href="#" onclick="goToCategory('${cat.name}')">
+          ${cat.name}
+        </a>
+      `;
+
+      box.appendChild(h4);
+    });
+
+  } catch (err) {
+    console.error("Category load error:", err);
+  }
+}
+
+function goToCategory(categoryName) {
+  window.location.href = `../htmlpages/productcatalogue.html?category=${encodeURIComponent(categoryName)}`;
+}

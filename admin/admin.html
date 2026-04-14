@@ -49,13 +49,13 @@
                         <div class="stats-grid">
                             <div class="stat-card">
                                 <div class="stat-label">Total Sales</div>
-                                <div class="stat-value">Rs. 1,00,000</div>
+                                <div class="stat-value" id="totalSales">0</div>
                                 <div class="stat-period">This Month</div>
                             </div>
 
                             <div class="stat-card">
                                 <div class="stat-label">New Orders</div>
-                                <div class="stat-value">25</div>
+                                <div class="stat-value" id="newOrders">0</div>
                             </div>
 
                             <div class="stat-card">
@@ -66,7 +66,7 @@
 
                             <div class="stat-card">
                                 <div class="stat-label">Low Stock Alerts</div>
-                                <div class="stat-value">25</div>
+                                <div class="stat-value" id="lowStockAlerts">0</div>
                             </div>
                         </div>
 
@@ -94,32 +94,7 @@
 
                             <div class="card">
                                 <h3 class="card-header">Bestsellers</h3>
-                                <ol class="bestsellers-list">
-                                    <li>Red Ethnic Suit</li>
-                                    <li>Blue Ethnic Suit</li>
-                                    <li>Pink Ethnic Suit</li>
-                                </ol>
-                            </div>
-                        </div>
-
-                        <!-- PAYMENTS -->
-                        <div class="two-col-grid">
-                            <div class="card">
-                                <h3 class="card-header">Payment Transactions</h3>
-                                <table>
-                                    <thead>
-                                        <tr>
-                                            <th>ID</th>
-                                            <th>Customer</th>
-                                            <th>Method</th>
-                                            <th>Amount</th>
-                                            <th>Status</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="dashboardPaymentsBody">
-                                        <!-- Populated by JS -->
-                                    </tbody>
-                                </table>
+                                <ol class="bestsellers-list" id="bestsellersList"></ol>
                             </div>
                         </div>
 
@@ -279,7 +254,7 @@
 
                 </div>
                 <!-- Inventory Page -->
-                <div class="page" id="inventory">
+                <div class="page hidden" id="inventory">
                     <h2 style="margin-bottom: 20px;">Inventory Management</h2>
 
                     <div class="card">
@@ -337,7 +312,7 @@
                 <div class="page" id="payments">
                     <h2 style="margin-bottom: 20px;">Payments</h2>
 
-                    <div class="filters">
+                    <!-- <div class="filters">
                         <select class="filter-select">
                             <option>All Methods</option>
                             <option>Credit Card</option>
@@ -346,13 +321,17 @@
                         </select>
                         <select class="filter-select">
                             <option>All Statuses</option>
-                            <option>Shipped</option>
-                            <option>Refund</option>
+                            <option>Pending</option>
+                            <option>Received</option>
+                            <option>Failed</option>
                         </select>
                         <select class="filter-select">
-                            <option>Date Range</option>
+                            <option>All Dates</option>
+                            <option>Today</option>
+                            <option>Last 7 Days</option>
+                            <option>Last 30 Days</option>
                         </select>
-                    </div>
+                    </div> -->
 
                     <div class="payment-summary">
                         <div class="payment-summary-item">

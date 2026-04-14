@@ -5,7 +5,7 @@
   margin: 20px 60px;
   border-radius: 20px;
   overflow: hidden;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
 }
 
 /* Slides Container */
@@ -20,24 +20,26 @@
 .slide {
   width: 100%;
   height: 100%;
-  object-fit: contain;
-  object-position: center top;
+  object-fit: cover;
+  object-position: center;
   flex-shrink: 0;
   display: block;
-  /* transition: transform 6s ease; */ 
+  /* transition: transform 6s ease; */
 }
 
 /* Track that moves left/right */
 .slide-track {
   display: flex;
   height: 100%;
-  transition: transform 1.3s cubic-bezier(0.77, 0, 0.175, 1); /* smoother */
+  transition: transform 1.3s cubic-bezier(0.77, 0, 0.175, 1);
+  /* smoother */
 }
 
 /* Active Slide */
 .slide.active {
   opacity: 1;
-  z-index: 2; /* ✅ ensures visible image */
+  z-index: 2;
+  /* ✅ ensures visible image */
 }
 
 
@@ -46,7 +48,7 @@
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  background: rgba(255,255,255,0.8);
+  background: rgba(255, 255, 255, 0.8);
   border: none;
   width: 45px;
   height: 45px;
@@ -75,15 +77,17 @@
 ========================= */
 
 .limited-section {
-  width: 100vw;             
+  width: 100vw;
   margin-left: calc(-50vw + 50%);
-  background: rgba(157, 145, 103, 0.73); 
+  background: rgba(157, 145, 103, 0.73);
   padding: 0;
   position: relative;
   overflow: hidden;
 }
+
 .limited-content {
-  padding: 30px 60px; /* spacing between strips */
+  padding: 30px 60px;
+  /* spacing between strips */
 }
 
 /* SECTION HEADER */
@@ -149,6 +153,7 @@
   0% {
     transform: translateX(0);
   }
+
   100% {
     transform: translateX(-100%);
   }
@@ -165,7 +170,8 @@
 
 .product-track {
   display: flex;
-  gap: 50px;   /* 🔥 increase spacing here */
+  gap: 50px;
+  /* 🔥 increase spacing here */
   overflow-x: auto;
   scroll-behavior: smooth;
   padding: 10px 0;
@@ -184,10 +190,11 @@
   height: 578px;
   background: #fff;
   overflow: hidden;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
   transition: 0.3s ease;
   position: relative;
-  flex-shrink: 0; /* important for slider */
+  flex-shrink: 0;
+  /* important for slider */
   display: flex;
   flex-direction: column;
 }
@@ -204,6 +211,7 @@
   display: block;
   margin: 5px auto 0;
 }
+
 /* DISCOUNT TAG */
 .discount-tag {
   position: absolute;
@@ -221,9 +229,11 @@
 .right-info {
   position: absolute;
   right: 14px;
-  top: 485px; /* below image */
+  top: 485px;
+  /* below image */
   text-align: right;
 }
+
 .product-info {
   position: absolute;
   left: 18px;
@@ -306,13 +316,13 @@
   position: absolute;
   top: 45%;
   transform: translateY(-50%);
-  background: rgba(255,255,255,0.9);
+  background: rgba(255, 255, 255, 0.9);
   border: none;
   width: 38px;
   height: 38px;
   border-radius: 50%;
   cursor: pointer;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -330,10 +340,11 @@
 .prod-btn.right {
   right: 30px;
 }
+
 /* NEWLY ADDED SECTION */
 
 .newly-added-section {
-  background: white; 
+  background: white;
   margin-top: 30px;
 }
 
@@ -350,7 +361,7 @@
   font-weight: 600;
 }
 
-.bestsellers{
+.bestsellers {
   margin-top: 30px;
 }
 
@@ -399,12 +410,14 @@
 
 /* Left arrow */
 .testimonial-container .prod-btn.left {
-  left: -60px;   /* adjust this value */
+  left: -60px;
+  /* adjust this value */
 }
 
 /* Right arrow */
 .testimonial-container .prod-btn.right {
-  right: -60px;  /* adjust this value */
+  right: -60px;
+  /* adjust this value */
 }
 
 
@@ -415,7 +428,7 @@
   background: #fff;
   border-radius: 14px;
   overflow: hidden;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.12);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
   position: relative;
 }
 
@@ -445,7 +458,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
 }
 
 /* left side text */
@@ -475,7 +488,8 @@
 .rating {
   font-size: 14px;
   font-weight: 600;
-  color: #f5a623; /* yellow */
+  color: #f5a623;
+  /* yellow */
 }
 
 .wishlist {
@@ -499,7 +513,7 @@
   padding: 28px 32px;
   text-align: left;
   position: relative;
-  box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
 }
 
 /* Header */

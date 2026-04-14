@@ -28,67 +28,6 @@ navItems.forEach(item => {
   });
 });
 
-// Chart
-const canvas = document.getElementById('salesChart');
-if (canvas) {
-  const ctx = canvas.getContext('2d');
-  canvas.width = canvas.offsetWidth;
-  canvas.height = canvas.offsetHeight;
-
-  // Draw simple line chart
-  const data = [150, 200, 180, 220, 250, 230, 200];
-  const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
-
-  const padding = 40;
-  const chartWidth = canvas.width - padding * 2;
-  const chartHeight = canvas.height - padding * 2;
-  const max = Math.max(...data);
-  const stepX = chartWidth / (data.length - 1);
-
-  // Draw axes
-  ctx.strokeStyle = '#ddd';
-  ctx.lineWidth = 1;
-  ctx.beginPath();
-  ctx.moveTo(padding, padding);
-  ctx.lineTo(padding, canvas.height - padding);
-  ctx.lineTo(canvas.width - padding, canvas.height - padding);
-  ctx.stroke();
-
-  // Draw line
-  ctx.strokeStyle = '#4CAF50';
-  ctx.lineWidth = 2;
-  ctx.beginPath();
-  data.forEach((value, index) => {
-    const x = padding + index * stepX;
-    const y = canvas.height - padding - (value / max) * chartHeight;
-    if (index === 0) {
-      ctx.moveTo(x, y);
-    } else {
-      ctx.lineTo(x, y);
-    }
-  });
-  ctx.stroke();
-
-  // Draw points
-  ctx.fillStyle = '#4CAF50';
-  data.forEach((value, index) => {
-    const x = padding + index * stepX;
-    const y = canvas.height - padding - (value / max) * chartHeight;
-    ctx.beginPath();
-    ctx.arc(x, y, 4, 0, Math.PI * 2);
-    ctx.fill();
-  });
-
-  // Draw labels
-  ctx.fillStyle = '#666';
-  ctx.font = '12px Arial';
-  ctx.textAlign = 'center';
-  days.forEach((day, index) => {
-    const x = padding + index * stepX;
-    ctx.fillText(day, x, canvas.height - padding + 20);
-  });
-}
-
 // Tab switching
 const tabs = document.querySelectorAll('.tab');
 tabs.forEach(tab => {
@@ -98,6 +37,28 @@ tabs.forEach(tab => {
     this.classList.add('active');
   });
 });
+
+async function loadDashboardStats() {
+  try {
+    const res = await fetch("http://localhost:5000/api/admin/dashboard-stats");
+    const data = await res.json();
+
+    document.getElementById("totalSales").innerText =
+      "₹" + (data.totalSales || 0).toLocaleString();
+
+    document.getElementById("newOrders").innerText =
+      data.newOrders || 0;
+
+    document.getElementById("newCustomers").innerText =
+      data.newCustomers || 0;
+
+    document.getElementById("lowStockAlerts").innerText =
+      data.lowStockAlerts || 0;
+
+  } catch (err) {
+    console.error("Dashboard error:", err);
+  }
+}
 
 // global text only validation 
 document.addEventListener("input", (e) => {
@@ -160,6 +121,7 @@ addVariantBtn?.addEventListener("click", () => {
                 <option>M</option>
                 <option>L</option>
                 <option>XL</option>
+                <option>XXL</option>
             </select>
         </td>
         <td><input type="number" class="variantStock" placeholder="Stock"></td>
@@ -672,15 +634,20 @@ document.addEventListener("click", async (e) => {
 
       (product.variants || []).forEach(v => {
         const div = document.createElement("div");
+
         div.style.display = "flex";
         div.style.gap = "10px";
         div.style.marginBottom = "8px";
 
         div.innerHTML = `
-          <input type="text" value="${v.color}" placeholder="Color">
-          <input type="number" value="${v.stock}" placeholder="Stock">
-          <button type="button" onclick="this.parentElement.remove()">❌</button>
-        `;
+    <input type="text" value="${v.color || ""}" placeholder="Color">
+
+    <input type="text" value="${v.size || "M"}" placeholder="Size">
+
+    <input type="number" value="${v.stock || 0}" placeholder="Stock">
+
+    <button type="button" onclick="this.parentElement.remove()">❌</button>
+  `;
 
         container.appendChild(div);
       });
@@ -701,10 +668,11 @@ document.addEventListener("click", async (e) => {
     div.style.marginBottom = "8px";
 
     div.innerHTML = `
-      <input type="text" placeholder="Color">
-      <input type="number" placeholder="Stock">
-      <button type="button" onclick="this.parentElement.remove()">❌</button>
-    `;
+    <input type="text" placeholder="Color">
+    <input type="text" placeholder="Size">
+    <input type="number" placeholder="Stock">
+    <button type="button" onclick="this.parentElement.remove()">❌</button>
+  `;
 
     document.getElementById("variantsContainer").appendChild(div);
   }
@@ -736,10 +704,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
           return {
             color: inputs[0].value.trim(),
-            stock: Number(inputs[1].value)
+            size: inputs[1].value.trim(),
+            stock: Number(inputs[2].value)
           };
         })
-        .filter(v => v.color && v.stock >= 0);
+        .filter(v => v.color && v.size && v.stock >= 0);
 
       // ✅ CALCULATE TOTAL STOCK
       const totalStock = variants.reduce((sum, v) => sum + v.stock, 0);
@@ -904,8 +873,7 @@ if (couponCodeInput) {
   });
 }
 
-
-
+// customers
 async function loadCustomers() {
 
   try {
@@ -925,17 +893,15 @@ async function loadCustomers() {
     tableBody.innerHTML = "";
 
     data.users.forEach(user => {
-
       const row = `
-                <tr>
-                    <td>${user.name}</td>
-                    <td>${user.email}</td>
-                    <td>-</td>
-                </tr>
-            `;
+    <tr>
+      <td>${user.name}</td>
+      <td>${user.email}</td>
+      <td>${user.orderCount || 0}</td>
+    </tr>
+  `;
 
       tableBody.innerHTML += row;
-
     });
 
   }
@@ -949,27 +915,6 @@ async function loadCustomers() {
 
 loadCustomers();
 
-// for new users in admin dashboard
-async function loadDashboardStats() {
-
-  try {
-
-    const response = await fetch("http://localhost:5000/api/admin/dashboard-stats");
-
-    const data = await response.json();
-
-    document.getElementById("newCustomers").innerText = data.newCustomers;
-
-  }
-  catch (error) {
-
-    console.error("Dashboard error:", error);
-
-  }
-
-}
-
-loadDashboardStats();
 
 // =============================================
 // ORDERS - API
@@ -1186,73 +1131,179 @@ async function updateOrderStatus() {
 // =============================================
 // PAYMENTS - API (linked from orders)
 // =============================================
+function showTopMessage(message) {
+
+  const msg = document.createElement("div");
+  msg.className = "top-message";
+  msg.innerText = message;
+
+  document.body.appendChild(msg);
+
+  setTimeout(() => msg.classList.add("show"), 10);
+
+  setTimeout(() => {
+    msg.classList.remove("show");
+    setTimeout(() => msg.remove(), 300);
+  }, 2500);
+}
+
 async function loadPayments() {
   try {
-    const response = await fetch('http://localhost:5000/api/admin/payments');
-    if (!response.ok) throw new Error('Failed to fetch payments');
-    const data = await response.json();
 
-    // Calculate summary
-    let totalRevenue = 0;
-    let successful = 0;
-    let failed = 0;
+    const res = await fetch("http://localhost:5000/api/admin/payments");
+    const data = await res.json();
 
-    data.payments.forEach(p => {
-      const amount = parseInt(p.totalAmount.replace(/[^0-9]/g, '')) || 0;
-      totalRevenue += amount;
-      if (['Delivered', 'Shipped'].includes(p.status)) successful++;
-      if (['Cancelled', 'Refund'].includes(p.status)) failed++;
-    });
+    const paymentsList = data.payments || [];
 
-    document.getElementById('totalRevenue').innerText = `Rs. ${totalRevenue.toLocaleString('en-IN')}`;
-    document.getElementById('successfulPayments').innerText = successful;
-    document.getElementById('failedPayments').innerText = failed;
+    const tbody = document.getElementById("paymentsTableBody");
+    if (!tbody) return;
 
-    const tbody = document.getElementById('paymentsTableBody');
-    tbody.innerHTML = '';
+    tbody.innerHTML = "";
 
-    if (!data.payments || data.payments.length === 0) {
-      tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; color:#999; padding:20px;">No payments found.</td></tr>';
+    if (paymentsList.length === 0) {
+      tbody.innerHTML = "<tr><td colspan='5'>No payments found</td></tr>";
       return;
     }
 
-    data.payments.forEach(payment => {
-      const statusColors = {
-        'Pending': { bg: '#fff8e6', color: '#b8860b' },
-        'Shipped': { bg: '#e6f4ff', color: '#0066cc' },
-        'Delivered': { bg: '#e6ffed', color: '#1a7a3c' },
-        'Refund': { bg: '#fff0f0', color: '#cc0000' },
-        'Cancelled': { bg: '#f5f5f5', color: '#666666' }
-      };
-      const style = statusColors[payment.status] || { bg: '#f5f5f5', color: '#333' };
+    paymentsList.forEach(p => {
 
-      tbody.innerHTML += `
-        <tr>
-          <td><span class="id-badge">#${payment.transactionId}</span></td>
-          <td>${payment.customerName}</td>
-          <td><span class="method-badge">${payment.transactionMethod}</span></td>
-          <td><strong>${payment.totalAmount}</strong></td>
-          <td><span style="background:${style.bg}; color:${style.color}; padding:3px 10px; border-radius:20px; font-size:13px; font-weight:600;">${payment.status}</span></td>
-        </tr>
-      `;
+      const row = document.createElement("tr");
+
+      row.innerHTML = `
+      <td>${p.transactionId || "N/A"}</td>
+      <td>${p.userId?.name || "N/A"}</td>
+      <td>${p.paymentMethod || "COD"}</td>
+      <td>₹${p.totalAmount?.toLocaleString() || 0}</td>
+      <td>
+        <select class="payment-status" data-id="${p._id}">
+          <option value="Pending" ${p.paymentStatus === "Pending" ? "selected" : ""}>Pending</option>
+          <option value="Received" ${p.paymentStatus === "Received" ? "selected" : ""}>Received</option>
+          <option value="Failed" ${p.paymentStatus === "Failed" ? "selected" : ""}>Failed</option>
+        </select>
+      </td>
+          <td>
+          <button class="invoice-btn" data-id="${p._id}" data-txn="${p.transactionId}"> Generate </button>
+          <button class="send-invoice-btn" data-id="${p._id}"> Send </button>
+        </td>
+    `;
+
+      tbody.appendChild(row);
     });
 
-  } catch (error) {
-    console.error('Error loading payments:', error);
+  } catch (err) {
+    console.error("Payments load error:", err);
   }
 }
 
-// Load payments when Payments nav is clicked
-document.querySelectorAll('.nav-item').forEach(item => {
-  if (item.getAttribute('data-page') === 'payments') {
-    item.addEventListener('click', loadPayments);
+document.addEventListener("change", async (e) => {
+
+  if (!e.target.classList.contains("payment-status")) return;
+
+  const paymentId = e.target.dataset.id;
+  const newStatus = e.target.value;
+
+  try {
+
+    const res = await fetch(`http://localhost:5000/api/admin/payments/${paymentId}/status`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ status: newStatus })
+    });
+
+    const data = await res.json();
+
+    if (res.ok) {
+      showTopMessage("Payment status updated");
+      loadPaymentStats(); // 🔥 refresh stats
+    } else {
+      showTopMessage(data.message || "Update failed");
+    }
+
+  } catch (err) {
+    console.error(err);
   }
+
+});
+
+async function loadPaymentStats() {
+  try {
+
+    const res = await fetch("http://localhost:5000/api/admin/payments/stats");
+    const data = await res.json();
+
+    document.getElementById("totalRevenue").innerText =
+      "₹" + (data.totalRevenue || 0).toLocaleString();
+
+    document.getElementById("successfulPayments").innerText =
+      data.successfulPayments || 0;
+
+    document.getElementById("failedPayments").innerText =
+      data.failedPayments || 0;
+
+  } catch (err) {
+    console.error("Stats error:", err);
+  }
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  loadPayments();
+  loadPaymentStats();
+});
+
+// ==============================
+// GENERATE INVOICE
+// ==============================
+document.addEventListener("click", (e) => {
+
+  if (e.target.classList.contains("invoice-btn")) {
+
+    const paymentId = e.target.dataset.id;
+    const transactionId = e.target.dataset.txn;
+
+    window.open(
+      `http://localhost:5000/api/admin/payments/${paymentId}/invoice?token=${transactionId}`,
+      "_blank"
+    );
+  }
+
+});
+
+// ==============================
+// SEND INVOICE
+// ==============================
+document.addEventListener("click", async (e) => {
+
+  if (!e.target.classList.contains("send-invoice-btn")) return;
+
+  const id = e.target.dataset.id;
+
+  try {
+
+    const res = await fetch(
+      `http://localhost:5000/api/admin/payments/${id}/send-invoice`,
+      { method: "POST" }
+    );
+
+    const data = await res.json();
+
+    if (res.ok) {
+      showTopMessage("Invoice sent to customer 📩");
+    } else {
+      showTopMessage(data.message || "Failed to send invoice");
+    }
+
+  } catch (err) {
+    console.error(err);
+  }
+
 });
 
 // =============================================
 // EXCHANGE & RETURN REQUESTS - API
 // =============================================
-async function loadExchangeReturns() {
+/* async function loadExchangeReturns() {
   try {
     const response = await fetch('http://localhost:5000/api/admin/exchange-returns');
     if (!response.ok) throw new Error('Failed to fetch requests');
@@ -1315,52 +1366,33 @@ async function updateExchangeStatus(id, status) {
 }
 
 // Load on page start (dashboard shows it)
-loadExchangeReturns();
+loadExchangeReturns(); */
 
 // =============================================
-// DASHBOARD - PAYMENT TRANSACTIONS OVERVIEW
+// DASHBOARD - Bestsellers OVERVIEW
 // =============================================
-async function loadDashboardPayments() {
+
+async function loadBestsellers() {
   try {
-    const response = await fetch('http://localhost:5000/api/admin/payments');
-    if (!response.ok) throw new Error('Failed to fetch payments');
-    const data = await response.json();
+    const res = await fetch("http://localhost:5000/api/admin/bestsellers");
+    const data = await res.json();
 
-    const tbody = document.getElementById('dashboardPaymentsBody');
-    tbody.innerHTML = '';
+    const list = document.getElementById("bestsellersList");
+    list.innerHTML = "";
 
-    if (!data.payments || data.payments.length === 0) {
-      tbody.innerHTML = '<tr><td colspan="5" style="text-align:center; color:#999; padding:15px;">No payments yet.</td></tr>';
-      return;
-    }
-
-    // Show only latest 3
-    const latest = data.payments.slice(0, 3);
-
-    latest.forEach(payment => {
-      const statusColors = {
-        'Pending': { bg: '#fff8e6', color: '#b8860b' },
-        'Shipped': { bg: '#e6f4ff', color: '#0066cc' },
-        'Delivered': { bg: '#e6ffed', color: '#1a7a3c' },
-        'Refund': { bg: '#fff0f0', color: '#cc0000' },
-        'Cancelled': { bg: '#f5f5f5', color: '#666666' }
-      };
-      const s = statusColors[payment.status] || { bg: '#f5f5f5', color: '#333' };
-
-      tbody.innerHTML += `
-        <tr>
-          <td><span class="id-badge">#${payment.transactionId}</span></td>
-          <td>${payment.customerName}</td>
-          <td>${payment.transactionMethod}</td>
-          <td><strong>${payment.totalAmount}</strong></td>
-          <td><span style="background:${s.bg}; color:${s.color}; padding:3px 10px; border-radius:20px; font-size:13px; font-weight:600;">${payment.status}</span></td>
-        </tr>
-      `;
+    data.bestsellers.forEach(item => {
+      const li = document.createElement("li");
+      li.textContent = `${item.name} (${item.count} sold)`;
+      list.appendChild(li);
     });
 
-  } catch (error) {
-    console.error('Error loading dashboard payments:', error);
+  } catch (err) {
+    console.error("Bestsellers error:", err);
   }
 }
 
-loadDashboardPayments();
+loadBestsellers();
+
+window.addEventListener("DOMContentLoaded", () => {
+  loadDashboardStats();
+});

@@ -435,6 +435,14 @@ document.querySelector(".final-order-btn")
     if (!cart.length) {
       return showTopMessage("Cart is empty");
     }
+    // 🔥 STOCK VALIDATION BEFORE ORDER
+    for (let item of cart) {
+      if (item.quantity > item.stock) {
+        return showTopMessage(
+          `${item.name} (${item.size}) only has ${item.stock} left`
+        );
+      }
+    }
 
     try {
 
@@ -519,21 +527,30 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
       }
 
-      cart = data.map(item => ({
-        productId: item.productId._id,
-        name: item.productId.name,
-        images: item.productId.images,
-        price: item.productId.discountedPrice,
-        originalPrice: item.productId.originalPrice,
-        size: item.size,
-        color: item.color,
-        quantity: item.quantity,
-        sizes: [...new Set(
-          item.productId.variants
-            ?.filter(v => v.color === item.color && v.stock > 0)
-            .map(v => v.size)
-        )] || []
-      }));
+      cart = data.map(item => {
+
+        const matchedVariant = item.productId.variants?.find(v =>
+          v.color === item.color && v.size === item.size
+        );
+
+        return {
+          productId: item.productId._id,
+          name: item.productId.name,
+          images: item.productId.images,
+          price: item.productId.discountedPrice,
+          originalPrice: item.productId.originalPrice,
+          size: item.size,
+          color: item.color,
+          quantity: item.quantity,
+          stock: matchedVariant?.stock || 0, // ✅ NOW WORKS
+          sizes: [...new Set(
+            item.productId.variants
+              ?.filter(v => v.color === item.color && v.stock > 0)
+              .map(v => v.size)
+          )] || []
+        };
+
+      });
 
       renderCart();
 
@@ -620,6 +637,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 class="qty-input" 
                 value="${item.quantity}" 
                 min="1" 
+                max="${item.stock}"
                 data-index="${index}">
             </div>
 
@@ -639,6 +657,18 @@ document.addEventListener("DOMContentLoaded", () => {
         </div>
 
       `;
+      const qtyInput = cartItem.querySelector(".qty-input");
+
+      if (item.quantity > item.stock) {
+        qtyInput.value = item.stock;
+
+        const warning = document.createElement("p");
+        warning.style.color = "red";
+        warning.style.fontSize = "12px";
+        warning.innerText = `Only ${item.stock} left in stock`;
+
+        cartItem.querySelector(".cart-details").appendChild(warning);
+      }
       cartItem.addEventListener("click", (e) => {
 
         // 🚫 Ignore clicks on interactive elements
@@ -742,7 +772,11 @@ document.addEventListener("DOMContentLoaded", () => {
     if (isNaN(newQty) || newQty < 1) {
       newQty = 1;
     }
-
+    // 🔥 ADD THIS
+    if (newQty > item.stock) {
+      newQty = item.stock;
+      showTopMessage(`Only ${item.stock} items available`);
+    }
     // Update input visually also
     e.target.value = newQty;
 

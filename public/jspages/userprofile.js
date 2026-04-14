@@ -409,8 +409,13 @@ document.addEventListener("click", (e) => {
 let userOrders = [];
 
 async function fetchUserOrders() {
-  const res = await fetch("http://localhost:5000/api/orders");
+  const userId = localStorage.getItem("userId");
+
+  const res = await fetch(`http://localhost:5000/api/orders?userId=${userId}`);
   const data = await res.json();
+
+  console.log("Orders:", data.orders); // 🔥 debug
+
   userOrders = data.orders;
   renderOrders();
 }
@@ -433,12 +438,24 @@ function loadOrders() {
       <div id="ordersContainer"></div>
     </div>
   `;
-
-  renderOrders();
+  // ✅ WAIT until DOM updates
+  requestAnimationFrame(() => {
+    fetchUserOrders();
+  });
 }
+
 
 function renderOrders() {
   const container = document.getElementById("ordersContainer");
+  if (!container) {
+    console.error("❌ ordersContainer not found");
+    return;
+  }
+
+  if (!userOrders || userOrders.length === 0) {
+    container.innerHTML = "<p>No orders found</p>";
+    return;
+  }
   container.innerHTML = "";
 
   userOrders.forEach(order => {
@@ -449,28 +466,38 @@ function renderOrders() {
       card.className = "order-card";
 
       card.innerHTML = `
-        <div class="order-top">
-          <span>
-            ${getStatusText(order.status)}
-          </span>
-          <span class="review-link">REVIEW PRODUCT</span>
+  <div class="order-top">
+    <span>
+      ${getStatusText(order.status)}
+    </span>
+    <span class="review-link">REVIEW PRODUCT</span>
+  </div>
+
+  <div class="order-body">
+    <img src="${item.productId?.images?.[0] || '../images/product.jpg'
+        }" class="order-img">
+
+    <div class="order-details">
+      <h3>${item.productId?.name}</h3>
+
+      <p>Colour: ${item.color || "N/A"}</p>
+      <p>Size: ${item.size || "N/A"} &nbsp;&nbsp; Quantity: ${item.quantity}</p>
+
+      <small>Order ID: ${order.orderId}</small>
+
+      ${order.status === "Delivered"
+          ? `
+        <div class="order-actions">
+          <button class="small-btn">Request Exchange</button>
+          <button class="small-btn">Request Return</button>
         </div>
+      `
+          : ""
+        }
 
-        <div class="order-body">
-          <img src="${
-            item.productId?.images?.[0] || '../images/product.jpg'
-          }" class="order-img">
-
-          <div class="order-details">
-            <h3>${item.productId?.name}</h3>
-
-            <p>Colour: ${item.color || "N/A"}</p>
-            <p>Size: ${item.size || "N/A"} &nbsp;&nbsp; Quantity: ${item.quantity}</p>
-
-            <small>Order ID: ${order.orderId}</small>
-          </div>
-        </div>
-      `;
+    </div>
+  </div>
+`;
 
       container.appendChild(card);
     });
@@ -479,7 +506,7 @@ function renderOrders() {
 }
 
 function getStatusText(status) {
-  switch(status) {
+  switch (status) {
     case "Pending": return "Order Placed";
     case "Confirmed": return "Order Confirmed";
     case "Shipped": return "Shipped";

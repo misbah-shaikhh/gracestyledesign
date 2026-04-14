@@ -1312,3 +1312,41 @@
   border-radius: 8px;
   cursor: pointer;
 }
+
+.invoice-btn {
+  background: #111;
+  color: #fff;
+  padding: 6px 10px;
+  border-radius: 6px;
+  margin-right: 5px;
+  cursor: pointer;
+}
+
+.send-invoice-btn {
+  background: #4CAF50;
+  color: white;
+  padding: 6px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.top-message {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: black;
+  color: white;
+  padding: 10px 15px;
+  border-radius: 6px;
+  opacity: 0;
+  transition: 0.3s;
+  z-index: 9999;
+}
+
+.top-message.show {
+  opacity: 1;
+}
+
+.hidden {
+  display: none !important;
+}
