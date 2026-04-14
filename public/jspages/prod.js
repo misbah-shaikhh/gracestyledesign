@@ -412,7 +412,7 @@ document.addEventListener("click", async (e) => {
 
   try {
 
-    await fetch("hhttps://gsd-backend-i5gj.onrender.com/api/cart/add", {
+    await fetch("https://gsd-backend-i5gj.onrender.com/api/cart/add", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
