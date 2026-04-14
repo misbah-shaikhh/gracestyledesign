@@ -513,7 +513,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     try {
 
-      const res = await fetch(`https://gsd-backend-i5gj.onrender.comapi/cart/${userId}`);
+      const res = await fetch(`https://gsd-backend-i5gj.onrender.com/api/cart/${userId}`);
 
       if (!res.ok) {
         console.error("Cart fetch failed");
