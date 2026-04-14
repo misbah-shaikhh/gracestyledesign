@@ -157,7 +157,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
                     // redirect based on role
                     if (data.role === "admin") {
-                        window.location.href = "/admin/admin.html";
+                        window.location.href = "https://gracestyledesign-j7va.vercel.app/";
                     } else {
                         window.location.href = "/htmlpages/index.html";
                     }

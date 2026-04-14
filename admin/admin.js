@@ -1263,7 +1263,7 @@ document.addEventListener("click", (e) => {
     const transactionId = e.target.dataset.txn;
 
     window.open(
-      `https://gsd-backend-i5gj.onrender.com/admin/payments/${paymentId}/invoice?token=${transactionId}`,
+      `https://gsd-backend-i5gj.onrender.com/api/admin/payments/${paymentId}/invoice?token=${transactionId}`,
       "_blank"
     );
   }
