@@ -172,7 +172,7 @@ if (thumbnailGallery) {
 
     if (relatedTrack) {
 
-      const allRes = await fetch("/api/products");
+      const allRes = await fetch("https://gsd-backend-i5gj.onrender.com/api/products");
       const allProducts = await allRes.json();
 
       const filtered = allProducts.filter(prod => prod._id !== productId);
