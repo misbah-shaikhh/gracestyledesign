@@ -40,7 +40,7 @@ tabs.forEach(tab => {
 
 async function loadDashboardStats() {
   try {
-    const res = await fetch("http://localhost:5000/api/admin/dashboard-stats");
+    const res = await fetch("https://gsd-backend-i5gj.onrender.com/api/admin/dashboard-stats");
     const data = await res.json();
 
     document.getElementById("totalSales").innerText =
@@ -237,7 +237,7 @@ addProductForm?.addEventListener("submit", async (e) => {
       uploadData.append("image", file);
     });
 
-    const uploadRes = await fetch("http://localhost:5000/api/upload", {
+    const uploadRes = await fetch("https://gsd-backend-i5gj.onrender.com/api/upload", {
       method: "POST",
       body: uploadData
     });
@@ -285,7 +285,7 @@ addProductForm?.addEventListener("submit", async (e) => {
   };
 
   try {
-    const res = await fetch("http://localhost:5000/api/products", {
+    const res = await fetch("https://gsd-backend-i5gj.onrender.com/api/products", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -317,7 +317,7 @@ async function loadProductsTable() {
   tableBody.innerHTML = "";
 
   try {
-    const res = await fetch("http://localhost:5000/api/products");
+    const res = await fetch("https://gsd-backend-i5gj.onrender.com/api/products");
     const products = await res.json();
 
     products.forEach(product => {
@@ -363,7 +363,7 @@ let allProducts = []; // store products for filtering
 async function loadProducts() {
   tableBody.innerHTML = "";
   try {
-    const res = await fetch("http://localhost:5000/api/products");
+    const res = await fetch("https://gsd-backend-i5gj.onrender.com/api/products");
     allProducts = await res.json();
 
     renderProducts(allProducts); // initial render
@@ -466,7 +466,7 @@ closeCategoryModal?.addEventListener("click", () => {
 // LOAD CATEGORIES
 async function loadCategories() {
   try {
-    const res = await fetch("http://localhost:5000/api/categories");
+    const res = await fetch("https://gsd-backend-i5gj.onrender.com/api/categories");
     const categories = await res.json();
 
     categoryTableBody.innerHTML = "";
@@ -497,7 +497,7 @@ saveCategoryBtn?.addEventListener("click", async () => {
   }
   try {
 
-    const res = await fetch("http://localhost:5000/api/categories", {
+    const res = await fetch("https://gsd-backend-i5gj.onrender.com/api/categories", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -529,7 +529,7 @@ async function loadCategoryDropdown() {
   const dropdown = document.getElementById("categoryDropdown");
 
   try {
-    const res = await fetch("http://localhost:5000/api/categories");
+    const res = await fetch("https://gsd-backend-i5gj.onrender.com/api/categories");
     const categories = await res.json();
 
     dropdown.innerHTML = `<option value="">Select Category</option>`;
@@ -551,7 +551,7 @@ async function loadFilterCategories() {
   if (!dropdown) return; // safety
 
   try {
-    const res = await fetch("http://localhost:5000/api/categories");
+    const res = await fetch("https://gsd-backend-i5gj.onrender.com/api/categories");
     const categories = await res.json();
 
     if (!Array.isArray(categories)) {
@@ -586,7 +586,7 @@ async function loadEditCategories(selectedId = null) {
   const dropdown = document.getElementById("editCategory");
 
   try {
-    const res = await fetch("http://localhost:5000/api/categories");
+    const res = await fetch("https://gsd-backend-i5gj.onrender.com/api/categories");
     const categories = await res.json();
 
     dropdown.innerHTML = `<option value="">Select Category</option>`;
@@ -619,7 +619,7 @@ document.addEventListener("click", async (e) => {
       const id = btn.dataset.id;
       currentProductId = id;
 
-      const res = await fetch(`http://localhost:5000/api/products/${id}`);
+      const res = await fetch(`https://gsd-backend-i5gj.onrender.com/api/products/${id}`);
       const product = await res.json();
 
       // Prefill
@@ -724,7 +724,7 @@ document.addEventListener("DOMContentLoaded", () => {
       console.log("SENDING:", updatedProduct);
 
       try {
-        const res = await fetch(`http://localhost:5000/api/products/${currentProductId}`, {
+        const res = await fetch(`https://gsd-backend-i5gj.onrender.com/api/products/${currentProductId}`, {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
@@ -878,7 +878,7 @@ async function loadCustomers() {
 
   try {
 
-    const response = await fetch("http://localhost:5000/api/admin/users");
+    const response = await fetch("https://gsd-backend-i5gj.onrender.com/api/admin/users");
 
     if (!response.ok) {
       throw new Error("Failed to fetch users");
@@ -924,7 +924,7 @@ let currentOrderId = null;
 
 async function loadOrders() {
   try {
-    const response = await fetch('http://localhost:5000/api/admin/orders');
+    const response = await fetch('https://gsd-backend-i5gj.onrender.com/api/admin/orders');
     if (!response.ok) throw new Error('Failed to fetch orders');
     const data = await response.json();
     allOrders = data.orders;
@@ -1100,7 +1100,7 @@ async function updateOrderStatus() {
 
   try {
     const res = await fetch(
-      `http://localhost:5000/api/admin/orders/${currentOrderId}/status`,
+      `https://gsd-backend-i5gj.onrender.com/api/admin/orders/${currentOrderId}/status`,
       {
         method: "PUT",
         headers: {
@@ -1150,7 +1150,7 @@ function showTopMessage(message) {
 async function loadPayments() {
   try {
 
-    const res = await fetch("http://localhost:5000/api/admin/payments");
+    const res = await fetch("https://gsd-backend-i5gj.onrender.com/api/admin/payments");
     const data = await res.json();
 
     const paymentsList = data.payments || [];
@@ -1204,7 +1204,7 @@ document.addEventListener("change", async (e) => {
 
   try {
 
-    const res = await fetch(`http://localhost:5000/api/admin/payments/${paymentId}/status`, {
+    const res = await fetch(`https://gsd-backend-i5gj.onrender.com/api/admin/payments/${paymentId}/status`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json"
@@ -1230,7 +1230,7 @@ document.addEventListener("change", async (e) => {
 async function loadPaymentStats() {
   try {
 
-    const res = await fetch("http://localhost:5000/api/admin/payments/stats");
+    const res = await fetch("https://gsd-backend-i5gj.onrender.com/api/admin/payments/stats");
     const data = await res.json();
 
     document.getElementById("totalRevenue").innerText =
@@ -1263,7 +1263,7 @@ document.addEventListener("click", (e) => {
     const transactionId = e.target.dataset.txn;
 
     window.open(
-      `http://localhost:5000/api/admin/payments/${paymentId}/invoice?token=${transactionId}`,
+      `https://gsd-backend-i5gj.onrender.com/admin/payments/${paymentId}/invoice?token=${transactionId}`,
       "_blank"
     );
   }
@@ -1282,7 +1282,7 @@ document.addEventListener("click", async (e) => {
   try {
 
     const res = await fetch(
-      `http://localhost:5000/api/admin/payments/${id}/send-invoice`,
+      `https://gsd-backend-i5gj.onrender.com/api/admin/payments/${id}/send-invoice`,
       { method: "POST" }
     );
 
@@ -1374,7 +1374,7 @@ loadExchangeReturns(); */
 
 async function loadBestsellers() {
   try {
-    const res = await fetch("http://localhost:5000/api/admin/bestsellers");
+    const res = await fetch("https://gsd-backend-i5gj.onrender.com/api/admin/bestsellers");
     const data = await res.json();
 
     const list = document.getElementById("bestsellersList");
