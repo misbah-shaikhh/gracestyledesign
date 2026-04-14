@@ -84,7 +84,7 @@ app.use((err, req, res, next) => {
 app.use(cors({
   origin: [
     "http://localhost:3000",
-    "https://gsd-backend-i5gj.onrender.com",
+    "https://gracestyledesign.vercel.app",
     "https://your-admin.vercel.app"
   ],
   credentials: true
