@@ -85,7 +85,7 @@ app.use(cors({
   origin: [
     "http://localhost:3000",
     "https://gracestyledesign.vercel.app",
-    "https://your-admin.vercel.app"
+    "https://gracestyledesign-j7va.vercel.app"
   ],
   credentials: true
 }));
