@@ -417,6 +417,7 @@ async function fetchUserOrders() {
   console.log("Orders:", data.orders); // 🔥 debug
 
   userOrders = data.orders;
+  renderRequests();
   renderOrders();
 }
 function loadOrders() {
@@ -434,7 +435,7 @@ function loadOrders() {
           </div>
         </div>
       </div>
-
+      <div id="requestsContainer"></div>  <!-- NEW -->
       <div id="ordersContainer"></div>
     </div>
   `;
@@ -485,7 +486,7 @@ function renderOrders() {
 
       <small>Order ID: ${order.orderId}</small>
 
-${order.status === "Delivered"
+${order.status === "Delivered" && !item.request
           ? `
     <div class="order-actions">
       <button class="small-btn exchange-btn"
@@ -506,7 +507,11 @@ ${order.status === "Delivered"
       ${getReturnLastDate(order.orderDate)}
     </p>
   `
-          : ""
+          : item.request
+            ? `<p class="request-badge">
+         ${item.request.type} Requested (${item.request.status})
+       </p>`
+            : ""
         }
 
     </div>
@@ -518,7 +523,81 @@ ${order.status === "Delivered"
 
   });
 }
+function renderRequests() {
+  const container = document.getElementById("requestsContainer");
+  if (!container) return;
 
+  const requests = [];
+
+  userOrders.forEach(order => {
+    order.items.forEach(item => {
+      if (item.request) {
+        requests.push({
+          ...item.request,
+          product: item.productId,
+          item
+        });
+      }
+    });
+  });
+
+  if (requests.length === 0) {
+    container.innerHTML = "";
+    return;
+  }
+
+  container.innerHTML = `<h3 style="margin-bottom:10px;">Your Requests</h3>`;
+
+  requests.forEach(req => {
+    const card = document.createElement("div");
+    card.className = "order-card";
+
+    card.innerHTML = `
+      <div class="order-top">
+        <span>${req.type} Request</span>
+        <span class="status ${req.status.toLowerCase()}">
+          ${req.status}
+        </span>
+      </div>
+
+      <div class="order-body">
+        <img src="${req.product.images?.[0]}" class="order-img">
+
+        <div class="order-details">
+          <h3>${req.product.name}</h3>
+
+          <p>${req.item.size} / ${req.item.color}</p>
+
+          ${req.type === "Exchange"
+        ? `<p>New: ${req.newSize} / ${req.newColor}</p>`
+        : `<p>Reason: ${req.reason}</p>
+                 <p>Refund: ₹${req.product.discountedPrice}</p>`
+      }
+
+          <small>
+            Requested on ${new Date(req.createdAt).toLocaleDateString("en-IN")}
+          </small>
+
+          <div class="request-info">
+            ${req.type === "Return"
+        ? `
+                <p>• Pickup in 10–12 days</p>
+                <p>• Refund after inspection</p>
+                `
+        : `
+                <p>• New product will be delivered</p>
+                `
+      }
+
+            <p>• Keep product, tags & invoice intact</p>
+          </div>
+        </div>
+      </div>
+    `;
+
+    container.appendChild(card);
+  });
+}
 function getReturnLastDate(orderDate) {
   const date = new Date(orderDate);
   date.setDate(date.getDate() + 7);

@@ -140,4 +140,46 @@ router.get("/", async (req, res) => {
     }
 });
 
+const Request = require("../models/requests");
+
+router.get("/", async (req, res) => {
+  try {
+    const { userId } = req.query;
+
+    const orders = await Order.find({ userId })
+      .populate("items.productId");
+
+    // 🔥 attach request info
+    const ordersWithRequests = await Promise.all(
+      orders.map(async (order) => {
+
+        const itemsWithRequest = await Promise.all(
+          order.items.map(async (item) => {
+
+            const request = await Request.findOne({
+              orderId: order._id,
+              productId: item.productId._id
+            });
+
+            return {
+              ...item.toObject(),
+              request // 🔥 attach here
+            };
+          })
+        );
+
+        return {
+          ...order.toObject(),
+          items: itemsWithRequest
+        };
+      })
+    );
+
+    res.json({ orders: ordersWithRequests });
+
+  } catch (err) {
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
 module.exports = router;

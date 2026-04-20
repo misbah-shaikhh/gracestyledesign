@@ -679,3 +679,36 @@
   color: #999; /* visible grey */
   opacity: 1; /* 🔥 important for some browsers */
 }
+
+.request-badge {
+  color: #6c5ce7;
+  font-weight: 600;
+  margin-top: 8px;
+}
+
+.status {
+  font-size: 12px;
+  padding: 4px 10px;
+  border-radius: 20px;
+}
+
+.status.pending {
+  background: #fff3cd;
+  color: #856404;
+}
+
+.status.approved {
+  background: #d4edda;
+  color: #155724;
+}
+
+.status.rejected {
+  background: #f8d7da;
+  color: #721c24;
+}
+
+.request-info {
+  margin-top: 8px;
+  font-size: 12px;
+  color: #666;
+}
