@@ -564,37 +564,129 @@ document.addEventListener("click", function (e) {
 
 });
 
-function openExchangeOverlay(order, item) {
+async function openExchangeOverlay(order, item) {
 
   exchangeOverlay.style.display = "flex";
 
-  document.getElementById("exchangeProductDetails").innerHTML = `
-    <p><b>${item.productId?.name}</b></p>
-    <p>Current: ${item.size} / ${item.color}</p>
-    <p>Quantity: ${item.quantity}</p>
+  // 🎯 UI product preview
+  document.getElementById("exchangeProduct").innerHTML = `
+    <div class="product-preview">
+      <img src="${item.productId?.images?.[0]}">
+      <div class="product-info">
+        <h4>${item.productId?.name}</h4>
+        <p>${item.size} / ${item.color}</p>
+        <p>Qty: ${item.quantity}</p>
+      </div>
+    </div>
   `;
 
-  const sizeSelect = document.getElementById("exchangeSize");
-  const colorSelect = document.getElementById("exchangeColor");
+  // 🔥 FETCH FULL PRODUCT (IMPORTANT)
+  const res = await fetch(
+    `https://gsd-backend-i5gj.onrender.com/api/products/${item.productId._id}`
+  );
+  const product = await res.json();
 
-  sizeSelect.innerHTML = `<option>${item.size}</option>`;
-  colorSelect.innerHTML = `<option>${item.color}</option>`;
+  const variants = product.variants || [];
 
-  // 🔥 TODO: later fetch real variants from backend
+  const sizeContainer = document.getElementById("sizeOptions");
+  const colorContainer = document.getElementById("colorOptions");
+
+  sizeContainer.innerHTML = "";
+  colorContainer.innerHTML = "";
+
+  const sizes = [...new Set(variants.map(v => v.size))];
+  const colors = [...new Set(variants.map(v => v.color))];
+
+  let selectedSize = item.size;
+  let selectedColor = item.color;
+
+  // 🔥 SIZE OPTIONS
+  sizes.forEach(size => {
+    const hasStock = variants.some(v => v.size === size && v.stock > 0);
+
+    const div = document.createElement("div");
+    div.className = `variant-option ${size === selectedSize ? "active" : ""} ${!hasStock ? "disabled" : ""}`;
+    div.innerText = size;
+
+    div.onclick = () => {
+      if (!hasStock) return;
+
+      selectedSize = size;
+
+      document.querySelectorAll("#sizeOptions .variant-option")
+        .forEach(el => el.classList.remove("active"));
+
+      div.classList.add("active");
+    };
+
+    sizeContainer.appendChild(div);
+  });
+
+  // 🔥 COLOR OPTIONS
+  colors.forEach(color => {
+    const hasStock = variants.some(v => v.color === color && v.stock > 0);
+
+    const div = document.createElement("div");
+    div.className = `variant-option ${color === selectedColor ? "active" : ""} ${!hasStock ? "disabled" : ""}`;
+    div.innerText = color;
+
+    div.onclick = () => {
+      if (!hasStock) return;
+
+      selectedColor = color;
+
+      document.querySelectorAll("#colorOptions .variant-option")
+        .forEach(el => el.classList.remove("active"));
+
+      div.classList.add("active");
+    };
+
+    colorContainer.appendChild(div);
+  });
+
+  // 🔥 SUBMIT
+  document.getElementById("submitExchange").onclick = () => {
+    console.log({
+      orderId: order._id,
+      productId: item.productId._id,
+      newSize: selectedSize,
+      newColor: selectedColor
+    });
+
+    alert("Exchange request sent");
+    exchangeOverlay.style.display = "none";
+  };
 }
 
 function openReturnOverlay(order, item) {
 
   returnOverlay.style.display = "flex";
 
-  document.getElementById("returnProductDetails").innerHTML = `
-    <p><b>${item.productId?.name}</b></p>
-    <p>${item.size} / ${item.color}</p>
-    <p>Quantity: ${item.quantity}</p>
+  document.getElementById("returnProduct").innerHTML = `
+    <div class="product-preview">
+      <img src="${item.productId?.images?.[0]}">
+      <div class="product-info">
+        <h4>${item.productId?.name}</h4>
+        <p>${item.size} / ${item.color}</p>
+      </div>
+    </div>
   `;
 
   document.getElementById("returnDeadline").innerText =
     "Return available till " + getReturnLastDate(order.orderDate);
+
+  document.getElementById("submitReturn").onclick = () => {
+    const reason = document.getElementById("returnReason").value;
+
+    console.log({
+      orderId: order._id,
+      productId: item.productId._id,
+      reason
+    });
+
+    alert("Return request sent (backend next)");
+    returnOverlay.style.display = "none";
+  };
 }
 
 [exchangeOverlay, returnOverlay].forEach(overlay => {

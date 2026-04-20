@@ -222,59 +222,55 @@
 </div>
 
 <!-- Exchange Overlay -->
- <div id="exchangeOverlay" class="overlay">
+<div id="exchangeOverlay" class="overlay">
   <div class="overlay-box">
 
     <h2>Exchange Product</h2>
 
-    <div id="exchangeProductDetails"></div>
+    <div id="exchangeProduct"></div>
 
-    <div class="form-group">
-      <label>Select Size</label>
-      <select id="exchangeSize"></select>
-    </div>
+    <label>Select Size</label>
+    <div id="sizeOptions" class="variant-grid"></div>
 
-    <div class="form-group">
-      <label>Select Color</label>
-      <select id="exchangeColor"></select>
-    </div>
+    <label style="margin-top:10px;">Select Color</label>
+    <div id="colorOptions" class="variant-grid"></div>
 
-    <p class="note">
+    <p class="secondary-note">
       Exchange will be processed only after admin approval.
     </p>
 
     <button id="submitExchange" class="primary-btn">
-      Submit Exchange Request
+      Confirm Exchange
     </button>
 
   </div>
 </div>
 
 <!-- Return Overlay -->
- <div id="returnOverlay" class="overlay">
+<div id="returnOverlay" class="overlay">
   <div class="overlay-box">
 
     <h2>Return Product</h2>
 
-    <div id="returnProductDetails"></div>
+    <div id="returnProduct"></div>
 
-    <p id="returnDeadline" class="note"></p>
+    <p id="returnDeadline" class="secondary-note"></p>
 
-    <div class="form-group">
-      <label>Reason for Return</label>
-      <textarea id="returnReason" placeholder="Enter reason..."></textarea>
-    </div>
+    <textarea id="returnReason"
+      placeholder="Tell us why you want to return..."
+      style="width:100%; padding:10px; border-radius:8px; border:1px solid #ddd;">
+    </textarea>
 
     <p class="warning">
-      ₹100 delivery charge will not be refunded.
+      ₹100 delivery fee will not be refunded.
     </p>
 
-    <p class="note">
+    <p class="secondary-note">
       Return will be processed only after admin approval.
     </p>
 
     <button id="submitReturn" class="primary-btn">
-      Submit Return Request
+      Confirm Return
     </button>
 
   </div>
