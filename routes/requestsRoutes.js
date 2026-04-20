@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const Request = require("../models/requests");
 const Product = require("../models/product");
+const Order = require("../models/orders");
 
 // 🔁 Exchange
 router.post("/exchange", async (req, res) => {
@@ -29,11 +30,15 @@ router.post("/return", async (req, res) => {
   try {
     const { userId, orderId, productId, reason } = req.body;
 
-    // 🔥 Fetch product
-    const product = await Product.findById(productId);
+    const order = await Order.findById(orderId);
 
-    // 🔥 Use discounted price (important)
-    const refundAmount = product?.discountedPrice || product?.originalPrice || 0;
+    const item = order.items.find(
+      i => (i.productId._id || i.productId).toString() === productId.toString()
+    );
+
+    const DELIVERY_FEE = 100;
+
+    const refundAmount = Math.max((item?.price || 0) - DELIVERY_FEE, 0);
 
     const request = await Request.create({
       type: "Return",
