@@ -570,3 +570,52 @@
   background: #6b2f1a;
   color: white;
 }
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.6);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+.overlay-box {
+  background: white;
+  padding: 20px;
+  width: 400px;
+  border-radius: 10px;
+}
+
+.form-group {
+  margin: 10px 0;
+}
+
+.primary-btn {
+  width: 100%;
+  padding: 10px;
+  background: black;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.note {
+  font-size: 12px;
+  color: gray;
+}
+
+.warning {
+  color: red;
+  font-size: 13px;
+}
+
+.return-note {
+  font-size: 12px;
+  color: #555;
+  margin-top: 5px;
+}

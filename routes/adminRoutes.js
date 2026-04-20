@@ -339,6 +339,8 @@ router.put("/orders/:id/status", async (req, res) => {
 
     // DELIVERED → PAYMENT RECEIVED
     if (status === "Delivered") {
+      order.deliveredAt = new Date(); // ✅ ADD THIS
+      await order.save();
       const payment = await Payment.findOne({ orderId: order._id });
 
       if (payment) {

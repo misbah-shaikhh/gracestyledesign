@@ -485,13 +485,27 @@ function renderOrders() {
 
       <small>Order ID: ${order.orderId}</small>
 
-      ${order.status === "Delivered"
+${order.status === "Delivered"
           ? `
-        <div class="order-actions">
-          <button class="small-btn">Request Exchange</button>
-          <button class="small-btn">Request Return</button>
-        </div>
-      `
+    <div class="order-actions">
+      <button class="small-btn exchange-btn"
+        data-order='${JSON.stringify(order)}'
+        data-item='${JSON.stringify(item)}'>
+        Request Exchange
+      </button>
+
+      <button class="small-btn return-btn"
+        data-order='${JSON.stringify(order)}'
+        data-item='${JSON.stringify(item)}'>
+        Request Return
+      </button>
+    </div>
+
+    <p class="return-note">
+      Exchange/Return available till 
+      ${getReturnLastDate(order.orderDate)}
+    </p>
+  `
           : ""
         }
 
@@ -505,6 +519,17 @@ function renderOrders() {
   });
 }
 
+function getReturnLastDate(orderDate) {
+  const date = new Date(orderDate);
+  date.setDate(date.getDate() + 7);
+
+  return date.toLocaleDateString("en-IN", {
+    day: "numeric",
+    month: "short",
+    year: "numeric"
+  });
+}
+
 function getStatusText(status) {
   switch (status) {
     case "Pending": return "Order Placed";
@@ -515,6 +540,70 @@ function getStatusText(status) {
     default: return status;
   }
 }
+
+const exchangeOverlay = document.getElementById("exchangeOverlay");
+const returnOverlay = document.getElementById("returnOverlay");
+
+document.addEventListener("click", function (e) {
+
+  // 🔥 EXCHANGE
+  if (e.target.classList.contains("exchange-btn")) {
+    const order = JSON.parse(e.target.dataset.order);
+    const item = JSON.parse(e.target.dataset.item);
+
+    openExchangeOverlay(order, item);
+  }
+
+  // 🔥 RETURN
+  if (e.target.classList.contains("return-btn")) {
+    const order = JSON.parse(e.target.dataset.order);
+    const item = JSON.parse(e.target.dataset.item);
+
+    openReturnOverlay(order, item);
+  }
+
+});
+
+function openExchangeOverlay(order, item) {
+
+  exchangeOverlay.style.display = "flex";
+
+  document.getElementById("exchangeProductDetails").innerHTML = `
+    <p><b>${item.productId?.name}</b></p>
+    <p>Current: ${item.size} / ${item.color}</p>
+    <p>Quantity: ${item.quantity}</p>
+  `;
+
+  const sizeSelect = document.getElementById("exchangeSize");
+  const colorSelect = document.getElementById("exchangeColor");
+
+  sizeSelect.innerHTML = `<option>${item.size}</option>`;
+  colorSelect.innerHTML = `<option>${item.color}</option>`;
+
+  // 🔥 TODO: later fetch real variants from backend
+}
+
+function openReturnOverlay(order, item) {
+
+  returnOverlay.style.display = "flex";
+
+  document.getElementById("returnProductDetails").innerHTML = `
+    <p><b>${item.productId?.name}</b></p>
+    <p>${item.size} / ${item.color}</p>
+    <p>Quantity: ${item.quantity}</p>
+  `;
+
+  document.getElementById("returnDeadline").innerText =
+    "Return available till " + getReturnLastDate(order.orderDate);
+}
+
+[exchangeOverlay, returnOverlay].forEach(overlay => {
+  overlay.addEventListener("click", function (e) {
+    if (e.target === overlay) {
+      overlay.style.display = "none";
+    }
+  });
+});
 
 document.addEventListener("click", function (e) {
 
