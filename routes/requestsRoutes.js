@@ -29,10 +29,15 @@ router.post("/return", async (req, res) => {
   try {
     const { userId, orderId, productId, reason } = req.body;
 
-    // 🔥 fetch product price safely
+    console.log("👉 productId received:", productId);
+
     const product = await Product.findById(productId);
 
+    console.log("👉 product found:", product);
+
     const refundAmount = product?.price || 0;
+
+    console.log("👉 refundAmount:", refundAmount);
 
     const request = await Request.create({
       type: "Return",
@@ -46,7 +51,7 @@ router.post("/return", async (req, res) => {
     res.json(request);
 
   } catch (err) {
-    console.error(err);
+    console.error("❌ ERROR:", err);
     res.status(500).json({ message: err.message });
   }
 });
