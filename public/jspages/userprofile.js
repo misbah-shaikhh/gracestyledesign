@@ -407,18 +407,31 @@ document.addEventListener("click", (e) => {
 });
 // orders section 
 let userOrders = [];
+let userRequests = [];
 
 async function fetchUserOrders() {
   const userId = localStorage.getItem("userId");
 
-  const res = await fetch(`https://gsd-backend-i5gj.onrender.com/api/orders?userId=${userId}`);
-  const data = await res.json();
+  // 🔥 ORDERS
+  const ordersRes = await fetch(
+    `https://gsd-backend-i5gj.onrender.com/api/orders?userId=${userId}`
+  );
+  const ordersData = await ordersRes.json();
 
-  console.log("Orders:", data.orders); // 🔥 debug
+  // 🔥 REQUESTS (NEW)
+  const reqRes = await fetch(
+    `https://gsd-backend-i5gj.onrender.com/api/requests?userId=${userId}`
+  );
+  const reqData = await reqRes.json();
 
-  userOrders = data.orders;
-  renderRequests();
-  renderOrders();
+  userOrders = ordersData.orders || [];
+  userRequests = reqData || []; // depends on your API response
+
+  console.log("Orders:", userOrders);
+  console.log("Requests:", userRequests);
+
+  renderRequests(); // 🔥 FIRST SHOW REQUESTS
+  renderOrders();   // 🔥 THEN ORDERS
 }
 function loadOrders() {
   profileContent.innerHTML = `
@@ -445,7 +458,6 @@ function loadOrders() {
   });
 }
 
-
 function renderOrders() {
   const container = document.getElementById("ordersContainer");
   if (!container) {
@@ -462,6 +474,11 @@ function renderOrders() {
   userOrders.forEach(order => {
 
     order.items.forEach(item => {
+      const existingRequest = userRequests.find(
+        r =>
+          r.orderId === order._id &&
+          r.productId._id === item.productId._id
+      );
 
       const card = document.createElement("div");
       card.className = "order-card";
@@ -486,7 +503,7 @@ function renderOrders() {
 
       <small>Order ID: ${order.orderId}</small>
 
-${order.status === "Delivered" && !item.request
+${order.status === "Delivered" && !existingRequest
           ? `
     <div class="order-actions">
       <button class="small-btn exchange-btn"
@@ -507,10 +524,10 @@ ${order.status === "Delivered" && !item.request
       ${getReturnLastDate(order.orderDate)}
     </p>
   `
-          : item.request
+          : existingRequest
             ? `<p class="request-badge">
-         ${item.request.type} Requested (${item.request.status})
-       </p>`
+       ${existingRequest.type} Requested (${existingRequest.status})
+     </p>`
             : ""
         }
 
@@ -527,28 +544,14 @@ function renderRequests() {
   const container = document.getElementById("requestsContainer");
   if (!container) return;
 
-  const requests = [];
-
-  userOrders.forEach(order => {
-    order.items.forEach(item => {
-      if (item.request) {
-        requests.push({
-          ...item.request,
-          product: item.productId,
-          item
-        });
-      }
-    });
-  });
-
-  if (requests.length === 0) {
+  if (!userRequests || userRequests.length === 0) {
     container.innerHTML = "";
     return;
   }
 
   container.innerHTML = `<h3 style="margin-bottom:10px;">Your Requests</h3>`;
 
-  requests.forEach(req => {
+  userRequests.forEach(req => {
     const card = document.createElement("div");
     card.className = "order-card";
 
@@ -561,33 +564,33 @@ function renderRequests() {
       </div>
 
       <div class="order-body">
-        <img src="${req.product.images?.[0]}" class="order-img">
+        <img src="${req.productId?.images?.[0]}" class="order-img">
 
         <div class="order-details">
-          <h3>${req.product.name}</h3>
+          <h3>${req.productId?.name}</h3>
 
-          <p>${req.item.size} / ${req.item.color}</p>
-
-          ${req.type === "Exchange"
-        ? `<p>New: ${req.newSize} / ${req.newColor}</p>`
-        : `<p>Reason: ${req.reason}</p>
-                 <p>Refund: ₹${req.product.discountedPrice}</p>`
-      }
+          ${
+            req.type === "Exchange"
+              ? `<p>New: ${req.newSize} / ${req.newColor}</p>`
+              : `<p>Reason: ${req.reason}</p>
+                 <p>Refund: ₹${req.productId?.discountedPrice}</p>`
+          }
 
           <small>
             Requested on ${new Date(req.createdAt).toLocaleDateString("en-IN")}
           </small>
 
           <div class="request-info">
-            ${req.type === "Return"
-        ? `
+            ${
+              req.type === "Return"
+                ? `
                 <p>• Pickup in 10–12 days</p>
                 <p>• Refund after inspection</p>
                 `
-        : `
+                : `
                 <p>• New product will be delivered</p>
                 `
-      }
+            }
 
             <p>• Keep product, tags & invoice intact</p>
           </div>
