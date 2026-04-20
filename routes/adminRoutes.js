@@ -98,10 +98,26 @@ async function generateInvoicePDF(payment) {
       doc.moveDown();
       doc.moveTo(40, doc.y).lineTo(550, doc.y).stroke();
 
+      const DELIVERY_FEE = 100;
+
+      // ✅ calculate subtotal from items
+      const subtotal = payment.items.reduce((sum, item) => {
+        return sum + (item.price * item.quantity);
+      }, 0);
       // =========================
       // TOTAL
       // =========================
       doc.moveDown();
+
+      // Subtotal
+      doc.font("Helvetica").fontSize(12);
+      doc.text(`Subtotal: ₹${subtotal}`, { align: "right" });
+
+      // Delivery
+      doc.text(`Delivery Fee: ₹${DELIVERY_FEE}`, { align: "right" });
+
+      // Final Total
+      doc.moveDown(0.5);
       doc.font("Helvetica-Bold").fontSize(14);
       doc.text(`Total: ₹${payment.totalAmount}`, { align: "right" });
 

@@ -26,6 +26,7 @@ router.post("/", async (req, res) => {
         }
 
         let totalAmount = 0;
+        const DELIVERY_FEE = 100; // ✅ ADD THIS
 
         const formattedItems = [];
 
@@ -73,7 +74,7 @@ router.post("/", async (req, res) => {
                 color: item.color
             });
         }
-
+        totalAmount += DELIVERY_FEE;
         // 🔥 STEP 2: CREATE ORDER
         const uniqueOrderId = "ORD" + Date.now();
 
