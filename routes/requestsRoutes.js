@@ -29,15 +29,11 @@ router.post("/return", async (req, res) => {
   try {
     const { userId, orderId, productId, reason } = req.body;
 
-    console.log("👉 productId received:", productId);
-
+    // 🔥 Fetch product
     const product = await Product.findById(productId);
 
-    console.log("👉 product found:", product);
-
-    const refundAmount = product?.price || 0;
-
-    console.log("👉 refundAmount:", refundAmount);
+    // 🔥 Use discounted price (important)
+    const refundAmount = product?.discountedPrice || product?.originalPrice || 0;
 
     const request = await Request.create({
       type: "Return",
@@ -51,7 +47,7 @@ router.post("/return", async (req, res) => {
     res.json(request);
 
   } catch (err) {
-    console.error("❌ ERROR:", err);
+    console.error(err);
     res.status(500).json({ message: err.message });
   }
 });
