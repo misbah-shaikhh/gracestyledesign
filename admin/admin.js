@@ -1359,15 +1359,16 @@ async function loadRequests() {
       </td>
 
       <td>
-        ${
-          req.type === "Exchange"
-            ? `New: ${req.newSize} / ${req.newColor}`
-            : `Reason: ${req.reason}`
-        }
+        ${req.type === "Exchange"
+        ? `New: ${req.newSize} / ${req.newColor}`
+        : `Reason: ${req.reason}`
+      }
       </td>
 
       <td>
-        ${req.type === "Return" ? "₹" + req.refundAmount : "-"}
+        ${req.type === "Return"
+        ? "₹" + (req.refundAmount ?? 0)
+        : "₹0"}
       </td>
 
       <td>
@@ -1377,14 +1378,13 @@ async function loadRequests() {
       </td>
 
       <td>
-        ${
-          req.status === "Pending"
-            ? `
+        ${req.status === "Pending"
+        ? `
               <button class="action-btn approve" onclick="updateRequest('${req._id}','Approved')">Approve</button>
               <button class="action-btn reject" onclick="updateRequest('${req._id}','Rejected')">Reject</button>
             `
-            : "-"
-        }
+        : "-"
+      }
       </td>
     `;
 

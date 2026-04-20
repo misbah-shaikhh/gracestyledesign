@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const Request = require("../models/requests");
+const Product = require("../models/product");
 
 // 🔁 Exchange
 router.post("/exchange", async (req, res) => {
@@ -26,7 +27,12 @@ router.post("/exchange", async (req, res) => {
 // 🔁 Return
 router.post("/return", async (req, res) => {
   try {
-    const { userId, orderId, productId, reason, refundAmount } = req.body;
+    const { userId, orderId, productId, reason } = req.body;
+
+    // 🔥 fetch product price safely
+    const product = await Product.findById(productId);
+
+    const refundAmount = product?.price || 0;
 
     const request = await Request.create({
       type: "Return",
@@ -40,6 +46,7 @@ router.post("/return", async (req, res) => {
     res.json(request);
 
   } catch (err) {
+    console.error(err);
     res.status(500).json({ message: err.message });
   }
 });
