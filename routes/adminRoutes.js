@@ -241,7 +241,6 @@ router.get("/orders", async (req, res) => {
 
 router.put("/orders/:id/status", async (req, res) => {
   try {
-
     const { status } = req.body;
 
     const allowedStatuses = [
@@ -256,7 +255,6 @@ router.put("/orders/:id/status", async (req, res) => {
       return res.status(400).json({ message: "Invalid status" });
     }
 
-    // ✅ STEP 1: GET ORDER
     const order = await Order.findById(req.params.id);
 
     if (!order) {
@@ -265,17 +263,44 @@ router.put("/orders/:id/status", async (req, res) => {
 
     const previousStatus = order.status;
 
-    // ✅ STEP 2: UPDATE STATUS
+    // ==============================
+    // 🚫 HARD RULES (BLOCK CHANGES)
+    // ==============================
+
+    // ❌ Cannot change if already Cancelled
+    if (previousStatus === "Cancelled") {
+      return res.status(400).json({
+        message: "Cancelled orders cannot be modified"
+      });
+    }
+
+    // ❌ Cannot change if already Delivered
+    if (previousStatus === "Delivered") {
+      return res.status(400).json({
+        message: "Delivered orders cannot be modified"
+      });
+    }
+
+    // ❌ Cannot cancel after shipped
+    if (previousStatus === "Shipped" && status === "Cancelled") {
+      return res.status(400).json({
+        message: "Shipped orders cannot be cancelled"
+      });
+    }
+
+    // ==============================
+    // ✅ UPDATE STATUS
+    // ==============================
     order.status = status;
     await order.save();
 
     // ==============================
-    // 🔥 CASE 1: CANCEL ORDER
+    // 🔥 STOCK LOGIC (ONLY VALID CASES)
     // ==============================
-    if (status === "Cancelled" && previousStatus !== "Cancelled") {
 
+    // CANCEL → RESTORE STOCK
+    if (status === "Cancelled") {
       for (const item of order.items) {
-
         const product = await Product.findById(item.productId);
         if (!product) continue;
 
@@ -284,46 +309,20 @@ router.put("/orders/:id/status", async (req, res) => {
         );
 
         if (variant) {
-          variant.stock += item.quantity; // 🔥 restore stock
+          variant.stock += item.quantity;
         }
 
         await product.save();
       }
 
-      // 🔥 update payment → failed
       await Payment.findOneAndUpdate(
         { orderId: order._id },
         { paymentStatus: "Failed" }
       );
     }
 
-    // ==============================
-    // 🔥 CASE 2: RESTORE ORDER
-    // ==============================
-    if (previousStatus === "Cancelled" && status !== "Cancelled") {
-
-      for (const item of order.items) {
-
-        const product = await Product.findById(item.productId);
-        if (!product) continue;
-
-        const variant = product.variants.find(v =>
-          v.color === item.color && v.size === item.size
-        );
-
-        if (variant) {
-          variant.stock = Math.max(0, variant.stock - item.quantity); // 🔥 subtract again safely
-        }
-
-        await product.save();
-      }
-    }
-
-    // ==============================
-    // 🔥 CASE 3: DELIVERED → PAYMENT RECEIVED
-    // ==============================
-    if (status === "Delivered" && previousStatus !== "Delivered") {
-
+    // DELIVERED → PAYMENT RECEIVED
+    if (status === "Delivered") {
       const payment = await Payment.findOne({ orderId: order._id });
 
       if (payment) {
