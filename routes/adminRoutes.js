@@ -361,8 +361,13 @@ router.get("/payments", async (req, res) => {
 
 router.put("/payments/:id/status", async (req, res) => {
   try {
-
     const { status } = req.body;
+
+    const allowedStatuses = ["Pending", "Received", "Failed"];
+
+    if (!allowedStatuses.includes(status)) {
+      return res.status(400).json({ message: "Invalid payment status" });
+    }
 
     const payment = await Payment.findById(req.params.id)
       .populate("userId")
@@ -372,24 +377,53 @@ router.put("/payments/:id/status", async (req, res) => {
       return res.status(404).json({ message: "Payment not found" });
     }
 
-    const allowedStatuses = ["Pending", "Received", "Failed"];
+    const previousStatus = payment.paymentStatus;
 
-    if (!allowedStatuses.includes(status)) {
-      return res.status(400).json({ message: "Invalid payment status" });
+    // ==============================
+    // 🚫 HARD RULES
+    // ==============================
+
+    // ❌ Once FAILED → locked forever
+    if (previousStatus === "Failed") {
+      return res.status(400).json({
+        message: "Failed payments cannot be modified"
+      });
     }
+
+    // ❌ Once RECEIVED → locked forever
+    if (previousStatus === "Received") {
+      return res.status(400).json({
+        message: "Completed payments cannot be modified"
+      });
+    }
+
+    // ==============================
+    // ✅ VALID TRANSITIONS
+    // ==============================
+    // Only Pending → Received / Failed allowed
+
+    if (previousStatus === "Pending") {
+      if (!["Received", "Failed"].includes(status)) {
+        return res.status(400).json({
+          message: "Pending payments can only be marked as Received or Failed"
+        });
+      }
+    }
+
+    // ==============================
+    // ✅ UPDATE STATUS
+    // ==============================
     payment.paymentStatus = status;
     await payment.save();
 
-    // =========================
-    // 🔥 SEND INVOICE (LATER)
-    // =========================
+    // ==============================
+    // 📄 SEND INVOICE
+    // ==============================
     if (status === "Received") {
-
       const userEmail = payment.userId.email;
-
       console.log("Send invoice to:", userEmail);
 
-      // 👉 Later: integrate nodemailer
+      // later → call resend here
     }
 
     res.json({ message: "Payment updated", payment });
