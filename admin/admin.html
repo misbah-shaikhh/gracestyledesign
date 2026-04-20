@@ -21,7 +21,7 @@
                 <li class="nav-item" data-page="products">Products</li>
                 <li class="nav-item" data-page="orders">Orders</li>
                 <li class="nav-item" data-page="customers">Customers</li>
-                <li class="nav-item" data-page="return-exchange">Return/Exchange Requests</li>
+                <li class="nav-item" data-page="return-exchange">Return/Exchange</li>
                 <li class="nav-item" data-page="payments">Payments</li>
                 <li class="nav-item" data-page="testimonies">Customer Testimonies</li>
             </ul>
@@ -253,59 +253,33 @@
                     </div>
 
                 </div>
-                <!-- Inventory Page -->
-                <div class="page hidden" id="inventory">
-                    <h2 style="margin-bottom: 20px;">Inventory Management</h2>
+                <!-- Requests Page -->
+                <div class="page" id="requests">
+
+                    <h2 style="margin-bottom: 20px;">Customer Requests</h2>
 
                     <div class="card">
-                        <h3 class="card-header">Stock Overview</h3>
-                        <table>
+                        <h3 class="card-header">Exchange & Return Requests</h3>
+
+                        <table class="requests-table">
                             <thead>
                                 <tr>
-                                    <th>Product Name</th>
-                                    <th>Category</th>
-                                    <th>Size</th>
-                                    <th>Current Stock</th>
+                                    <th>Product</th>
+                                    <th>User</th>
+                                    <th>Type</th>
+                                    <th>Details</th>
+                                    <th>Refund</th>
                                     <th>Status</th>
-                                    <th>Actions</th>
+                                    <th>Action</th>
                                 </tr>
                             </thead>
-                            <tbody>
-                                <tr>
-                                    <td>Green Ethnic suit</td>
-                                    <td>Kurti</td>
-                                    <td>S, M, L</td>
-                                    <td>50</td>
-                                    <td>Available</td>
-                                    <td><button class="btn">Update</button></td>
-                                </tr>
-                                <tr>
-                                    <td>Green Ethnic suit</td>
-                                    <td>Kurti</td>
-                                    <td>XL, L</td>
-                                    <td>30</td>
-                                    <td>Available</td>
-                                    <td><button class="btn">Update</button></td>
-                                </tr>
-                                <tr>
-                                    <td>Green Ethnic suit</td>
-                                    <td>Kurti</td>
-                                    <td>S, L</td>
-                                    <td>5</td>
-                                    <td>Low Stock</td>
-                                    <td><button class="btn">Update</button></td>
-                                </tr>
+
+                            <tbody id="requestsTableBody">
+                                <!-- dynamic -->
                             </tbody>
                         </table>
                     </div>
 
-                    <div class="card" style="margin-top: 20px;">
-                        <h3 class="card-header">Low Stock Alerts</h3>
-                        <p
-                            style="font-size: 14px; color: #e74c3c; padding: 10px; background: #ffeaea; border-radius: 4px;">
-                            ⚠️ 8 items are running low on stock and need restocking soon.
-                        </p>
-                    </div>
                 </div>
 
                 <!-- Payments Page -->

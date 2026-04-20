@@ -1303,71 +1303,84 @@ document.addEventListener("click", async (e) => {
 // =============================================
 // EXCHANGE & RETURN REQUESTS - API
 // =============================================
-/* async function loadExchangeReturns() {
-  try {
-    const response = await fetch('http://localhost:5000/api/admin/exchange-returns');
-    if (!response.ok) throw new Error('Failed to fetch requests');
-    const data = await response.json();
+async function loadRequests() {
+  const res = await fetch("https://gsd-backend-i5gj.onrender.com/api/requests");
+  const data = await res.json();
 
-    const tbody = document.getElementById('exchangeTableBody');
-    tbody.innerHTML = '';
+  const tbody = document.getElementById("requestsTableBody");
+  tbody.innerHTML = "";
 
-    if (!data.requests || data.requests.length === 0) {
-      tbody.innerHTML = '<tr><td colspan="7" style="text-align:center; color:#999; padding:20px;">No requests found.</td></tr>';
-      return;
-    }
+  data.forEach(req => {
 
-    data.requests.forEach(req => {
-      const typeBg = req.type === 'Exchange' ? '#e6f4ff' : '#fff0f0';
-      const typeColor = req.type === 'Exchange' ? '#0066cc' : '#cc0000';
+    const row = document.createElement("tr");
 
-      const statusColors = {
-        'Pending': { bg: '#fff8e6', color: '#b8860b' },
-        'Approved': { bg: '#e6ffed', color: '#1a7a3c' },
-        'Rejected': { bg: '#fff0f0', color: '#cc0000' }
-      };
-      const s = statusColors[req.status] || { bg: '#f5f5f5', color: '#333' };
+    row.innerHTML = `
+      <td>
+        <div class="product-cell">
+          <img src="${req.productId?.images?.[0]}">
+          <div>
+            <strong>${req.productId?.name}</strong>
+          </div>
+        </div>
+      </td>
 
-      const actionBtns = req.status === 'Pending'
-        ? `<button class="btn" style="margin-right:5px;" onclick="updateExchangeStatus('${req._id}', 'Approved')">Approve</button>
-           <button class="btn" onclick="updateExchangeStatus('${req._id}', 'Rejected')">Reject</button>`
-        : `<span style="color:#999; font-size:13px;">${req.status}</span>`;
+      <td>
+        ${req.userId?.name || "User"}<br>
+        <small>${req.userId?.email || ""}</small>
+      </td>
 
-      tbody.innerHTML += `
-        <tr>
-          <td>${req.requestId}</td>
-          <td>#${req.orderId}</td>
-          <td>${req.customerName}</td>
-          <td>${req.product}</td>
-          <td><span style="background:${typeBg}; color:${typeColor}; padding:3px 10px; border-radius:20px; font-size:13px; font-weight:600;">${req.type}</span></td>
-          <td><span style="background:${s.bg}; color:${s.color}; padding:3px 10px; border-radius:20px; font-size:13px; font-weight:600;">${req.status}</span></td>
-          <td>${actionBtns}</td>
-        </tr>
-      `;
-    });
+      <td>
+        <span class="badge ${req.type.toLowerCase()}">
+          ${req.type}
+        </span>
+      </td>
 
-  } catch (error) {
-    console.error('Error loading exchange/return requests:', error);
-  }
+      <td>
+        ${
+          req.type === "Exchange"
+            ? `New: ${req.newSize} / ${req.newColor}`
+            : `Reason: ${req.reason}`
+        }
+      </td>
+
+      <td>
+        ${req.type === "Return" ? "₹" + req.refundAmount : "-"}
+      </td>
+
+      <td>
+        <span class="status ${req.status.toLowerCase()}">
+          ${req.status}
+        </span>
+      </td>
+
+      <td>
+        ${
+          req.status === "Pending"
+            ? `
+              <button class="action-btn approve" onclick="updateRequest('${req._id}','Approved')">Approve</button>
+              <button class="action-btn reject" onclick="updateRequest('${req._id}','Rejected')">Reject</button>
+            `
+            : "-"
+        }
+      </td>
+    `;
+
+    tbody.appendChild(row);
+  });
 }
 
-async function updateExchangeStatus(id, status) {
-  try {
-    const response = await fetch(`http://localhost:5000/api/admin/exchange-returns/${id}`, {
-      method: 'PATCH',
-      headers: { 'Content-Type': 'application/json' },
+async function updateRequest(id, status) {
+  await fetch(
+    `https://gsd-backend-i5gj.onrender.com/api/requests/${id}/status`,
+    {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ status })
-    });
-    if (!response.ok) throw new Error('Failed to update status');
-    loadExchangeReturns(); // refresh table
-  } catch (error) {
-    console.error('Error updating status:', error);
-  }
+    }
+  );
+
+  loadRequests(); // refresh
 }
-
-// Load on page start (dashboard shows it)
-loadExchangeReturns(); */
-
 // =============================================
 // DASHBOARD - Bestsellers OVERVIEW
 // =============================================

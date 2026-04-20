@@ -1350,3 +1350,91 @@
 .hidden {
   display: none !important;
 }
+.requests-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.requests-table th {
+  text-align: left;
+  padding: 12px;
+  font-size: 13px;
+  color: #777;
+}
+
+.requests-table td {
+  padding: 14px 12px;
+  border-top: 1px solid #eee;
+  vertical-align: middle;
+}
+
+/* product cell */
+.product-cell {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.product-cell img {
+  width: 50px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+/* badges */
+.badge {
+  padding: 5px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+}
+
+.badge.exchange {
+  background: #eef5ff;
+  color: #2d6cdf;
+}
+
+.badge.return {
+  background: #fff0f0;
+  color: #e74c3c;
+}
+
+.status {
+  font-size: 12px;
+  padding: 5px 10px;
+  border-radius: 20px;
+}
+
+.status.pending {
+  background: #fff6e5;
+  color: #f39c12;
+}
+
+.status.approved {
+  background: #e8f8f0;
+  color: #27ae60;
+}
+
+.status.rejected {
+  background: #fdecea;
+  color: #e74c3c;
+}
+
+/* buttons */
+.action-btn {
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.approve {
+  background: #27ae60;
+  color: white;
+}
+
+.reject {
+  background: #e74c3c;
+  color: white;
+}

@@ -44,4 +44,34 @@ router.post("/return", async (req, res) => {
   }
 });
 
+router.get("/", async (req, res) => {
+  try {
+    const requests = await Request.find()
+      .populate("userId")
+      .populate("productId");
+
+    res.json(requests);
+
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
+router.put("/:id/status", async (req, res) => {
+  try {
+    const { status } = req.body;
+
+    const request = await Request.findByIdAndUpdate(
+      req.params.id,
+      { status },
+      { new: true }
+    );
+
+    res.json(request);
+
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
 module.exports = router;
