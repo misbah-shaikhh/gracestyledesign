@@ -645,16 +645,37 @@ async function openExchangeOverlay(order, item) {
   });
 
   // 🔥 SUBMIT
-  document.getElementById("submitExchange").onclick = () => {
-    console.log({
-      orderId: order._id,
-      productId: item.productId._id,
-      newSize: selectedSize,
-      newColor: selectedColor
-    });
+  document.getElementById("submitExchange").onclick = async () => {
+    const btn = document.getElementById("submitExchange");
+    btn.disabled = true;
+    btn.innerText = "Processing...";
+    try {
+      const res = await fetch(
+        "https://gsd-backend-i5gj.onrender.com/api/requests/exchange",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            userId: localStorage.getItem("userId"),
+            orderId: order._id,
+            productId: item.productId._id,
+            newSize: selectedSize,
+            newColor: selectedColor
+          })
+        }
+      );
 
-    alert("Exchange request sent");
-    exchangeOverlay.style.display = "none";
+      const data = await res.json();
+
+      alert("Exchange request sent");
+      exchangeOverlay.style.display = "none";
+
+    } catch (err) {
+      console.error(err);
+      alert("Something went wrong");
+    }
   };
 }
 
@@ -675,17 +696,43 @@ function openReturnOverlay(order, item) {
   document.getElementById("returnDeadline").innerText =
     "Return available till " + getReturnLastDate(order.orderDate);
 
-  document.getElementById("submitReturn").onclick = () => {
-    const reason = document.getElementById("returnReason").value;
+  document.getElementById("submitReturn").onclick = async () => {
+    const btn = document.getElementById("submitReturn");
+    btn.disabled = true;
+    try {
+      const reason = document.getElementById("returnReason").value;
 
-    console.log({
-      orderId: order._id,
-      productId: item.productId._id,
-      reason
-    });
+      if (!reason.trim()) {
+        alert("Please enter return reason");
+        return;
+      }
 
-    alert("Return request sent");
-    returnOverlay.style.display = "none";
+      const res = await fetch(
+        "https://gsd-backend-i5gj.onrender.com/api/requests/return",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            userId: localStorage.getItem("userId"),
+            orderId: order._id,
+            productId: item.productId._id,
+            reason,
+            refundAmount: item.productId.price
+          })
+        }
+      );
+
+      const data = await res.json();
+
+      alert("Return request sent");
+      returnOverlay.style.display = "none";
+
+    } catch (err) {
+      console.error(err);
+      alert("Something went wrong");
+    }
   };
 }
 

@@ -13,6 +13,9 @@ const categoryRoutes = require("./routes/categoryRoutes");
 const uploadRoutes = require("./routes/uploadRoutes");
 const cartRoutes = require("./routes/cartRoutes");
 const orderRoutes = require("./routes/orderRoutes");
+const requestsRoutes = require("./routes/requests");
+
+
 
 const app = express();
 
@@ -48,6 +51,7 @@ app.use("/api/categories", categoryRoutes);
 app.use("/api/upload", uploadRoutes);
 app.use("/api/cart", cartRoutes);
 app.use("/api/orders", orderRoutes);
+app.use("/api/requests", requestsRoutes);
 
 app.use("/api", (req, res) => {
   res.status(404).json({
