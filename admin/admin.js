@@ -15,16 +15,39 @@ const pages = document.querySelectorAll('.page');
 
 navItems.forEach(item => {
   item.addEventListener('click', () => {
-    // Remove active class from all items
+
+    // 🔹 Active nav highlight
     navItems.forEach(nav => nav.classList.remove('active'));
-    // Add active class to clicked item
     item.classList.add('active');
 
-    // Hide all pages
+    // 🔹 Hide all pages
     pages.forEach(page => page.classList.remove('active'));
-    // Show selected page
+
+    // 🔹 Get target page
     const pageId = item.getAttribute('data-page');
-    document.getElementById(pageId).classList.add('active');
+    const targetPage = document.getElementById(pageId);
+
+    // 🔥 SAFE CHECK (prevents crash)
+    if (targetPage) {
+      targetPage.classList.add('active');
+
+      // 🚀 Page-specific logic
+      if (pageId === "requests") {
+        loadRequests(); // auto fetch requests
+      }
+
+      if (pageId === "orders") {
+        loadOrders?.(); // optional if exists
+      }
+
+      if (pageId === "products") {
+        loadProducts?.();
+      }
+
+    } else {
+      console.error("❌ Page not found:", pageId);
+    }
+
   });
 });
 
