@@ -684,7 +684,7 @@ function openReturnOverlay(order, item) {
       reason
     });
 
-    alert("Return request sent (backend next)");
+    alert("Return request sent");
     returnOverlay.style.display = "none";
   };
 }

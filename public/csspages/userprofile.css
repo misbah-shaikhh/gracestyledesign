@@ -671,3 +671,11 @@
   font-size: 12px;
   margin-top: 10px;
 }
+#returnReason {
+  color: #000; /* actual typed text */
+}
+
+#returnReason::placeholder {
+  color: #999; /* visible grey */
+  opacity: 1; /* 🔥 important for some browsers */
+}
