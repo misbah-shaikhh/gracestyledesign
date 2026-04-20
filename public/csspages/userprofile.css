@@ -680,18 +680,48 @@
   opacity: 1; /* 🔥 important for some browsers */
 }
 
-.request-badge {
-  color: #6c5ce7;
-  font-weight: 600;
-  margin-top: 8px;
+/* 🔥 REQUESTS SECTION WRAPPER */
+.requests-section {
+  background: #fafafa;
+  border: 1px solid #eee;
+  border-radius: 14px;
+  padding: 15px;
+  margin-bottom: 25px;
 }
 
-.status {
+/* HEADER */
+.requests-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.requests-header h3 {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.requests-sub {
   font-size: 12px;
+  color: #888;
+}
+
+/* 🔥 REQUEST CARDS DIFFERENT LOOK */
+.requests-section .order-card {
+  border-left: 4px solid #000; /* accent */
+  background: #fff;
+}
+
+/* STATUS BADGE */
+.status {
   padding: 4px 10px;
   border-radius: 20px;
+  font-size: 12px;
+  font-weight: 500;
 }
 
+/* STATUS COLORS */
 .status.pending {
   background: #fff3cd;
   color: #856404;
@@ -707,8 +737,14 @@
   color: #721c24;
 }
 
+/* REQUEST INFO BOX */
 .request-info {
   margin-top: 8px;
   font-size: 12px;
-  color: #666;
+  color: #555;
+  line-height: 1.5;
+}
+
+.requests-section {
+  box-shadow: 0 4px 12px rgba(0,0,0,0.04);
 }

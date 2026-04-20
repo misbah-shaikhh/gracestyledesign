@@ -549,7 +549,15 @@ function renderRequests() {
     return;
   }
 
-  container.innerHTML = `<h3 style="margin-bottom:10px;">Your Requests</h3>`;
+  container.innerHTML = `
+  <div class="requests-section">
+    <div class="requests-header">
+      <h3>Your Requests</h3>
+      <span class="requests-sub">Track returns & exchanges</span>
+    </div>
+    <div id="requestsList"></div>
+  </div>
+`;
 
   userRequests.forEach(req => {
     const card = document.createElement("div");
@@ -569,36 +577,33 @@ function renderRequests() {
         <div class="order-details">
           <h3>${req.productId?.name}</h3>
 
-          ${
-            req.type === "Exchange"
-              ? `<p>New: ${req.newSize} / ${req.newColor}</p>`
-              : `<p>Reason: ${req.reason}</p>
+          ${req.type === "Exchange"
+        ? `<p>New: ${req.newSize} / ${req.newColor}</p>`
+        : `<p>Reason: ${req.reason}</p>
                  <p>Refund: ₹${req.productId?.discountedPrice}</p>`
-          }
+      }
 
           <small>
             Requested on ${new Date(req.createdAt).toLocaleDateString("en-IN")}
           </small>
 
           <div class="request-info">
-            ${
-              req.type === "Return"
-                ? `
+            ${req.type === "Return"
+        ? `
                 <p>• Pickup in 10–12 days</p>
                 <p>• Refund after inspection</p>
                 `
-                : `
+        : `
                 <p>• New product will be delivered</p>
                 `
-            }
+      }
 
             <p>• Keep product, tags & invoice intact</p>
           </div>
         </div>
       </div>
     `;
-
-    container.appendChild(card);
+    document.getElementById("requestsList").appendChild(card);
   });
 }
 function getReturnLastDate(orderDate) {
