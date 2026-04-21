@@ -4,6 +4,7 @@ const User = require("../models/user");
 const Payment = require("../models/payment");
 const Order = require("../models/orders");
 const Product = require("../models/product"); // 🔥 ADD THIS
+const Review = require("../models/review");
 
 const PDFDocument = require("pdfkit");
 const { Resend } = require("resend");

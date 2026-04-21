@@ -3,7 +3,6 @@ const router = express.Router();
 const Review = require("../models/review");
 const Order = require("../models/orders");
 const Product = require("../models/product");
-const Review = require("../models/review")
 
 /* ✅ ADD REVIEW */
 router.post("/", async (req, res) => {
