@@ -78,6 +78,9 @@ async function loadDashboardStats() {
     document.getElementById("lowStockAlerts").innerText =
       data.lowStockAlerts || 0;
 
+    // ✅ call here (inside try)
+    loadRefunds();
+
   } catch (err) {
     console.error("Dashboard error:", err);
   }
@@ -1434,3 +1437,61 @@ loadBestsellers();
 window.addEventListener("DOMContentLoaded", () => {
   loadDashboardStats();
 });
+
+// dashboard refund table 
+async function loadRefunds() {
+  const res = await fetch("https://gsd-backend-i5gj.onrender.com/api/refunds/pending");
+  const data = await res.json();
+
+  const tbody = document.getElementById("refundTableBody");
+  tbody.innerHTML = "";
+
+  data.forEach(refund => {
+
+    const row = document.createElement("tr");
+
+    row.innerHTML = `
+      <td>${refund._id.slice(-6)}</td>
+
+      <td>${refund.orderId?.orderId || "-"}</td>
+
+      <td>
+        ${refund.userId?.name}<br>
+        <small>${refund.userId?.email}</small>
+      </td>
+
+      <td>
+        ${refund.productId?.name}
+      </td>
+
+      <td>₹${refund.amount}</td>
+
+      <td>
+        <span class="status pending">
+          ${refund.status}
+        </span>
+      </td>
+
+      <td>
+        <button class="action-btn approve"
+          onclick="updateRefund('${refund._id}')">
+          Mark Refunded
+        </button>
+      </td>
+    `;
+
+    tbody.appendChild(row);
+  });
+}
+async function updateRefund(id) {
+  await fetch(
+    `https://gsd-backend-i5gj.onrender.com/api/refunds/${id}/status`,
+    {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ status: "Processed" })
+    }
+  );
+
+  loadRefunds(); // refresh table
+}

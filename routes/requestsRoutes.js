@@ -181,14 +181,21 @@ async function handleExchange(request) {
   request.newOrderId = newOrder._id;
 }
 
+const Refund = require("../models/refund");
+
 async function handleReturn(request) {
 
-  // 🔥 DO NOT modify payments directly
+  // 🔥 CREATE REFUND ENTRY
+  await Refund.create({
+    userId: request.userId,
+    orderId: request.orderId,
+    requestId: request._id,
+    amount: request.refundAmount,
+    method: "COD", // or detect from order later
+    status: "Pending"
+  });
 
-  // later you can create Refund model (recommended)
-  console.log("Return approved. Refund to process:", request.refundAmount);
-
-  // OPTIONAL (good UX)
+  // 🔥 OPTIONAL: mark inside request
   request.refundStatus = "Pending";
 }
 
