@@ -479,6 +479,11 @@ function renderOrders() {
           r.orderId === order._id &&
           r.productId._id === item.productId._id
       );
+      const reviewedList = order.reviewedProducts || [];
+
+      const hasReviewed = reviewedList.some(
+        id => id.toString() === item.productId._id.toString()
+      );
 
       const card = document.createElement("div");
       card.className = "order-card";
@@ -489,18 +494,21 @@ function renderOrders() {
     ${getStatusText(order.status)}
   </span>
 
-${order.status === "Delivered" && !hasReviewed ? `
-  <span 
-    class="review-link"
-    data-productid="${item.productId._id}"
-    data-orderid="${order._id}"
-    data-name="${item.productId?.name}"
-    data-color="${item.color}"
-    data-size="${item.size}"
-  >
-    REVIEW PRODUCT
-  </span>
-` : ""}
+${order.status === "Delivered"
+          ? hasReviewed
+            ? `<span class="review-done">Reviewed ✔</span>`
+            : `<span 
+        class="review-link"
+        data-productid="${item.productId._id}"
+        data-orderid="${order._id}"
+        data-name="${item.productId?.name}"
+        data-color="${item.color}"
+        data-size="${item.size}"
+      >
+        REVIEW PRODUCT
+      </span>`
+          : ""
+        }
 </div>
 
   <div class="order-body">
@@ -1029,3 +1037,6 @@ async function saveProfile() {
 
 }
 
+document.addEventListener("DOMContentLoaded", () => {
+  fetchUserOrders();
+});
