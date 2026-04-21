@@ -1505,3 +1505,94 @@ async function updateRefund(id) {
 
   loadRefunds(); // refresh table
 }
+
+// Reviewsss 
+async function loadReviews() {
+  try {
+    const res = await fetch("https://gsd-backend-i5gj.onrender.com/api/reviews/admin");
+    const reviews = await res.json();
+
+    const tbody = document.getElementById("reviewsTableBody");
+    tbody.innerHTML = "";
+
+    reviews.forEach(r => {
+
+      const stars = "★".repeat(r.rating) + "☆".repeat(5 - r.rating);
+
+      const row = document.createElement("tr");
+
+      row.innerHTML = `
+        <td>
+          <div class="product-cell">
+            <img src="${r.productId?.images?.[0]}">
+            <span>${r.productId?.name}</span>
+          </div>
+        </td>
+
+        <td>${r.userId?.name}</td>
+
+        <td class="rating-stars">${stars}</td>
+
+        <td>${r.reviewText}</td>
+
+        <td>${r.orderId}</td>
+
+        <td>
+          <span class="status-badge status-${r.status}">
+            ${r.status}
+          </span>
+        </td>
+
+        <td>
+          <button class="action-btn approve-btn"
+            data-id="${r._id}" data-action="approved">
+            Approve
+          </button>
+
+          <button class="action-btn reject-btn"
+            data-id="${r._id}" data-action="rejected">
+            Reject
+          </button>
+        </td>
+      `;
+
+      tbody.appendChild(row);
+    });
+
+  } catch (err) {
+    console.error(err);
+  }
+}
+
+document.addEventListener("click", async (e) => {
+  if (e.target.classList.contains("action-btn")) {
+
+    const reviewId = e.target.dataset.id;
+    const status = e.target.dataset.action;
+
+    try {
+      const res = await fetch(
+        `https://gsd-backend-i5gj.onrender.com/api/reviews/${reviewId}/status`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({ status })
+        }
+      );
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        alert(data.message);
+        return;
+      }
+
+      loadReviews(); // 🔁 refresh
+
+    } catch (err) {
+      console.error(err);
+    }
+  }
+});

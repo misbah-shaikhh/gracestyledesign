@@ -1,39 +1,44 @@
 const mongoose = require("mongoose");
 
 const reviewSchema = new mongoose.Schema({
-  userId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "User",
-    required: true
-  },
+    userId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+        required: true
+    },
 
-  productId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Product",
-    required: true
-  },
+    productId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Product",
+        required: true
+    },
 
-  orderId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Order",
-    required: true
-  },
+    orderId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Order",
+        required: true
+    },
 
-  rating: {
-    type: Number,
-    min: 1,
-    max: 5,
-    required: true
-  },
+    rating: {
+        type: Number,
+        min: 1,
+        max: 5,
+        required: true
+    },
 
-  reviewText: {
-    type: String
-  },
+    reviewText: {
+        type: String
+    },
 
-  createdAt: {
-    type: Date,
-    default: Date.now
-  }
+    createdAt: {
+        type: Date,
+        default: Date.now
+    },
+    status: {
+        type: String,
+        enum: ["pending", "approved", "rejected"],
+        default: "pending"
+    }
 
 });
 

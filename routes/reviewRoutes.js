@@ -3,6 +3,7 @@ const router = express.Router();
 const Review = require("../models/review");
 const Order = require("../models/orders");
 const Product = require("../models/product");
+const Review = require("../models/review")
 
 /* ✅ ADD REVIEW */
 router.post("/", async (req, res) => {
@@ -81,6 +82,23 @@ router.get("/product/:productId", async (req, res) => {
     } catch (err) {
         res.status(500).json({ message: err.message });
     }
+});
+
+router.put("/:id/status", async (req, res) => {
+  try {
+    const { status } = req.body;
+
+    const review = await Review.findByIdAndUpdate(
+      req.params.id,
+      { status },
+      { new: true }
+    );
+
+    res.json(review);
+
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
 });
 
 module.exports = router;

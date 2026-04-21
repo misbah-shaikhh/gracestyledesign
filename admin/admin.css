@@ -1492,22 +1492,26 @@ tbody tr:hover {
     font-size: 12px;
     padding: 10px;
 }
+
 table {
     font-size: 13px;
     table-layout: fixed;
 }
+
 td {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     max-width: 150px;
 }
+
 .action-btn {
     padding: 5px 10px;
     font-size: 11px;
 }
+
 .card {
-    box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
 }
 
 thead {
@@ -1516,4 +1520,83 @@ thead {
 
 tbody tr:hover {
     background: #f9f6f1;
+}
+
+.premium-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.premium-table th {
+    background: #111;
+    color: #fff;
+    padding: 14px;
+    font-weight: 500;
+    text-align: left;
+}
+
+.premium-table td {
+    padding: 14px;
+    border-bottom: 1px solid #eee;
+    vertical-align: middle;
+}
+
+.product-cell {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.product-cell img {
+    width: 50px;
+    height: 50px;
+    border-radius: 8px;
+    object-fit: cover;
+}
+
+.rating-stars {
+    color: gold;
+    font-size: 16px;
+}
+
+.status-badge {
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 12px;
+}
+
+.status-approved {
+    background: #d4edda;
+    color: #155724;
+}
+
+.status-rejected {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+.status-pending {
+    background: #fff3cd;
+    color: #856404;
+}
+
+.action-btn {
+    padding: 6px 10px;
+    border: none;
+    cursor: pointer;
+    border-radius: 6px;
+    margin-right: 5px;
+}
+
+.approve-btn {
+    background: #28a745;
+    color: #fff;
+}
+
+.reject-btn {
+    background: #dc3545;
+    color: #fff;
 }

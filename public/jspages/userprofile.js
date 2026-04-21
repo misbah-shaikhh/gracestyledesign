@@ -1036,7 +1036,3 @@ async function saveProfile() {
   }
 
 }
-
-document.addEventListener("DOMContentLoaded", () => {
-  fetchUserOrders();
-});

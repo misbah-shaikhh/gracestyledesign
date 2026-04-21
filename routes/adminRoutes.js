@@ -617,4 +617,17 @@ router.get("/bestsellers", async (req, res) => {
   }
 });
 
+// GET all reviews (admin)
+router.get("/admin", async (req, res) => {
+  try {
+    const reviews = await Review.find()
+      .populate("userId", "name")
+      .populate("productId", "name images");
+
+    res.json(reviews);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
 module.exports = router;
