@@ -594,7 +594,7 @@ function renderRequests() {
                 <p>• Refund after inspection</p>
                 `
         : `
-                <p>• New product will be delivered</p>
+                <p>• New product will be delivered in 10-12 days</p>
                 `
       }
 

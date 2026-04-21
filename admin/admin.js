@@ -1378,12 +1378,14 @@ async function loadRequests() {
       </td>
 
       <td>
-        ${req.status === "Pending"
+${req.status === "Pending"
         ? `
-              <button class="action-btn approve" onclick="updateRequest('${req._id}','Approved')">Approve</button>
-              <button class="action-btn reject" onclick="updateRequest('${req._id}','Rejected')">Reject</button>
-            `
-        : "-"
+    <button class="action-btn approve" onclick="updateRequest('${req._id}','Approved')">Approve</button>
+    <button class="action-btn reject" onclick="updateRequest('${req._id}','Rejected')">Reject</button>
+  `
+        : req.type === "Return" && req.status === "Approved"
+          ? `<small style="color:#777;">Refund Pending</small>`
+          : "-"
       }
       </td>
     `;

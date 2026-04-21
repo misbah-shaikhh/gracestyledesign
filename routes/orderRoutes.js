@@ -13,8 +13,7 @@ const Product = require("../models/product"); // 🔥 ADD THIS
 router.post("/", async (req, res) => {
 
     try {
-
-        const { userId, addressId, items, paymentMethod } = req.body;
+        const { userId, addressId, items, paymentMethod, orderType = "normal" } = req.body;
 
         if (!userId || !addressId || !items || items.length === 0) {
             return res.status(400).json({ message: "Missing required fields" });
@@ -74,7 +73,9 @@ router.post("/", async (req, res) => {
                 color: item.color
             });
         }
-        totalAmount += DELIVERY_FEE;
+        if (orderType === "normal") {
+            totalAmount += DELIVERY_FEE;
+        }
         // 🔥 STEP 2: CREATE ORDER
         const uniqueOrderId = "ORD" + Date.now();
 
@@ -85,24 +86,27 @@ router.post("/", async (req, res) => {
             orderId: uniqueOrderId,
             paymentMethod,
             totalAmount,
-            items: formattedItems
+            items: formattedItems,
+            orderType
         });
 
         await order.save();
 
-        const Payment = require("../models/payment");
+        if (orderType === "normal") {
+            const Payment = require("../models/payment");
 
-        const payment = new Payment({
-            orderId: order._id,
-            userId: userId,
-            transactionId: "TXN" + Date.now(),
-            items: formattedItems, // 🔥 snapshot of items
-            totalAmount,
-            paymentMethod: paymentMethod || "COD",
-            paymentStatus: "Pending"
-        });
+            const payment = new Payment({
+                orderId: order._id,
+                userId: userId,
+                transactionId: "TXN" + Date.now(),
+                items: formattedItems,
+                totalAmount,
+                paymentMethod: paymentMethod || "COD",
+                paymentStatus: "Pending"
+            });
 
-        await payment.save();
+            await payment.save();
+        }
 
         res.status(201).json({
             message: "Order placed successfully",
@@ -143,43 +147,43 @@ router.get("/", async (req, res) => {
 const Request = require("../models/requests");
 
 router.get("/", async (req, res) => {
-  try {
-    const { userId } = req.query;
+    try {
+        const { userId } = req.query;
 
-    const orders = await Order.find({ userId })
-      .populate("items.productId");
+        const orders = await Order.find({ userId })
+            .populate("items.productId");
 
-    // 🔥 attach request info
-    const ordersWithRequests = await Promise.all(
-      orders.map(async (order) => {
+        // 🔥 attach request info
+        const ordersWithRequests = await Promise.all(
+            orders.map(async (order) => {
 
-        const itemsWithRequest = await Promise.all(
-          order.items.map(async (item) => {
+                const itemsWithRequest = await Promise.all(
+                    order.items.map(async (item) => {
 
-            const request = await Request.findOne({
-              orderId: order._id,
-              productId: item.productId._id
-            });
+                        const request = await Request.findOne({
+                            orderId: order._id,
+                            productId: item.productId._id
+                        });
 
-            return {
-              ...item.toObject(),
-              request // 🔥 attach here
-            };
-          })
+                        return {
+                            ...item.toObject(),
+                            request // 🔥 attach here
+                        };
+                    })
+                );
+
+                return {
+                    ...order.toObject(),
+                    items: itemsWithRequest
+                };
+            })
         );
 
-        return {
-          ...order.toObject(),
-          items: itemsWithRequest
-        };
-      })
-    );
+        res.json({ orders: ordersWithRequests });
 
-    res.json({ orders: ordersWithRequests });
-
-  } catch (err) {
-    res.status(500).json({ message: "Server error" });
-  }
+    } catch (err) {
+        res.status(500).json({ message: "Server error" });
+    }
 });
 
 module.exports = router;

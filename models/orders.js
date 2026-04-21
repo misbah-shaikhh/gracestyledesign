@@ -59,6 +59,17 @@ const orderSchema = new mongoose.Schema({
   orderDate: {
     type: Date,
     default: Date.now
+  }, 
+
+  orderType: {
+    type: String,
+    enum: ["normal", "exchange"],
+    default: "normal"
+  },
+
+  parentOrderId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Order"
   }
 
 });
