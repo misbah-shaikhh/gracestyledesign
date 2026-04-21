@@ -44,6 +44,10 @@ navItems.forEach(item => {
         loadProducts?.();
       }
 
+      if (pageID == "reviews"){
+        loadReviews?.();
+      }
+
     } else {
       console.error("❌ Page not found:", pageId);
     }
