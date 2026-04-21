@@ -1514,50 +1514,31 @@ async function updateRefund(id) {
 async function loadReviews() {
   try {
     const res = await fetch("https://gsd-backend-i5gj.onrender.com/api/reviews/admin");
-    const reviews = await res.json();
+    const data = await res.json();
+
+    console.log("Reviews API:", data); // 🔍 debug
+
+    if (!Array.isArray(data)) {
+      console.error("❌ Expected array, got:", data);
+      return;
+    }
 
     const tbody = document.getElementById("reviewsTableBody");
     tbody.innerHTML = "";
 
-    reviews.forEach(r => {
-
+    data.forEach(r => {
       const stars = "★".repeat(r.rating) + "☆".repeat(5 - r.rating);
 
       const row = document.createElement("tr");
 
       row.innerHTML = `
-        <td>
-          <div class="product-cell">
-            <img src="${r.productId?.images?.[0]}">
-            <span>${r.productId?.name}</span>
-          </div>
-        </td>
-
+        <td>${r.productId?.name}</td>
         <td>${r.userId?.name}</td>
-
-        <td class="rating-stars">${stars}</td>
-
+        <td>${stars}</td>
         <td>${r.reviewText}</td>
-
         <td>${r.orderId}</td>
-
-        <td>
-          <span class="status-badge status-${r.status}">
-            ${r.status}
-          </span>
-        </td>
-
-        <td>
-          <button class="action-btn approve-btn"
-            data-id="${r._id}" data-action="approved">
-            Approve
-          </button>
-
-          <button class="action-btn reject-btn"
-            data-id="${r._id}" data-action="rejected">
-            Reject
-          </button>
-        </td>
+        <td>${r.status}</td>
+        <td>...</td>
       `;
 
       tbody.appendChild(row);

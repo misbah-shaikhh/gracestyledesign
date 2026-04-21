@@ -83,21 +83,34 @@ router.get("/product/:productId", async (req, res) => {
     }
 });
 
+router.get("/admin", async (req, res) => {
+    try {
+        const reviews = await Review.find()
+            .populate("userId", "name")
+            .populate("productId", "name images");
+
+        res.json(reviews);
+
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
+});
+
 router.put("/:id/status", async (req, res) => {
-  try {
-    const { status } = req.body;
+    try {
+        const { status } = req.body;
 
-    const review = await Review.findByIdAndUpdate(
-      req.params.id,
-      { status },
-      { new: true }
-    );
+        const review = await Review.findByIdAndUpdate(
+            req.params.id,
+            { status },
+            { new: true }
+        );
 
-    res.json(review);
+        res.json(review);
 
-  } catch (err) {
-    res.status(500).json({ message: err.message });
-  }
+    } catch (err) {
+        res.status(500).json({ message: err.message });
+    }
 });
 
 module.exports = router;
