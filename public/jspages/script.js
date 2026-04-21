@@ -280,5 +280,5 @@ function goToCategory(categoryName) {
 function renderRating(rating = 0) {
   if (!rating) return "—"; // cleaner than "No rating"
 
-  return `⭐ ${Number(rating).toFixed(1)}`;
+  return `${Number(rating).toFixed(1)}`;
 }
