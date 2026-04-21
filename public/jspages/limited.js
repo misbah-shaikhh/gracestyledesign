@@ -159,7 +159,7 @@ async function fetchAndRenderProducts() {
 
         <!-- RATING + HEART -->
         <div class="rating-heart">
-          <span class="rating">⭐ ${renderRating(p.rating)}</span>
+          <span class="rating">⭐ ${renderRating(p.averageRating)}</span>
           <i class="fa-regular fa-heart heart wishlist-btn"></i>
         </div>
 
