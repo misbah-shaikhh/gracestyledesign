@@ -10,8 +10,10 @@ router.get("/pending", async (req, res) => {
       .populate("orderId")
       .populate("productId");
 
-    res.json(refunds);
+    res.json({ refunds }); // ✅ IMPORTANT (wrap in object)
+
   } catch (err) {
+    console.error("Refund fetch error:", err); // 🔥 ADD THIS
     res.status(500).json({ message: err.message });
   }
 });

@@ -1440,48 +1440,58 @@ window.addEventListener("DOMContentLoaded", () => {
 
 // dashboard refund table 
 async function loadRefunds() {
-  const res = await fetch("https://gsd-backend-i5gj.onrender.com/api/refunds/pending");
-  const data = await res.json();
+  try {
+    const res = await fetch("https://gsd-backend-i5gj.onrender.com/api/refunds/pending");
+    const data = await res.json();
 
-  const tbody = document.getElementById("refundTableBody");
-  tbody.innerHTML = "";
+    console.log("Refund API:", data); // 🔥 DEBUG
 
-  data.forEach(refund => {
+    const refunds = data.refunds; // ✅ FIX
 
-    const row = document.createElement("tr");
+    const tbody = document.getElementById("refundTableBody");
+    tbody.innerHTML = "";
 
-    row.innerHTML = `
-      <td>${refund._id.slice(-6)}</td>
+    if (!refunds || refunds.length === 0) {
+      tbody.innerHTML = `<tr><td colspan="7">No pending refunds</td></tr>`;
+      return;
+    }
 
-      <td>${refund.orderId?.orderId || "-"}</td>
+    refunds.forEach(refund => {
 
-      <td>
-        ${refund.userId?.name}<br>
-        <small>${refund.userId?.email}</small>
-      </td>
+      const row = document.createElement("tr");
 
-      <td>
-        ${refund.productId?.name}
-      </td>
+      row.innerHTML = `
+        <td>${refund._id.slice(-6)}</td>
 
-      <td>₹${refund.amount}</td>
+        <td>${refund.orderId?.orderId || "-"}</td>
 
-      <td>
-        <span class="status pending">
-          ${refund.status}
-        </span>
-      </td>
+        <td>
+          ${refund.userId?.name}<br>
+          <small>${refund.userId?.email}</small>
+        </td>
 
-      <td>
-        <button class="action-btn approve"
-          onclick="updateRefund('${refund._id}')">
-          Mark Refunded
-        </button>
-      </td>
-    `;
+        <td>${refund.productId?.name}</td>
 
-    tbody.appendChild(row);
-  });
+        <td>₹${refund.amount}</td>
+
+        <td>
+          <span class="status pending">${refund.status}</span>
+        </td>
+
+        <td>
+          <button class="action-btn approve"
+            onclick="updateRefund('${refund._id}')">
+            Mark Refunded
+          </button>
+        </td>
+      `;
+
+      tbody.appendChild(row);
+    });
+
+  } catch (err) {
+    console.error("Refund load error:", err);
+  }
 }
 async function updateRefund(id) {
   await fetch(
