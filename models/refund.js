@@ -2,43 +2,48 @@ const mongoose = require("mongoose");
 
 const refundSchema = new mongoose.Schema({
 
-  userId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "User",
-    required: true
-  },
+    userId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+        required: true
+    },
 
-  orderId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Order",
-    required: true
-  },
+    orderId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Order",
+        required: true
+    },
 
-  requestId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Request"
-  },
+    requestId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Request"
+    },
 
-  amount: {
-    type: Number,
-    required: true
-  },
+    productId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Product"
+    },
 
-  method: {
-    type: String,
-    enum: ["COD", "ONLINE"],
-    default: "COD"
-  },
+    amount: {
+        type: Number,
+        required: true
+    },
 
-  status: {
-    type: String,
-    enum: ["Pending", "Processed"],
-    default: "Pending"
-  },
+    method: {
+        type: String,
+        enum: ["COD", "ONLINE"],
+        default: "COD"
+    },
 
-  refundDate: {
-    type: Date
-  }
+    status: {
+        type: String,
+        enum: ["Pending", "Processed"],
+        default: "Pending"
+    },
+
+    refundDate: {
+        type: Date
+    }
 
 }, { timestamps: true });
 

@@ -190,6 +190,7 @@ async function handleReturn(request) {
     userId: request.userId,
     orderId: request.orderId,
     requestId: request._id,
+    productId: request.productId, 
     amount: request.refundAmount,
     method: "COD", // or detect from order later
     status: "Pending"

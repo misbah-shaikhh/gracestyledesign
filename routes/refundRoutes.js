@@ -8,12 +8,11 @@ router.get("/pending", async (req, res) => {
     const refunds = await Refund.find({ status: "Pending" })
       .populate("userId", "name email")
       .populate("orderId")
-      .populate("productId");
+      .populate("productId", "name images");
 
-    res.json({ refunds }); // ✅ IMPORTANT (wrap in object)
-
+    res.json(refunds); // 🔥 MUST be array
   } catch (err) {
-    console.error("Refund fetch error:", err); // 🔥 ADD THIS
+    console.error("Refund fetch error:", err);
     res.status(500).json({ message: err.message });
   }
 });
