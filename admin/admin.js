@@ -44,7 +44,7 @@ navItems.forEach(item => {
         loadProducts?.();
       }
 
-      if (pageID == "reviews"){
+      if (pageId == "reviews"){
         loadReviews?.();
       }
 
