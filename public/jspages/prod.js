@@ -253,6 +253,9 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   }
 
+  // ⭐ AFTER PRODUCT IS LOADED
+loadReviews(productId);
+
 });
 
 /* =============================
@@ -450,3 +453,92 @@ document.addEventListener("click", async (e) => {
   }
 
 });
+
+// reviewsss 
+async function loadReviews(productId) {
+  try {
+    const res = await fetch(
+      `https://gsd-backend-i5gj.onrender.com/api/reviews/product/${productId}`
+    );
+
+    let reviews = await res.json();
+
+    // ONLY APPROVED REVIEWS
+    reviews = reviews.filter(r => r.status === "approved");
+
+    renderReviewStats(reviews);
+    renderReviewList(reviews);
+
+  } catch (err) {
+    console.error("Review load error:", err);
+  }
+}
+
+function renderReviewStats(reviews) {
+
+  const total = reviews.length;
+
+  let sum = 0;
+  const starCount = [0, 0, 0, 0, 0];
+
+  reviews.forEach(r => {
+    sum += r.rating;
+    starCount[r.rating - 1]++;
+  });
+
+  const avg = total ? (sum / total).toFixed(1) : 0;
+
+  // UI updates
+  document.querySelector(".total-reviews").textContent = `${total} Ratings`;
+  document.querySelector(".overall-score").textContent = avg;
+  document.querySelector(".overall-stars").textContent = renderStars(avg);
+
+  // update bars
+  for (let i = 5; i >= 1; i--) {
+
+    const count = starCount[i - 1];
+    const percent = total ? (count / total) * 100 : 0;
+
+    const bar = document.querySelectorAll(".rating-bar")[5 - i];
+
+    if (bar) {
+      bar.querySelector(".bar-count").textContent = count;
+      bar.querySelector(".bar-fill").style.width = `${percent}%`;
+    }
+  }
+}
+
+function renderReviewList(reviews) {
+
+  const container = document.querySelector(".review-list");
+  container.innerHTML = "";
+
+  reviews.forEach(r => {
+
+    const date = new Date(r.createdAt).toLocaleDateString();
+
+    const initial = r.userId?.name?.charAt(0).toUpperCase() || "U";
+
+    const div = document.createElement("div");
+    div.classList.add("review-item");
+
+    div.innerHTML = `
+      <div class="review-header">
+        <div class="reviewer-avatar">${initial}</div>
+
+        <div class="reviewer-info">
+          <div class="reviewer-name">${r.userId?.name || "User"}</div>
+          <div class="review-stars">${renderStars(r.rating)}</div>
+        </div>
+
+        <div class="review-date">${date}</div>
+      </div>
+
+      <div class="review-text">
+        ${r.reviewText}
+      </div>
+    `;
+
+    container.appendChild(div);
+  });
+}

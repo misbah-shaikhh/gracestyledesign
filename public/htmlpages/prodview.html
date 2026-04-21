@@ -530,6 +530,22 @@
             line-height: 1.6;
         }
 
+        .review-list {
+            max-height: 500px;
+            overflow-y: auto;
+            padding-right: 10px;
+        }
+
+        /* optional cleaner scrollbar */
+        .review-list::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .review-list::-webkit-scrollbar-thumb {
+            background: #c9b59a;
+            border-radius: 10px;
+        }
+
         .related-products .product-track {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -864,7 +880,7 @@
             <!-- Header -->
             <div class="reviews-header">
                 <h2 class="reviews-title">Customer Reviews</h2>
-                <span class="total-reviews">83 Ratings</span>
+                <span class="total-reviews" id="totalReviews">0 Ratings</span>
             </div>
 
             <!-- 2 Column Layout -->
@@ -874,9 +890,9 @@
                 <div class="rating-left">
 
                     <div class="overall-rating">
-                        <div class="overall-score">5</div>
-                        <div class="overall-stars">★★★★★</div>
-                        <div class="out-of-text">5 Out Of 5</div>
+                        <div class="overall-score" id="overallScore">0</div>
+                        <div class="overall-stars" id="overallStars">☆☆☆☆☆</div>
+                        <div class="out-of-text" id="outOfText">0 Out Of 5</div>
                     </div>
 
                     <div class="rating-bars">
@@ -884,23 +900,23 @@
                         <div class="rating-bar">
                             <span class="bar-label">★★★★★</span>
                             <div class="bar-container">
-                                <div class="bar-fill" style="width: 30%"></div>
+                                <div class="bar-fill"></div>
                             </div>
-                            <span class="bar-count">2</span>
+                            <span class="bar-count">0</span>
                         </div>
 
                         <div class="rating-bar">
                             <span class="bar-label">★★★★☆</span>
                             <div class="bar-container">
-                                <div class="bar-fill" style="width: 15%"></div>
+                                <div class="bar-fill"></div>
                             </div>
-                            <span class="bar-count">1</span>
+                            <span class="bar-count">0</span>
                         </div>
 
                         <div class="rating-bar">
                             <span class="bar-label">★★★☆☆</span>
                             <div class="bar-container">
-                                <div class="bar-fill" style="width: 0%"></div>
+                                <div class="bar-fill"></div>
                             </div>
                             <span class="bar-count">0</span>
                         </div>
@@ -908,7 +924,7 @@
                         <div class="rating-bar">
                             <span class="bar-label">★★☆☆☆</span>
                             <div class="bar-container">
-                                <div class="bar-fill" style="width: 0%"></div>
+                                <div class="bar-fill"></div>
                             </div>
                             <span class="bar-count">0</span>
                         </div>
@@ -916,7 +932,7 @@
                         <div class="rating-bar">
                             <span class="bar-label">★☆☆☆☆</span>
                             <div class="bar-container">
-                                <div class="bar-fill" style="width: 0%"></div>
+                                <div class="bar-fill"></div>
                             </div>
                             <span class="bar-count">0</span>
                         </div>
@@ -924,40 +940,8 @@
                     </div>
                 </div>
 
-                <!-- RIGHT SIDE -->
-                <div class="review-list">
-
-                    <div class="review-item">
-                        <div class="review-header">
-                            <div class="reviewer-avatar">E</div>
-                            <div class="reviewer-info">
-                                <div class="reviewer-name">Eirene</div>
-                                <div class="review-stars">★★★☆☆</div>
-                            </div>
-                            <div class="review-date">06/03/2026</div>
-                        </div>
-                        <div class="review-title">Customer Service And Product</div>
-                        <div class="review-text">
-                            The Customer Service Is Really Helpful And The Product Quality Is Very Good Worth The Money
-                        </div>
-                    </div>
-
-                    <div class="review-item">
-                        <div class="review-header">
-                            <div class="reviewer-avatar">E</div>
-                            <div class="reviewer-info">
-                                <div class="reviewer-name">Eirene</div>
-                                <div class="review-stars">★★★☆☆</div>
-                            </div>
-                            <div class="review-date">06/03/2026</div>
-                        </div>
-                        <div class="review-title">Customer Service And Product</div>
-                        <div class="review-text">
-                            The Customer Service Is Really Helpful And The Product Quality Is Very Good Worth The Money
-                        </div>
-                    </div>
-
-                </div>
+                <!-- RIGHT SIDE (DYNAMIC REVIEWS GO HERE) -->
+                <div class="review-list" id="reviewList"></div>
 
             </div>
 
