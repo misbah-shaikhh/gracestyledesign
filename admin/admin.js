@@ -1446,7 +1446,7 @@ async function loadRefunds() {
 
     console.log("Refund API:", data); // 🔥 DEBUG
 
-    const refunds = data.refunds; // ✅ FIX
+    const refunds = data; // ✅ FIX
 
     const tbody = document.getElementById("refundTableBody");
     tbody.innerHTML = "";
