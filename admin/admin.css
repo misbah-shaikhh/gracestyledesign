@@ -235,7 +235,6 @@ body {
     background: #f0f0f0;
 }
 
-
 .bestsellers-list,
 .recent-orders-list {
     list-style: none;
@@ -255,16 +254,11 @@ body {
 
 .two-col-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 3fr 1fr;
     gap: 20px;
     margin-bottom: 20px;
 }
 
-.three-col-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 20px;
-}
 
 /* Tables */
 table {
