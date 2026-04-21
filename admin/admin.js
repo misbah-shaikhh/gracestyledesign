@@ -44,7 +44,7 @@ navItems.forEach(item => {
         loadProducts?.();
       }
 
-      if (pageId == "reviews"){
+      if (pageId == "reviews") {
         loadReviews?.();
       }
 
@@ -1538,7 +1538,29 @@ async function loadReviews() {
         <td>${r.reviewText}</td>
         <td>${r.orderId}</td>
         <td>${r.status}</td>
-        <td>...</td>
+        <td>
+  ${r.status === "pending" ? `
+    <button 
+      class="action-btn approve-btn" 
+      data-id="${r._id}" 
+      data-action="approved"
+    >
+      Approve
+    </button>
+
+    <button 
+      class="action-btn reject-btn" 
+      data-id="${r._id}" 
+      data-action="rejected"
+    >
+      Reject
+    </button>
+  ` : `
+    <span class="status-badge ${r.status}">
+      ${r.status}
+    </span>
+  `}
+</td>
       `;
 
       tbody.appendChild(row);
