@@ -136,7 +136,7 @@ document.addEventListener("DOMContentLoaded", () => {
       <img src="${product.images?.[0] || '../images/product.jpg'}" alt="${product.name}">
       <div class="right-info">
         <div class="rating">
-  ${renderRating(product.rating)}
+  ⭐ ${renderRating(product.rating)}
 </div>
         <div class="wishlist wishlist-btn"><i class="fa-regular fa-heart heart"></i></div>
       </div>
