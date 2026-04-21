@@ -254,7 +254,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 
   // ⭐ AFTER PRODUCT IS LOADED
-loadReviews(productId);
+  loadReviews(productId);
 
 });
 
@@ -497,6 +497,9 @@ function renderReviewStats(reviews) {
   document.querySelector(".total-reviews").textContent = `${total} Ratings`;
   document.querySelector(".overall-score").textContent = avg;
   document.querySelector(".overall-stars").textContent = renderStars(avg);
+
+  // ⭐ NEW LINE (FIX THIS TEXT)
+  document.getElementById("outOfText").textContent = `${avg} Out Of 5`;
 
   // update bars
   for (let i = 5; i >= 1; i--) {
