@@ -680,108 +680,75 @@
   opacity: 1; /* 🔥 important for some browsers */
 }
 
-/* 🔥 REQUESTS SECTION WRAPPER */
-.requests-section {
-  background: #fafafa;
-  border: 1px solid #eee;
-  border-radius: 14px;
-  padding: 15px;
-  margin-bottom: 25px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.04);
-}
-
-/* HEADER */
-.requests-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 15px;
-}
-
-.requests-header h3 {
-  font-size: 18px;
-  font-weight: 600;
-}
-
-.requests-sub {
-  font-size: 12px;
-  color: #888;
-}
-
-/* 🔥 REQUEST CARDS DIFFERENT LOOK */
+/* 🔥 MAKE REQUEST CARDS COMPACT */
 .requests-section .order-card {
-  border-left: 4px solid #000; /* accent */
-  background: #fff;
+  padding: 8px 10px;
+  margin-bottom: 8px;
+  border-radius: 10px;
 }
 
-
-/* REQUEST INFO BOX */
-.request-info {
-  margin-top: 8px;
-  font-size: 12px;
-  color: #555;
-  line-height: 1.5;
+/* reduce inner spacing */
+.requests-section .order-body {
+  display: flex;
+  gap: 8px; /* smaller gap */
+  align-items: center;
 }
 
-
-/* 🔥 RETURN CARDS (COMPACT STYLE) */
-.return-card {
-  background: #fff7f7; /* light red tint */
-  border-left: 4px solid #ff4d4f;
-  padding: 10px;
+/* smaller image */
+.requests-section .order-img {
+  width: 55px;
+  height: 70px;
+  border-radius: 6px;
 }
 
-/* reduce spacing */
-.return-card .order-body {
-  gap: 10px;
+/* tighter text */
+.requests-section .order-details h3 {
+  font-size: 13px;
+  margin-bottom: 2px;
 }
 
-.return-card .order-details h3 {
-  font-size: 14px;
-  margin-bottom: 4px;
-}
-
-.return-card .order-details p {
-  font-size: 12px;
-  margin: 2px 0;
-}
-
-.return-card .request-info {
+.requests-section .order-details p {
   font-size: 11px;
-  margin-top: 5px;
+  margin: 1px 0;
 }
 
+/* less vertical space */
+.requests-section .request-info {
+  font-size: 10.5px;
+  margin-top: 4px;
+  line-height: 1.3;
+}
+/* 🔴 RETURN = light red */
+.return-card {
+  background: #ffeaea; /* stronger tint */
+  border-left: 4px solid #ff4d4f;
+}
+
+/* 🔵 EXCHANGE = light blue */
 .exchange-card {
-  background: #f7faff;
+  background: #eaf3ff; /* stronger tint */
   border-left: 4px solid #4a90e2;
 }
-
 .status {
-  padding: 5px 12px;
+  padding: 4px 10px;
   border-radius: 20px;
-  font-size: 12px;
-  font-weight: 700; /* 🔥 bold */
+  font-size: 11px;
+  font-weight: 800;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
 }
 
-/* 🔥 HIGH VISIBILITY COLORS */
+/* stronger colors */
 .status.pending {
-  background: #fff3cd;
-  color: #856404;
+  background: #ffe69c;
+  color: #7a5d00;
 }
 
 .status.approved {
-  background: #d4edda;
-  color: #155724;
+  background: #b7f0c2;
+  color: #0f5132;
 }
 
 .status.rejected {
-  background: #f8d7da;
-  color: #721c24;
-}
-
-.requests-section .order-card {
-  margin-bottom: 10px;
-  padding: 10px;
+  background: #ffb3b8;
+  color: #7a1c21;
 }
