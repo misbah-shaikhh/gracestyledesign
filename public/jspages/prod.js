@@ -463,11 +463,16 @@ async function loadReviews(productId) {
 
     let reviews = await res.json();
 
-    // ONLY APPROVED REVIEWS
-    reviews = reviews.filter(r => r.status === "approved");
+    // ⭐ ALL REVIEWS (for rating calculation)
+    const allReviews = reviews;
 
-    renderReviewStats(reviews);
-    renderReviewList(reviews);
+    // ⭐ ONLY APPROVED (for UI display)
+    const approvedReviews = reviews.filter(
+      r => r.status === "approved"
+    );
+
+    renderReviewStats(allReviews);
+    renderReviewList(approvedReviews);
 
   } catch (err) {
     console.error("Review load error:", err);
