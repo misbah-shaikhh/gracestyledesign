@@ -39,15 +39,17 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     track.innerHTML = "";
 
-products.forEach(product => {
-  const card = document.createElement("div");
-  card.classList.add("product-card");
-  card.dataset.id = product._id;
+    products.forEach(product => {
+      const card = document.createElement("div");
+      card.classList.add("product-card");
+      card.dataset.id = product._id;
 
-  card.innerHTML = `
+      card.innerHTML = `
     <img src="${product.images?.[0] || "../images/product.jpg"}" alt="${product.name}">
     <div class="right-info">
-      <div class="rating">⭐ 4.5</div>
+      <div class="rating">
+  ${renderRating(p.rating)}
+</div>
       <div class="wishlist wishlist-btn">
         <i class="fa-regular fa-solid fa-heart heart"></i>
       </div>
@@ -62,31 +64,31 @@ products.forEach(product => {
     </div>
   `;
 
-  // Redirect card click
-  card.addEventListener("click", () => {
-    window.location.href = `../htmlpages/prodview.html?id=${product._id}`;
-  });
+      // Redirect card click
+      card.addEventListener("click", () => {
+        window.location.href = `../htmlpages/prodview.html?id=${product._id}`;
+      });
 
-  // Stop card click when heart is clicked & toggle wishlist
-  const heartBtn = card.querySelector(".wishlist-btn");
-  if (heartBtn) {
-    heartBtn.addEventListener("click", e => {
-      e.stopPropagation();
-      // Your existing toggle logic, e.g.
-      if (!isLoggedIn()) return redirectLogin();
-      fetch("https://gsd-backend-i5gj.onrender.com/api/wishlist/toggle", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ userId, productId: product._id })
-      }).then(() => syncWishlistHearts());
+      // Stop card click when heart is clicked & toggle wishlist
+      const heartBtn = card.querySelector(".wishlist-btn");
+      if (heartBtn) {
+        heartBtn.addEventListener("click", e => {
+          e.stopPropagation();
+          // Your existing toggle logic, e.g.
+          if (!isLoggedIn()) return redirectLogin();
+          fetch("https://gsd-backend-i5gj.onrender.com/api/wishlist/toggle", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ userId, productId: product._id })
+          }).then(() => syncWishlistHearts());
+        });
+      }
+
+      track.appendChild(card);
     });
-  }
 
-  track.appendChild(card);
-});
-
-// Sync hearts after all cards appended
-syncWishlistHearts();
+    // Sync hearts after all cards appended
+    syncWishlistHearts();
 
   } catch (err) {
 

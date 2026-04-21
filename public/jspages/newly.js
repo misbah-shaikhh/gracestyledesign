@@ -165,7 +165,7 @@ card.addEventListener("click", () => {
 
         <!-- RATING + HEART -->
         <div class="rating-heart">
-          <span class="rating">⭐ ${p.rating || 4.5}</span>
+          <span class="rating">⭐ ${renderRating(p.rating)}</span>
           <i class="fa-regular fa-heart heart wishlist-btn"></i>
         </div>
 

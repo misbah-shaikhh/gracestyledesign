@@ -872,9 +872,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
         <div class="right-info">
 
-          <div class="rating">
-            ⭐ 4.5
-          </div>
+<div class="rating">
+  ${renderRating(item.productId?.rating)}
+</div>
 
           <div class="wishlist-btn">
             <i class="fa-regular fa-heart"></i>

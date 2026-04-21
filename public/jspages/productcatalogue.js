@@ -148,7 +148,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 <span class="c2" style="background-color: ${colors[1] || 'transparent'}"></span>
               </div>
               <div class="rating-heart">
-                <span class="rating">⭐ ${p.rating || 4.5}</span>
+                <span class="rating">⭐ ${renderRating(p.rating)}</span>
                 <i class="fa-regular fa-heart heart wishlist-btn"></i>
               </div>
             </div>

@@ -172,9 +172,6 @@ body {
   font-family: 'Corben', serif;
 }
 
-
-
-
 /* FOOTER */
 .footer {
   background-color: #6b2f1a; /* brown shade */
@@ -461,4 +458,21 @@ margin-top:20px;
 /* Optional hover effect */
 .wishlist-btn:hover {
   transform: scale(1.1);
+}
+
+.rating {
+  font-size: 14px;
+  font-weight: 500;
+  color: #111;
+}
+
+.rating-count {
+  color: #777;
+  font-size: 12px;
+  margin-left: 4px;
+}
+
+.no-rating {
+  color: #aaa;
+  font-style: italic;
 }

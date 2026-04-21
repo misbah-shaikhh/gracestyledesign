@@ -276,3 +276,16 @@ async function loadCategories() {
 function goToCategory(categoryName) {
   window.location.href = `../htmlpages/productcatalogue.html?category=${encodeURIComponent(categoryName)}`;
 }
+
+// ratings for all product cards 
+function renderRating(rating = 0) {
+  if (!rating) {
+    return `<span class="rating no-rating">No rating</span>`;
+  }
+
+  return `
+    <span class="rating">
+      ⭐ ${rating.toFixed(1)}
+    </span>
+  `;
+}

@@ -34,7 +34,7 @@ document.addEventListener("DOMContentLoaded", () => {
   startAutoSlide();
 
   // ---------------------- PRODUCT SCROLL FUNCTION ----------------------
-  window.scrollProducts = function(direction, containerSelector, viewAllUrl) {
+  window.scrollProducts = function (direction, containerSelector, viewAllUrl) {
     const track = document.querySelector(containerSelector || ".product-track");
     if (!track) return;
 
@@ -104,22 +104,22 @@ document.addEventListener("DOMContentLoaded", () => {
   function renderLimitedCollection() {
     if (!limitedTrack) return;
     limitedTrack.innerHTML = "";
-    const limitedProducts = [...allProducts].sort((a,b) => a.totalStock - b.totalStock).slice(0,3);
+    const limitedProducts = [...allProducts].sort((a, b) => a.totalStock - b.totalStock).slice(0, 3);
     limitedProducts.forEach(p => limitedTrack.appendChild(createProductCard(p)));
   }
 
   function renderNewlyAdded() {
     if (!newlyTrack) return;
     newlyTrack.innerHTML = "";
-    const newProducts = [...allProducts].sort((a,b) => new Date(b.createdAt) - new Date(a.createdAt)).slice(0,3);
-    newProducts.forEach(p => newlyTrack.appendChild(createProductCard(p,true)));
+    const newProducts = [...allProducts].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt)).slice(0, 3);
+    newProducts.forEach(p => newlyTrack.appendChild(createProductCard(p, true)));
   }
 
   function renderBestsellers() {
     if (!bestsellerTrack) return;
     bestsellerTrack.innerHTML = "";
     const shuffled = [...allProducts].sort(() => 0.5 - Math.random());
-    shuffled.slice(0,3).forEach(p => bestsellerTrack.appendChild(createProductCard(p)));
+    shuffled.slice(0, 3).forEach(p => bestsellerTrack.appendChild(createProductCard(p)));
   }
 
   function createProductCard(product, isNew = false) {
@@ -135,7 +135,9 @@ document.addEventListener("DOMContentLoaded", () => {
       </div>
       <img src="${product.images?.[0] || '../images/product.jpg'}" alt="${product.name}">
       <div class="right-info">
-        <div class="rating">⭐ 4.5</div>
+        <div class="rating">
+  ${renderRating(p.rating)}
+</div>
         <div class="wishlist wishlist-btn"><i class="fa-regular fa-heart heart"></i></div>
       </div>
       <div class="product-info">
@@ -151,110 +153,110 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function generateColorDots(variants) {
     if (!variants || !variants.length) return "";
-    const uniqueColors = [...new Set(variants.map(v=>v.color))].slice(0,5);
-    return uniqueColors.map((color,i) => `<span class="c${i+1}" style="background-color:${color.toLowerCase()}"></span>`).join("");
+    const uniqueColors = [...new Set(variants.map(v => v.color))].slice(0, 5);
+    return uniqueColors.map((color, i) => `<span class="c${i + 1}" style="background-color:${color.toLowerCase()}"></span>`).join("");
   }
 
   // ---------------------- SYNC WISHLIST HEARTS ----------------------
 
-async function syncWishlistHearts() {
-
-  const userId = localStorage.getItem("userId");
-  if (!userId) return;
-
-  try {
-
-    const res = await fetch(`https://gsd-backend-i5gj.onrender.com/api/wishlist/${userId}`);
-    const wishlist = await res.json();
-
-    // convert ids to strings
-    const wishlistIds = wishlist.map(p => p._id.toString());
-
-    document.querySelectorAll(".product-card").forEach(card => {
-
-      const productId = card.dataset.id;
-      const heart = card.querySelector(".heart");
-
-      if (!heart) return;
-
-      if (wishlistIds.includes(productId)) {
-
-        heart.classList.remove("fa-regular");
-        heart.classList.add("fa-solid");
-        heart.style.color = "#e63946";
-
-      } else {
-
-        heart.classList.remove("fa-solid");
-        heart.classList.add("fa-regular");
-        heart.style.color = "";
-
-      }
-
-    });
-
-  } catch (err) {
-
-    console.error("Wishlist sync error:", err);
-
-  }
-
-}
- 
-  // ---------------------- PRODUCT CARD CLICK ----------------------
-document.addEventListener("click", (e) => {
-
-  // ---------------- WISHLIST CLICK ----------------
-  const heartBtn = e.target.closest(".wishlist-btn");
-
-  if (heartBtn) {
-
-    e.stopPropagation();
-
-    // prevent rapid double clicks
-    if (heartBtn.classList.contains("loading")) return;
-    heartBtn.classList.add("loading");
+  async function syncWishlistHearts() {
 
     const userId = localStorage.getItem("userId");
+    if (!userId) return;
 
-    if (!userId) {
-      window.location.href = "../htmlpages/login.html";
-      return;
+    try {
+
+      const res = await fetch(`https://gsd-backend-i5gj.onrender.com/api/wishlist/${userId}`);
+      const wishlist = await res.json();
+
+      // convert ids to strings
+      const wishlistIds = wishlist.map(p => p._id.toString());
+
+      document.querySelectorAll(".product-card").forEach(card => {
+
+        const productId = card.dataset.id;
+        const heart = card.querySelector(".heart");
+
+        if (!heart) return;
+
+        if (wishlistIds.includes(productId)) {
+
+          heart.classList.remove("fa-regular");
+          heart.classList.add("fa-solid");
+          heart.style.color = "#e63946";
+
+        } else {
+
+          heart.classList.remove("fa-solid");
+          heart.classList.add("fa-regular");
+          heart.style.color = "";
+
+        }
+
+      });
+
+    } catch (err) {
+
+      console.error("Wishlist sync error:", err);
+
     }
 
-    const card = heartBtn.closest(".product-card");
-    const productId = card.dataset.id;
+  }
 
-    fetch("https://gsd-backend-i5gj.onrender.com/api/wishlist/toggle", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        userId,
-        productId
+  // ---------------------- PRODUCT CARD CLICK ----------------------
+  document.addEventListener("click", (e) => {
+
+    // ---------------- WISHLIST CLICK ----------------
+    const heartBtn = e.target.closest(".wishlist-btn");
+
+    if (heartBtn) {
+
+      e.stopPropagation();
+
+      // prevent rapid double clicks
+      if (heartBtn.classList.contains("loading")) return;
+      heartBtn.classList.add("loading");
+
+      const userId = localStorage.getItem("userId");
+
+      if (!userId) {
+        window.location.href = "../htmlpages/login.html";
+        return;
+      }
+
+      const card = heartBtn.closest(".product-card");
+      const productId = card.dataset.id;
+
+      fetch("https://gsd-backend-i5gj.onrender.com/api/wishlist/toggle", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          userId,
+          productId
+        })
       })
-    })
-    .then(() => syncWishlistHearts())
-    .catch(err => console.error("Wishlist toggle error:", err))
-    .finally(() => heartBtn.classList.remove("loading"));
+        .then(() => syncWishlistHearts())
+        .catch(err => console.error("Wishlist toggle error:", err))
+        .finally(() => heartBtn.classList.remove("loading"));
 
-    return; // stop product redirect
-  }
+      return; // stop product redirect
+    }
 
-  // ---------------- PRODUCT CARD CLICK ----------------
-  const card = e.target.closest(".product-card");
+    // ---------------- PRODUCT CARD CLICK ----------------
+    const card = e.target.closest(".product-card");
 
-  if (card && card.dataset.id) {
-    window.location.href = `../htmlpages/prodview.html?id=${card.dataset.id}`;
-  }
+    if (card && card.dataset.id) {
+      window.location.href = `../htmlpages/prodview.html?id=${card.dataset.id}`;
+    }
 
-  // ---------------- SALE BADGE ----------------
-  if (e.target.closest(".sale-badge")) {
-    alert("Item added to cart!");
-  }
+    // ---------------- SALE BADGE ----------------
+    if (e.target.closest(".sale-badge")) {
+      alert("Item added to cart!");
+    }
 
-});
+  });
 
   loadHomepageProducts();
 });
