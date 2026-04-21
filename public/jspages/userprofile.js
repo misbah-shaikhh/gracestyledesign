@@ -561,7 +561,7 @@ function renderRequests() {
 
   userRequests.forEach(req => {
     const card = document.createElement("div");
-    card.className = "order-card";
+    card.className = `order-card request-card ${req.type.toLowerCase()}-card`;
 
     card.innerHTML = `
       <div class="order-top">
