@@ -23,6 +23,14 @@ const productSchema = new mongoose.Schema({
         sleeveType: String,
         countryOfOrigin: String
     },
+    averageRating: {
+        type: Number,
+        default: 0
+    },
+    totalReviews: {
+        type: Number,
+        default: 0
+    },
 
     variants: [
         {

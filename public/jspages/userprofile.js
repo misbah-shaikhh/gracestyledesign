@@ -484,12 +484,24 @@ function renderOrders() {
       card.className = "order-card";
 
       card.innerHTML = `
-  <div class="order-top">
-    <span>
-      ${getStatusText(order.status)}
-    </span>
-    <span class="review-link">REVIEW PRODUCT</span>
-  </div>
+<div class="order-top">
+  <span>
+    ${getStatusText(order.status)}
+  </span>
+
+${order.status === "Delivered" && !hasReviewed ? `
+  <span 
+    class="review-link"
+    data-productid="${item.productId._id}"
+    data-orderid="${order._id}"
+    data-name="${item.productId?.name}"
+    data-color="${item.color}"
+    data-size="${item.size}"
+  >
+    REVIEW PRODUCT
+  </span>
+` : ""}
+</div>
 
   <div class="order-body">
     <img src="${item.productId?.images?.[0] || '../images/product.jpg'
@@ -866,12 +878,6 @@ const submitReview = document.getElementById("submitReview");
 
 let selectedRating = 0;
 
-/* Open Overlay */
-document.addEventListener("click", function (e) {
-  if (e.target.classList.contains("review-link")) {
-    reviewOverlay.style.display = "flex";
-  }
-});
 
 /* Close when clicking outside */
 reviewOverlay.addEventListener("click", function (e) {
@@ -894,19 +900,82 @@ stars.forEach(star => {
 });
 
 /* Submit */
-submitReview.addEventListener("click", function () {
+
+let selectedProductId = null;
+let selectedOrderId = null;
+
+document.addEventListener("click", function (e) {
+  if (e.target.classList.contains("review-link")) {
+    // 🔥 reset before opening
+    selectedRating = 0;
+    stars.forEach(s => s.classList.remove("active"));
+    document.getElementById("reviewText").value = "";
+    document.getElementById("reviewConsent").checked = false;
+    selectedProductId = e.target.dataset.productid;
+    selectedOrderId = e.target.dataset.orderid;
+
+    document.getElementById("reviewProductName").innerText =
+      e.target.dataset.name;
+
+    document.getElementById("reviewVariant").innerText =
+      `Colour: ${e.target.dataset.color} | Size: ${e.target.dataset.size}`;
+
+    reviewOverlay.style.display = "flex";
+  }
+});
+
+submitReview.addEventListener("click", async function () {
 
   const consent = document.getElementById("reviewConsent").checked;
+  const reviewText = document.getElementById("reviewText").value;
+  const userId = localStorage.getItem("userId");
 
   if (!consent) {
     alert("Please accept Terms & Privacy Policy.");
     return;
   }
 
-  console.log("Rating:", selectedRating);
-  console.log("Review:", document.getElementById("reviewText").value);
+  if (selectedRating === 0) {
+    alert("Please select rating");
+    return;
+  }
 
-  reviewOverlay.style.display = "none";
+  try {
+    const res = await fetch("https://gsd-backend-i5gj.onrender.com/api/reviews", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        userId,
+        productId: selectedProductId,
+        orderId: selectedOrderId,
+        rating: selectedRating,
+        reviewText
+      })
+    });
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      alert(data.message);
+      return;
+    }
+
+    alert("Review submitted ✅");
+
+    reviewOverlay.style.display = "none";
+    selectedRating = 0;
+    document.getElementById("reviewText").value = "";
+    document.getElementById("reviewConsent").checked = false;
+
+    stars.forEach(s => s.classList.remove("active"));
+    btn.disabled = false;
+    btn.innerText = "Submit Review";
+
+  } catch (err) {
+    console.error(err);
+  }
 });
 
 function loadSectionFromURL() {

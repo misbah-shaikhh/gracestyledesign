@@ -15,7 +15,7 @@ const cartRoutes = require("./routes/cartRoutes");
 const orderRoutes = require("./routes/orderRoutes");
 const requestsRoutes = require("./routes/requestsRoutes");
 const refundRoutes = require("./routes/refundRoutes");
-
+const reviewRoutes = require("./routes/reviewRoutes");
 const app = express();
 
 /* ---------------- DATABASE ---------------- */
@@ -52,6 +52,7 @@ app.use("/api/cart", cartRoutes);
 app.use("/api/orders", orderRoutes);
 app.use("/api/requests", requestsRoutes);
 app.use("/api/refunds", refundRoutes);
+app.use("/api/reviews", reviewRoutes);
 
 app.use("/api", (req, res) => {
   res.status(404).json({

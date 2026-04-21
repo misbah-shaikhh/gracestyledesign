@@ -1,324 +1,327 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <title>My Wishlist - GS Store</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8">
+  <title>My Wishlist - GS Store</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Corben">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Crimson+Text">
-    <link href="https://fonts.cdnfonts.com/css/rowdies" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../csspages/style.css"> 
-    <link rel="stylesheet" href="../csspages/userprofile.css">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Corben">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Crimson+Text">
+  <link href="https://fonts.cdnfonts.com/css/rowdies" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="../csspages/style.css">
+  <link rel="stylesheet" href="../csspages/userprofile.css">
 </head>
+
 <body>
-<!-- HEADER -->
-<header class="header">
-  <div class="logo">
-  <img src="../images/gsd.png" alt="GS Logo">
-</div>
-  <nav class="nav">
-    <a href="../htmlpages/index.html">HOME</a>
-    <a href="javascript:void(0)" id="categoryBtn">CATEGORIES</a>
-    <a href="#">SALE</a>
-    <a href="../htmlpages/about.html">ABOUT</a>
-    <a href="#contact">CONTACT</a>
-  </nav>
-<div class="nav-icons">
+  <!-- HEADER -->
+  <header class="header">
+    <div class="logo">
+      <img src="../images/gsd.png" alt="GS Logo">
+    </div>
+    <nav class="nav">
+      <a href="../htmlpages/index.html">HOME</a>
+      <a href="javascript:void(0)" id="categoryBtn">CATEGORIES</a>
+      <a href="#">SALE</a>
+      <a href="../htmlpages/about.html">ABOUT</a>
+      <a href="#contact">CONTACT</a>
+    </nav>
+    <div class="nav-icons">
 
-  <i class="fa-regular fa-user" id="profileBtn"></i>
+      <i class="fa-regular fa-user" id="profileBtn"></i>
 
-  <!-- Wishlist Icon -->
-  <a href="../htmlpages/wishlist.html">
-    <i class="fa-regular fa-heart"></i>
-  </a>
+      <!-- Wishlist Icon -->
+      <a href="../htmlpages/wishlist.html">
+        <i class="fa-regular fa-heart"></i>
+      </a>
 
-  <!-- Cart Icon -->
-  <a href="../htmlpages/cart.html">
-    <i class="fa-solid fa-bag-shopping"></i>
-  </a>
-</div>
+      <!-- Cart Icon -->
+      <a href="../htmlpages/cart.html">
+        <i class="fa-solid fa-bag-shopping"></i>
+      </a>
+    </div>
 
-</header>
+  </header>
 
   <!-- Categories Overlay -->
-<div class="category-overlay" id="categoryOverlay">
-  <div class="category-box" id="categoryBox">
-    <!-- Dynamic categories will come here -->
+  <div class="category-overlay" id="categoryOverlay">
+    <div class="category-box" id="categoryBox">
+      <!-- Dynamic categories will come here -->
+    </div>
   </div>
-</div>
 
-<!-- Profile Overlay -->
-<div class="profile-overlay" id="profileOverlay">
-  <div class="profile-box">
-    <ul>
-      <li><a href="../htmlpages/userprofile.html?section=orders">My Orders</a></li>
-      <li><a href="../htmlpages/wishlist.html">My Wishlist</a></li>
-      <li><a href="../htmlpages/userprofile.html?section=savedAddress">Saved Addresses</a></li>
-    </ul>
-
-    <hr>
-
-    <ul>
-      <li><a href="../htmlpages/userprofile.html?section=editProfile">Edit Profile</a></li>
-      <li id="logoutBtn"><a href="../htmlpages/login.html">Logout</a></li>
-    </ul>
-  </div>
-</div>
-
-
-<div class="profile-container">
-
-  <!-- LEFT SIDEBAR -->
-  <aside class="profile-sidebar">
-<div class="user-info">
-  <div class="avatar"></div>
-  <p id="welcomeUser">Welcome User!</p>
-</div>
-
-    <div class="sidebar-section">
-      <h4>Account</h4>
+  <!-- Profile Overlay -->
+  <div class="profile-overlay" id="profileOverlay">
+    <div class="profile-box">
       <ul>
-        <li class="active" data-page="editProfile">Edit Profile</li>
-        <li data-page="savedAddress">Saved Address</li>
+        <li><a href="../htmlpages/userprofile.html?section=orders">My Orders</a></li>
+        <li><a href="../htmlpages/wishlist.html">My Wishlist</a></li>
+        <li><a href="../htmlpages/userprofile.html?section=savedAddress">Saved Addresses</a></li>
+      </ul>
+
+      <hr>
+
+      <ul>
+        <li><a href="../htmlpages/userprofile.html?section=editProfile">Edit Profile</a></li>
+        <li id="logoutBtn"><a href="../htmlpages/login.html">Logout</a></li>
       </ul>
     </div>
-
-    <div class="sidebar-section">
-      <h4>Orders</h4>
-      <ul>
-        <li data-page="myOrders">My Orders</li>
-        <li>
-          <a href="../htmlpages/wishlist.html" class="side-link">My Wishlist</a>
-        </li>
-
-        <li>
-          <a href="../htmlpages/cart.html" class="side-link">My Cart</a>
-        </li>
-      </ul>
-    </div>
-  </aside>
+  </div>
 
 
-  <!-- RIGHT CONTENT AREA -->
-  <main class="profile-content" id="profileContent">
-    <!-- Edit Profile loads here -->
-  </main>
+  <div class="profile-container">
 
-</div>
-
-<!-- Address Overlay -->
-<div class="address-overlay" id="addressOverlay">
-
-  <div class="overlay-box overlay-address-form">
-
-    <div class="overlay-header">
-      <h2>Add Address</h2>
-      <span id="cancelOverlay">CANCEL</span>
-    </div>
-
-    <div class="form-group">
-      <label>Name</label>
-      <input type="text" class="nameInput">
-    </div>
-
-    <div class="form-group">
-      <label>Mobile</label>
-      <input type="text" class="phoneInput">
-    </div>
-
-    <div class="form-row split">
-      <div>
-        <label>Pincode</label>
-        <input type="text" class="pincodeInput">
+    <!-- LEFT SIDEBAR -->
+    <aside class="profile-sidebar">
+      <div class="user-info">
+        <div class="avatar"></div>
+        <p id="welcomeUser">Welcome User!</p>
       </div>
 
-      <div>
-        <label>State</label>
-        <input type="text" class="stateInput" value="Maharashtra" readonly>
-      </div>
-    </div>
-
-    <div class="form-group">
-      <label>Address (House no., Building, Street, Area)</label>
-      <input type="text" class="addressInput">
-    </div>
-
-    <div class="form-row split">
-      <div>
-        <label>Landmark</label>
-        <input type="text" class="landmarkInput">
+      <div class="sidebar-section">
+        <h4>Account</h4>
+        <ul>
+          <li class="active" data-page="editProfile">Edit Profile</li>
+          <li data-page="savedAddress">Saved Address</li>
+        </ul>
       </div>
 
-      <div>
-        <label>City/District</label>
-        <input type="text" class="cityInput">
+      <div class="sidebar-section">
+        <h4>Orders</h4>
+        <ul>
+          <li data-page="myOrders">My Orders</li>
+          <li>
+            <a href="../htmlpages/wishlist.html" class="side-link">My Wishlist</a>
+          </li>
+
+          <li>
+            <a href="../htmlpages/cart.html" class="side-link">My Cart</a>
+          </li>
+        </ul>
       </div>
-    </div>
+    </aside>
 
-    <div style="margin-top:15px;">
-      <label style="display:flex; align-items:center; gap:10px;">
-        <input type="checkbox" class="defaultAddress">
-        Default Address
-      </label>
-    </div>
 
-    <button class="save-btn saveAddressBtn">
-      Save Address
-    </button>
+    <!-- RIGHT CONTENT AREA -->
+    <main class="profile-content" id="profileContent">
+      <!-- Edit Profile loads here -->
+    </main>
 
   </div>
 
-</div>
-<!-- Review Overlay -->
-<div class="review-overlay" id="reviewOverlay">
-  <div class="review-box" id="reviewBox">
+  <!-- Address Overlay -->
+  <div class="address-overlay" id="addressOverlay">
 
-    <h2>REVIEW PRODUCT</h2>
+    <div class="overlay-box overlay-address-form">
 
-    <div class="review-section">
-      <h4>RATE PRODUCT</h4>
+      <div class="overlay-header">
+        <h2>Add Address</h2>
+        <span id="cancelOverlay">CANCEL</span>
+      </div>
 
-      <div class="rating-row">
+      <div class="form-group">
+        <label>Name</label>
+        <input type="text" class="nameInput">
+      </div>
+
+      <div class="form-group">
+        <label>Mobile</label>
+        <input type="text" class="phoneInput">
+      </div>
+
+      <div class="form-row split">
         <div>
-          <strong>Pink Ethnic Suit</strong>
-          <p>Colour: 05-BIHU BLISS</p>
+          <label>Pincode</label>
+          <input type="text" class="pincodeInput">
         </div>
 
-        <div class="stars" id="starContainer">
-          <span class="star" data-value="1">&#9733;</span>
-          <span class="star" data-value="2">&#9733;</span>
-          <span class="star" data-value="3">&#9733;</span>
-          <span class="star" data-value="4">&#9733;</span>
-          <span class="star" data-value="5">&#9733;</span>
+        <div>
+          <label>State</label>
+          <input type="text" class="stateInput" value="Maharashtra" readonly>
         </div>
       </div>
-    </div>
 
-    <div class="review-text">
-      <h4>WRITE REVIEW HERE :</h4>
-      <textarea id="reviewText"></textarea>
-    </div>
+      <div class="form-group">
+        <label>Address (House no., Building, Street, Area)</label>
+        <input type="text" class="addressInput">
+      </div>
 
-    <div class="review-consent">
-      <label class="consent-label">
-        <input type="checkbox" id="reviewConsent">
-        <span>
-          By Submitting Review You Give Us Consent To Publish And Process Personal Information 
-          In Accordance With <u>Terms Of Use</u> And <u>Privacy Policy</u>
-        </span>
-      </label>
-    </div>
+      <div class="form-row split">
+        <div>
+          <label>Landmark</label>
+          <input type="text" class="landmarkInput">
+        </div>
 
-    <button class="submit-review" id="submitReview">
-      Submit Review
-    </button>
+        <div>
+          <label>City/District</label>
+          <input type="text" class="cityInput">
+        </div>
+      </div>
+
+      <div style="margin-top:15px;">
+        <label style="display:flex; align-items:center; gap:10px;">
+          <input type="checkbox" class="defaultAddress">
+          Default Address
+        </label>
+      </div>
+
+      <button class="save-btn saveAddressBtn">
+        Save Address
+      </button>
+
+    </div>
 
   </div>
-</div>
+  <!-- Review Overlay -->
+  <div class="review-overlay" id="reviewOverlay">
+    <div class="review-box" id="reviewBox">
 
-<!-- Exchange Overlay -->
-<div id="exchangeOverlay" class="overlay">
-  <div class="overlay-box">
+      <h2>REVIEW PRODUCT</h2>
 
-    <h2>Exchange Product</h2>
+      <div class="review-section">
+        <h4>RATE PRODUCT</h4>
 
-    <div id="exchangeProduct"></div>
+        <div class="rating-row">
+          <div>
+            <strong id="reviewProductName"></strong>
+            <p id="reviewVariant"></p>
+          </div>
 
-    <label>Select Size</label>
-    <div id="sizeOptions" class="variant-grid"></div>
+          <div class="stars" id="starContainer">
+            <span class="star" data-value="1">&#9733;</span>
+            <span class="star" data-value="2">&#9733;</span>
+            <span class="star" data-value="3">&#9733;</span>
+            <span class="star" data-value="4">&#9733;</span>
+            <span class="star" data-value="5">&#9733;</span>
+          </div>
+        </div>
+      </div>
 
-    <label style="margin-top:10px;">Select Color</label>
-    <div id="colorOptions" class="variant-grid"></div>
+      <div class="review-text">
+        <h4>WRITE REVIEW HERE :</h4>
+        <textarea id="reviewText"></textarea>
+      </div>
 
-    <p class="secondary-note">
-      Exchange will be processed only after admin approval.
-    </p>
+      <div class="review-consent">
+        <label class="consent-label">
+          <input type="checkbox" id="reviewConsent">
+          <span>
+            By Submitting Review You Give Us Consent To Publish And Process Personal Information
+            In Accordance With <u>Terms Of Use</u> And <u>Privacy Policy</u>
+          </span>
+        </label>
+      </div>
 
-    <button id="submitExchange" class="primary-btn">
-      Confirm Exchange
-    </button>
+      <button class="submit-review" id="submitReview">
+        Submit Review
+      </button>
 
+    </div>
   </div>
-</div>
 
-<!-- Return Overlay -->
-<div id="returnOverlay" class="overlay">
-  <div class="overlay-box">
+  <!-- Exchange Overlay -->
+  <div id="exchangeOverlay" class="overlay">
+    <div class="overlay-box">
 
-    <h2>Return Product</h2>
+      <h2>Exchange Product</h2>
 
-    <div id="returnProduct"></div>
+      <div id="exchangeProduct"></div>
 
-    <p id="returnDeadline" class="secondary-note"></p>
+      <label>Select Size</label>
+      <div id="sizeOptions" class="variant-grid"></div>
 
-    <textarea id="returnReason"
-      placeholder="Tell us why you want to return..."
-      style="width:100%; padding:10px; border-radius:8px; border:1px solid #ddd;">
+      <label style="margin-top:10px;">Select Color</label>
+      <div id="colorOptions" class="variant-grid"></div>
+
+      <p class="secondary-note">
+        Exchange will be processed only after admin approval.
+      </p>
+
+      <button id="submitExchange" class="primary-btn">
+        Confirm Exchange
+      </button>
+
+    </div>
+  </div>
+
+  <!-- Return Overlay -->
+  <div id="returnOverlay" class="overlay">
+    <div class="overlay-box">
+
+      <h2>Return Product</h2>
+
+      <div id="returnProduct"></div>
+
+      <p id="returnDeadline" class="secondary-note"></p>
+
+      <textarea id="returnReason" placeholder="Tell us why you want to return..."
+        style="width:100%; padding:10px; border-radius:8px; border:1px solid #ddd;">
     </textarea>
 
-    <p class="warning">
-      ₹100 delivery fee will not be refunded.
-    </p>
+      <p class="warning">
+        ₹100 delivery fee will not be refunded.
+      </p>
 
-    <p class="secondary-note">
-      Return will be processed only after admin approval.
-    </p>
+      <p class="secondary-note">
+        Return will be processed only after admin approval.
+      </p>
 
-    <button id="submitReturn" class="primary-btn">
-      Confirm Return
-    </button>
+      <button id="submitReturn" class="primary-btn">
+        Confirm Return
+      </button>
 
+    </div>
   </div>
-</div>
 
-<!-- FOOTER -->
-<footer class="footer">
-  <div class="footer-container">
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-container">
 
-    <!-- Menu -->
-    <div class="footer-box">
-      <h3>Menu</h3>
-      <ul>
-        <li><a href="../htmlpages/track.html">Track Your Order</a></li>
-      </ul>
-    </div>
-
-    <!-- Policies -->
-    <div class="footer-box">
-      <h3>Our Policies</h3>
-      <ul>
-        <li><a href="../htmlpages/return.html">Return and Exchange Policy</a></li>
-        <li><a href="../htmlpages/policy.html">Shipping Policy</a></li>
-        <li><a href="../htmlpages/policy.html">Privacy Policy</a></li>
-        <li><a href="../htmlpages/policy.html">Terms and Conditions</a></li>
-      </ul>
-    </div>
-
-    <!-- Contact -->
-    <div id="contact" class="footer-box">
-      <h3>Contact Us</h3>
-      <p>Support Contact: 8287440077</p>
-      <p>(12PM To 6PM, Mon-Sat)</p>
-
-      <div class="social-icons">
-        <a href="#"><i class="fab fa-instagram"></i></a>
-        <a href="#"><i class="fab fa-whatsapp"></i></a>
-        <a href="#"><i class="fab fa-facebook"></i></a>
+      <!-- Menu -->
+      <div class="footer-box">
+        <h3>Menu</h3>
+        <ul>
+          <li><a href="../htmlpages/track.html">Track Your Order</a></li>
+        </ul>
       </div>
+
+      <!-- Policies -->
+      <div class="footer-box">
+        <h3>Our Policies</h3>
+        <ul>
+          <li><a href="../htmlpages/return.html">Return and Exchange Policy</a></li>
+          <li><a href="../htmlpages/policy.html">Shipping Policy</a></li>
+          <li><a href="../htmlpages/policy.html">Privacy Policy</a></li>
+          <li><a href="../htmlpages/policy.html">Terms and Conditions</a></li>
+        </ul>
+      </div>
+
+      <!-- Contact -->
+      <div id="contact" class="footer-box">
+        <h3>Contact Us</h3>
+        <p>Support Contact: 8287440077</p>
+        <p>(12PM To 6PM, Mon-Sat)</p>
+
+        <div class="social-icons">
+          <a href="#"><i class="fab fa-instagram"></i></a>
+          <a href="#"><i class="fab fa-whatsapp"></i></a>
+          <a href="#"><i class="fab fa-facebook"></i></a>
+        </div>
+      </div>
+
     </div>
 
-  </div>
-
-  <div class="footer-bottom">
-    <p>© 2026, Grace Style Design.</p>
-  </div>
-</footer>
-    <script defer src="../jspages/userprofile.js"></script>
-    <script defer src="../jspages/script.js"></script>
+    <div class="footer-bottom">
+      <p>© 2026, Grace Style Design.</p>
+    </div>
+  </footer>
+  <script defer src="../jspages/userprofile.js"></script>
+  <script defer src="../jspages/script.js"></script>
 </body>
+
 </html>
