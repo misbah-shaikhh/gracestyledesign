@@ -1,5 +1,10 @@
-document.addEventListener("DOMContentLoaded", async () => {
+function renderStars(rating = 0) {
+  const full = Math.floor(rating);
+  const empty = 5 - full;
 
+  return "★".repeat(full) + "☆".repeat(empty);
+}
+document.addEventListener("DOMContentLoaded", async () => {
   const urlParams = new URLSearchParams(window.location.search);
   const productId = urlParams.get("id");
   if (!productId) return;
@@ -35,8 +40,17 @@ document.addEventListener("DOMContentLoaded", async () => {
     if (discountEl) discountEl.textContent =
       discounted !== original ? `Save ${original - discounted}` : "";
 
+    // ⭐ RATING UI UPDATE
+    const starsEl = document.getElementById("productStars");
+    const ratingTextEl = document.getElementById("productRatingText");
 
+    if (starsEl) {
+      starsEl.textContent = renderStars(p.averageRating || 0);
+    }
 
+    if (ratingTextEl) {
+      ratingTextEl.textContent = `(${p.totalReviews || 0} Reviews)`;
+    }
     // ---------------- SIZE OPTIONS ----------------
     const sizeContainer = document.querySelector(".size-options");
 
@@ -107,38 +121,38 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 
     // ---------------- THUMBNAILS ----------------
-const thumbnailGallery = document.querySelector(".thumbnail-gallery");
+    const thumbnailGallery = document.querySelector(".thumbnail-gallery");
 
-if (thumbnailGallery) {
+    if (thumbnailGallery) {
 
-  thumbnailGallery.innerHTML = "";
+      thumbnailGallery.innerHTML = "";
 
-  if (images.length === 0) return;
+      if (images.length === 0) return;
 
-  images.slice(0, 3).forEach((img, i) => {
+      images.slice(0, 3).forEach((img, i) => {
 
-    const thumbDiv = document.createElement("div");
-    thumbDiv.classList.add("thumbnail");
+        const thumbDiv = document.createElement("div");
+        thumbDiv.classList.add("thumbnail");
 
-    if (i === 0) thumbDiv.classList.add("active");
+        if (i === 0) thumbDiv.classList.add("active");
 
-    thumbDiv.innerHTML = `<img src="${img}" alt="${p.name} thumbnail">`;
+        thumbDiv.innerHTML = `<img src="${img}" alt="${p.name} thumbnail">`;
 
-    thumbDiv.addEventListener("click", () => {
+        thumbDiv.addEventListener("click", () => {
 
-      document.querySelectorAll(".thumbnail")
-        .forEach(t => t.classList.remove("active"));
+          document.querySelectorAll(".thumbnail")
+            .forEach(t => t.classList.remove("active"));
 
-      thumbDiv.classList.add("active");
+          thumbDiv.classList.add("active");
 
-      if (mainImage) mainImage.src = img;
+          if (mainImage) mainImage.src = img;
 
-    });
+        });
 
-    thumbnailGallery.appendChild(thumbDiv);
+        thumbnailGallery.appendChild(thumbDiv);
 
-  });
-}
+      });
+    }
 
 
 
@@ -196,7 +210,9 @@ if (thumbnailGallery) {
           <img src="${prod.images?.[0] || "../images/product.jpg"}">
 
           <div class="right-info">
-            <div class="rating">⭐ 4.5</div>
+            <div class="rating">
+  ⭐ ${(prod.averageRating || 0).toFixed(1)}
+</div>
             <div class="wishlist wishlist-btn">
               <i class="fa-regular fa-heart heart"></i>
             </div>

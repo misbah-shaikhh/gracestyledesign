@@ -873,7 +873,7 @@ document.addEventListener("DOMContentLoaded", () => {
         <div class="right-info">
 
 <div class="rating">
-  ${renderRating(item.productId?.averageRating)}
+  ${renderRating(product.averageRating)}
 </div>
 
           <div class="wishlist-btn">
