@@ -1676,3 +1676,17 @@ tbody tr:hover {
   font-size: 13px;
   color: #777;
 }
+
+.requests-filters {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 15px;
+}
+
+.requests-filters select {
+  padding: 6px 10px;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+  background: #fff;
+  cursor: pointer;
+}

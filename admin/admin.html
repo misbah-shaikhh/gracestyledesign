@@ -306,7 +306,22 @@
 
                     <div class="card">
                         <h3 class="card-header">Exchange & Return Requests</h3>
+                        <div class="filters requests-filters">
 
+                            <select id="requestTypeFilter">
+                                <option value="">All Types</option>
+                                <option value="Exchange">Exchange</option>
+                                <option value="Return">Return</option>
+                            </select>
+
+                            <select id="requestStatusFilter">
+                                <option value="">All Status</option>
+                                <option value="Pending">Pending</option>
+                                <option value="Approved">Approved</option>
+                                <option value="Rejected">Rejected</option>
+                            </select>
+
+                        </div>
                         <table class="requests-table">
                             <thead>
                                 <tr>

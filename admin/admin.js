@@ -1277,19 +1277,24 @@ document.addEventListener("click", async (e) => {
 // =============================================
 // EXCHANGE & RETURN REQUESTS - API
 // =============================================
+let allRequests = [];
+let filteredRequests = [];
 async function loadRequests() {
   const res = await fetch("https://gsd-backend-i5gj.onrender.com/api/requests");
   const data = await res.json();
 
-  data.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-  const tbody = document.getElementById("requestsTableBody");
-  tbody.innerHTML = "";
+  allRequests = data.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+  filteredRequests = [...allRequests];
+  renderRequests(filteredRequests);
+  function renderRequests(data) {
+    const tbody = document.getElementById("requestsTableBody");
+    tbody.innerHTML = "";
 
-  data.forEach(req => {
+    data.forEach(req => {
 
-    const row = document.createElement("tr");
+      const row = document.createElement("tr");
 
-    row.innerHTML = `
+      row.innerHTML = `
       <td>
         <div class="product-cell">
           <img src="${req.productId?.images?.[0]}">
@@ -1312,15 +1317,15 @@ async function loadRequests() {
 
       <td>
         ${req.type === "Exchange"
-        ? `New: ${req.newSize} / ${req.newColor}`
-        : `Reason: ${req.reason}`
-      }
+          ? `New: ${req.newSize} / ${req.newColor}`
+          : `Reason: ${req.reason}`
+        }
       </td>
 
       <td>
         ${req.type === "Return"
-        ? "₹" + (req.refundAmount ?? 0)
-        : "₹0"}
+          ? "₹" + (req.refundAmount ?? 0)
+          : "₹0"}
       </td>
 
       <td>
@@ -1330,21 +1335,40 @@ async function loadRequests() {
       </td>
 
       <td>
-${req.status === "Pending"
-        ? `
-    <button class="action-btn approve" onclick="updateRequest('${req._id}','Approved')">Approve</button>
-    <button class="action-btn reject" onclick="updateRequest('${req._id}','Rejected')">Reject</button>
-  `
-        : req.type === "Return" && req.status === "Approved"
-          ? `<small style="color:#777;">Refund Pending</small>`
-          : "-"
-      }
+        ${req.status === "Pending"
+          ? `
+            <button class="action-btn approve" onclick="updateRequest('${req._id}','Approved')">Approve</button>
+            <button class="action-btn reject" onclick="updateRequest('${req._id}','Rejected')">Reject</button>
+          `
+          : req.type === "Return" && req.status === "Approved"
+            ? `<small style="color:#777;">Refund Pending</small>`
+            : "-"
+        }
       </td>
     `;
 
-    tbody.appendChild(row);
-  });
+      tbody.appendChild(row);
+    });
+  }
 }
+
+function applyRequestFilters() {
+  const type = document.getElementById("requestTypeFilter").value;
+  const status = document.getElementById("requestStatusFilter").value;
+
+  filteredRequests = allRequests.filter(req => {
+    const matchType = type ? req.type === type : true;
+    const matchStatus = status ? req.status === status : true;
+    return matchType && matchStatus;
+  });
+
+  renderRequests(filteredRequests);
+}
+document.getElementById("requestTypeFilter")
+  .addEventListener("change", applyRequestFilters);
+
+document.getElementById("requestStatusFilter")
+  .addEventListener("change", applyRequestFilters);
 
 async function updateRequest(id, status) {
   await fetch(
@@ -1356,7 +1380,8 @@ async function updateRequest(id, status) {
     }
   );
 
-  loadRequests(); // refresh
+  await loadRequests();
+  applyRequestFilters(); // 🔥 keep filters active
 }
 // =============================================
 // DASHBOARD - Bestsellers OVERVIEW
