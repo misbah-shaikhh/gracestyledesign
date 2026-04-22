@@ -1279,22 +1279,25 @@ document.addEventListener("click", async (e) => {
 // =============================================
 let allRequests = [];
 let filteredRequests = [];
+
 async function loadRequests() {
   const res = await fetch("https://gsd-backend-i5gj.onrender.com/api/requests");
   const data = await res.json();
 
   allRequests = data.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
   filteredRequests = [...allRequests];
-  renderRequests(filteredRequests);
-  function renderRequests(data) {
-    const tbody = document.getElementById("requestsTableBody");
-    tbody.innerHTML = "";
 
-    data.forEach(req => {
+  renderRequests(filteredRequests); // ✅ now works
+}
 
-      const row = document.createElement("tr");
+function renderRequests(data) {
+  const tbody = document.getElementById("requestsTableBody");
+  tbody.innerHTML = "";
 
-      row.innerHTML = `
+  data.forEach(req => {
+    const row = document.createElement("tr");
+
+    row.innerHTML = `
       <td>
         <div class="product-cell">
           <img src="${req.productId?.images?.[0]}">
@@ -1317,15 +1320,15 @@ async function loadRequests() {
 
       <td>
         ${req.type === "Exchange"
-          ? `New: ${req.newSize} / ${req.newColor}`
-          : `Reason: ${req.reason}`
-        }
+        ? `New: ${req.newSize} / ${req.newColor}`
+        : `Reason: ${req.reason}`
+      }
       </td>
 
       <td>
         ${req.type === "Return"
-          ? "₹" + (req.refundAmount ?? 0)
-          : "₹0"}
+        ? "₹" + (req.refundAmount ?? 0)
+        : "₹0"}
       </td>
 
       <td>
@@ -1336,20 +1339,19 @@ async function loadRequests() {
 
       <td>
         ${req.status === "Pending"
-          ? `
+        ? `
             <button class="action-btn approve" onclick="updateRequest('${req._id}','Approved')">Approve</button>
             <button class="action-btn reject" onclick="updateRequest('${req._id}','Rejected')">Reject</button>
           `
-          : req.type === "Return" && req.status === "Approved"
-            ? `<small style="color:#777;">Refund Pending</small>`
-            : "-"
-        }
+        : req.type === "Return" && req.status === "Approved"
+          ? `<small style="color:#777;">Refund Pending</small>`
+          : "-"
+      }
       </td>
     `;
 
-      tbody.appendChild(row);
-    });
-  }
+    tbody.appendChild(row);
+  });
 }
 
 function applyRequestFilters() {
@@ -1364,11 +1366,15 @@ function applyRequestFilters() {
 
   renderRequests(filteredRequests);
 }
-document.getElementById("requestTypeFilter")
-  .addEventListener("change", applyRequestFilters);
+document.addEventListener("DOMContentLoaded", () => {
+  document.getElementById("requestTypeFilter")
+    .addEventListener("change", applyRequestFilters);
 
-document.getElementById("requestStatusFilter")
-  .addEventListener("change", applyRequestFilters);
+  document.getElementById("requestStatusFilter")
+    .addEventListener("change", applyRequestFilters);
+
+  loadRequests(); // 🔥 important
+});
 
 async function updateRequest(id, status) {
   await fetch(
