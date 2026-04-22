@@ -782,6 +782,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // customers
 let allCustomers = [];
+let filteredCustomers = [];
 
 async function loadCustomers() {
   try {
@@ -790,7 +791,8 @@ async function loadCustomers() {
     const data = await res.json();
 
     allCustomers = data.users;
-
+    filteredCustomers = [...allCustomers]; // 🔥 important
+    renderCustomers(filteredCustomers);
     // 🔥 analytics
     document.getElementById("totalCustomers").innerText = data.total;
     document.getElementById("activeCustomers").innerText = data.active;
@@ -823,16 +825,16 @@ function renderCustomers(data) {
 document.getElementById("customerSearch").addEventListener("input", (e) => {
   const value = e.target.value.toLowerCase();
 
-  const filtered = allCustomers.filter(user =>
+  filteredCustomers = allCustomers.filter(user =>
     user.name.toLowerCase().includes(value) ||
     user.email.toLowerCase().includes(value)
   );
 
-  renderCustomers(filtered);
+  renderCustomers(filteredCustomers);
 });
 
 document.getElementById("customerSort").addEventListener("change", (e) => {
-  let sorted = [...allCustomers];
+  let sorted = [...filteredCustomers]; // 🔥 FIX
 
   switch (e.target.value) {
     case "ordersHigh":
