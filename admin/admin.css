@@ -1645,3 +1645,34 @@ tbody tr:hover {
 .order-filters select option {
   padding: 10px;
 }
+
+.filter-select {
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+  background: #fff;
+  cursor: pointer;
+}
+
+.customer-stats {
+  display: flex;
+  gap: 20px;
+}
+
+.customer-stat {
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  flex: 1;
+  text-align: center;
+}
+
+.customer-stat-value {
+  font-size: 22px;
+  font-weight: 600;
+}
+
+.customer-stat-label {
+  font-size: 13px;
+  color: #777;
+}

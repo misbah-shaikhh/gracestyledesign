@@ -231,7 +231,17 @@
 
                     <!-- Filters -->
                     <div class="filters">
-                        <input type="text" id="customerSearch" class="search-box" placeholder="Search Customer">
+
+                        <input type="text" id="customerSearch" class="search-box" placeholder="Search by name or email">
+
+                        <select id="customerSort">
+                            <option value="">Sort By</option>
+                            <option value="orders_desc">Orders (High → Low)</option>
+                            <option value="orders_asc">Orders (Low → High)</option>
+                            <option value="spend_desc">Spend (High → Low)</option>
+                            <option value="spend_asc">Spend (Low → High)</option>
+                        </select>
+
                     </div>
 
 
@@ -245,9 +255,18 @@
                         <div class="customer-stats">
 
                             <div class="customer-stat">
-                                <!-- JS will update this -->
                                 <div class="customer-stat-value" id="totalCustomers">0</div>
-                                <div class="customer-stat-label">Customers</div>
+                                <div class="customer-stat-label">Total Customers</div>
+                            </div>
+
+                            <div class="customer-stat">
+                                <div class="customer-stat-value" id="activeCustomers">0</div>
+                                <div class="customer-stat-label">Active</div>
+                            </div>
+
+                            <div class="customer-stat">
+                                <div class="customer-stat-value" id="inactiveCustomers">0</div>
+                                <div class="customer-stat-label">Inactive</div>
                             </div>
 
                         </div>
@@ -266,6 +285,7 @@
                                     <th>Customer Name</th>
                                     <th>Email</th>
                                     <th>Orders</th>
+                                    <th>Total Spend</th>
                                 </tr>
                             </thead>
 

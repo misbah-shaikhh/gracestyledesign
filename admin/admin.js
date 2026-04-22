@@ -780,168 +780,80 @@ document.addEventListener("DOMContentLoaded", () => {
 
 });
 
-// Add Offer Modal
-const addOfferBtn = document.getElementById('addOfferBtn');
-const addOfferModal = document.getElementById('addOfferModal');
-const closeOfferModal = document.getElementById('closeOfferModal');
-const cancelOfferBtn = document.getElementById('cancelOfferBtn');
-const addOfferForm = document.getElementById('addOfferForm');
-
-// Open offer modal
-if (addOfferBtn) {
-  addOfferBtn.addEventListener('click', () => {
-    addOfferModal.classList.add('active');
-  });
-}
-
-// Close offer modal
-if (closeOfferModal) {
-  closeOfferModal.addEventListener('click', () => {
-    addOfferModal.classList.remove('active');
-    addOfferForm.reset();
-  });
-}
-
-if (cancelOfferBtn) {
-  cancelOfferBtn.addEventListener('click', () => {
-    addOfferModal.classList.remove('active');
-    addOfferForm.reset();
-  });
-}
-
-// Close offer modal when clicking outside
-if (addOfferModal) {
-  addOfferModal.addEventListener('click', (e) => {
-    if (e.target === addOfferModal) {
-      addOfferModal.classList.remove('active');
-      addOfferForm.reset();
-    }
-  });
-}
-
-// Handle offer form submission
-if (addOfferForm) {
-  addOfferForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-
-    // Get form data
-    const formData = new FormData(addOfferForm);
-    const offerData = {
-      name: formData.get('offerName'),
-      couponCode: formData.get('couponCode').toUpperCase(),
-      offerType: formData.get('offerType'),
-      discountValue: formData.get('discountValue'),
-      usageLimit: formData.get('usageLimit'),
-      startDate: formData.get('startDate'),
-      endDate: formData.get('endDate'),
-      minPurchase: formData.get('minPurchase'),
-      maxDiscount: formData.get('maxDiscount'),
-      applicableTo: Array.from(document.querySelectorAll('input[name="applicableTo"]:checked')).map(cb => cb.value),
-      description: formData.get('offerDescription')
-    };
-
-    // Validate dates
-    const start = new Date(offerData.startDate);
-    const end = new Date(offerData.endDate);
-
-    if (end < start) {
-      alert('End date must be after start date');
-      return;
-    }
-
-    // Format offer display text
-    let offerText = '';
-    if (offerData.offerType === 'percentage') {
-      offerText = `${offerData.discountValue}% OFF`;
-    } else if (offerData.offerType === 'fixed') {
-      offerText = `Rs.${offerData.discountValue} OFF`;
-    } else if (offerData.offerType === 'buy_one_get_one') {
-      offerText = 'Buy 1 Get 1';
-    } else if (offerData.offerType === 'free_shipping') {
-      offerText = 'Free Shipping';
-    }
-
-    // Format dates for display
-    const formatDate = (dateStr) => {
-      const d = new Date(dateStr);
-      const day = String(d.getDate()).padStart(2, '0');
-      const month = String(d.getMonth() + 1).padStart(2, '0');
-      const year = d.getFullYear();
-      return `${day}/${month}/${year}`;
-    };
-
-    // Add offer to table
-    const offersTable = document.getElementById('offersTableBody');
-    const newRow = offersTable.insertRow(0);
-
-    newRow.innerHTML = `
-                    <td>${offerData.couponCode}</td>
-                    <td>${offerText}</td>
-                    <td>0/${offerData.usageLimit}</td>
-                    <td>${formatDate(offerData.startDate)}</td>
-                    <td>${formatDate(offerData.endDate)}</td>
-                    <td>
-                        <button class="btn" style="margin-right: 5px;">Edit</button>
-                        <button class="btn">Delete</button>
-                    </td>
-                `;
-
-    // Close modal and reset form
-    addOfferModal.classList.remove('active');
-    addOfferForm.reset();
-
-    // Show success message
-    alert(`Offer "${offerData.name}" added successfully!`);
-  });
-}
-
-// Auto-uppercase coupon code as user types
-const couponCodeInput = document.getElementById('couponCode');
-if (couponCodeInput) {
-  couponCodeInput.addEventListener('input', function () {
-    this.value = this.value.toUpperCase();
-  });
-}
-
 // customers
-async function loadCustomers() {
+let allCustomers = [];
 
+async function loadCustomers() {
   try {
 
-    const response = await fetch("https://gsd-backend-i5gj.onrender.com/api/admin/users");
+    const res = await fetch("https://gsd-backend-i5gj.onrender.com/api/admin/users");
+    const data = await res.json();
 
-    if (!response.ok) {
-      throw new Error("Failed to fetch users");
-    }
+    allCustomers = data.users;
 
-    const data = await response.json();
-
-    // Update total customers
+    // 🔥 analytics
     document.getElementById("totalCustomers").innerText = data.total;
+    document.getElementById("activeCustomers").innerText = data.active;
+    document.getElementById("inactiveCustomers").innerText = data.inactive;
 
-    const tableBody = document.getElementById("customerTableBody");
-    tableBody.innerHTML = "";
+    renderCustomers(allCustomers);
 
-    data.users.forEach(user => {
-      const row = `
-    <tr>
-      <td>${user.name}</td>
-      <td>${user.email}</td>
-      <td>${user.orderCount || 0}</td>
-    </tr>
-  `;
-
-      tableBody.innerHTML += row;
-    });
-
+  } catch (err) {
+    console.error(err);
   }
-  catch (error) {
-
-    console.error("Error loading users:", error);
-
-  }
-
 }
+
+function renderCustomers(data) {
+  const tbody = document.getElementById("customerTableBody");
+  tbody.innerHTML = "";
+
+  data.forEach(user => {
+    const row = `
+      <tr>
+        <td>${user.name}</td>
+        <td>${user.email}</td>
+        <td>${user.orderCount}</td>
+        <td>₹${user.totalSpent}</td>
+      </tr>
+    `;
+    tbody.innerHTML += row;
+  });
+}
+
+document.getElementById("customerSearch").addEventListener("input", (e) => {
+  const value = e.target.value.toLowerCase();
+
+  const filtered = allCustomers.filter(user =>
+    user.name.toLowerCase().includes(value) ||
+    user.email.toLowerCase().includes(value)
+  );
+
+  renderCustomers(filtered);
+});
+
+document.getElementById("customerSort").addEventListener("change", (e) => {
+  let sorted = [...allCustomers];
+
+  switch (e.target.value) {
+    case "ordersHigh":
+      sorted.sort((a, b) => b.orderCount - a.orderCount);
+      break;
+
+    case "ordersLow":
+      sorted.sort((a, b) => a.orderCount - b.orderCount);
+      break;
+
+    case "spentHigh":
+      sorted.sort((a, b) => b.totalSpent - a.totalSpent);
+      break;
+
+    case "spentLow":
+      sorted.sort((a, b) => a.totalSpent - b.totalSpent);
+      break;
+  }
+
+  renderCustomers(sorted);
+});
 
 loadCustomers();
 

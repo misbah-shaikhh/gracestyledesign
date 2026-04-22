@@ -141,37 +141,60 @@ async function generateInvoicePDF(payment) {
 /* ---------------- GET ALL USERS (ADMIN) ---------------- */
 
 router.get("/users", async (req, res) => {
-
   try {
 
     const users = await User.find({ role: "customer" }, "name email phone");
-    const usersWithOrders = await Promise.all(
+
+    let activeCount = 0;
+    let inactiveCount = 0;
+
+    const enrichedUsers = await Promise.all(
       users.map(async (user) => {
-        const orderCount = await Order.countDocuments({
-          userId: user._id
+
+        // 🔥 ORDERS
+        const orders = await Order.find({ userId: user._id });
+        const orderCount = orders.length;
+
+        // 🔥 ACTIVE / INACTIVE
+        if (orderCount > 0) activeCount++;
+        else inactiveCount++;
+
+        // 🔥 PAYMENTS (ONLY SUCCESSFUL)
+        const payments = await Payment.find({
+          userId: user._id,
+          paymentStatus: "Received"
         });
 
+        const totalSpent = payments.reduce(
+          (sum, p) => sum + (Number(p.totalAmount) || 0),
+          0
+        );
+
         return {
-          ...user.toObject(),
-          orderCount
+          _id: user._id,
+          name: user.name,
+          email: user.email,
+          phone: user.phone,
+          orderCount,
+          totalSpent
         };
       })
     );
+
     res.status(200).json({
       total: users.length,
-      users: usersWithOrders
+      active: activeCount,
+      inactive: inactiveCount,
+      users: enrichedUsers
     });
 
   } catch (error) {
-
     console.error("Fetch Users Error:", error);
 
     res.status(500).json({
       message: "Server error"
     });
-
   }
-
 });
 
 // for new users (admin dashboard)
