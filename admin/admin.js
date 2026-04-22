@@ -1105,6 +1105,8 @@ async function updateOrderStatus() {
 // =============================================
 // PAYMENTS - API (linked from orders)
 // =============================================
+let allPayments = [];
+let filteredPayments = [];
 function showTopMessage(message) {
 
   const msg = document.createElement("div");
@@ -1127,23 +1129,34 @@ async function loadPayments() {
     const res = await fetch("https://gsd-backend-i5gj.onrender.com/api/admin/payments");
     const data = await res.json();
 
-    const paymentsList = data.payments || [];
+    allPayments = (data.payments || []).sort(
+      (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+    );
 
-    const tbody = document.getElementById("paymentsTableBody");
-    if (!tbody) return;
+    filteredPayments = [...allPayments];
 
-    tbody.innerHTML = "";
+    renderPayments(filteredPayments);
 
-    if (paymentsList.length === 0) {
-      tbody.innerHTML = "<tr><td colspan='5'>No payments found</td></tr>";
-      return;
-    }
+  } catch (err) {
+    console.error("Payments load error:", err);
+  }
+}
 
-    paymentsList.forEach(p => {
+function renderPayments(paymentsList) {
+  const tbody = document.getElementById("paymentsTableBody");
+  if (!tbody) return;
 
-      const row = document.createElement("tr");
+  tbody.innerHTML = "";
 
-      row.innerHTML = `
+  if (paymentsList.length === 0) {
+    tbody.innerHTML = "<tr><td colspan='6'>No payments found</td></tr>";
+    return;
+  }
+
+  paymentsList.forEach(p => {
+    const row = document.createElement("tr");
+
+    row.innerHTML = `
       <td>${p.transactionId || "N/A"}</td>
       <td>${p.userId?.name || "N/A"}</td>
       <td>${p.paymentMethod || "COD"}</td>
@@ -1155,18 +1168,14 @@ async function loadPayments() {
           <option value="Failed" ${p.paymentStatus === "Failed" ? "selected" : ""}>Failed</option>
         </select>
       </td>
-          <td>
-          <button class="invoice-btn" data-id="${p._id}" data-txn="${p.transactionId}"> Generate </button>
-          <button class="send-invoice-btn" data-id="${p._id}"> Send </button>
-        </td>
+      <td>
+        <button class="invoice-btn" data-id="${p._id}" data-txn="${p.transactionId}">Generate</button>
+        <button class="send-invoice-btn" data-id="${p._id}">Send</button>
+      </td>
     `;
 
-      tbody.appendChild(row);
-    });
-
-  } catch (err) {
-    console.error("Payments load error:", err);
-  }
+    tbody.appendChild(row);
+  });
 }
 
 document.addEventListener("change", async (e) => {
@@ -1190,7 +1199,11 @@ document.addEventListener("change", async (e) => {
 
     if (res.ok) {
       showTopMessage("Payment status updated");
-      loadPaymentStats(); // 🔥 refresh stats
+
+      await loadPayments();       // 🔥 reload fresh data
+      applyPaymentFilters();      // 🔥 keep filters applied
+
+      loadPaymentStats();
     } else {
       showTopMessage(data.message || "Update failed");
     }
@@ -1221,9 +1234,62 @@ async function loadPaymentStats() {
   }
 }
 
+
+function applyPaymentFilters() {
+
+  const method = document.getElementById("paymentMethodFilter")?.value || "";
+  const status = document.getElementById("paymentStatusFilter")?.value || "";
+  const date = document.getElementById("paymentDateFilter")?.value || "";
+
+  filteredPayments = allPayments.filter(p => {
+
+    const matchMethod = method
+      ? (p.paymentMethod || "").toLowerCase() === method.toLowerCase()
+      : true;
+
+    const matchStatus = status
+      ? p.paymentStatus === status
+      : true;
+
+    let matchDate = true;
+
+    if (date === "today") {
+      const today = new Date().toDateString();
+      matchDate = new Date(p.createdAt).toDateString() === today;
+    }
+
+    if (date === "7days") {
+      const past = new Date();
+      past.setDate(past.getDate() - 7);
+      matchDate = new Date(p.createdAt) >= past;
+    }
+
+    if (date === "30days") {
+      const past = new Date();
+      past.setDate(past.getDate() - 30);
+      matchDate = new Date(p.createdAt) >= past;
+    }
+
+    return matchMethod && matchStatus && matchDate;
+  });
+
+  renderPayments(filteredPayments);
+}
+
 document.addEventListener("DOMContentLoaded", () => {
+
   loadPayments();
   loadPaymentStats();
+
+  document.getElementById("paymentMethodFilter")
+    ?.addEventListener("change", applyPaymentFilters);
+
+  document.getElementById("paymentStatusFilter")
+    ?.addEventListener("change", applyPaymentFilters);
+
+  document.getElementById("paymentDateFilter")
+    ?.addEventListener("change", applyPaymentFilters);
+
 });
 
 // ==============================

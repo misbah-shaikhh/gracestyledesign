@@ -211,9 +211,6 @@ async function handleReturn(request) {
     method: "COD", // or detect from order later
     status: "Pending"
   });
-
-  // 🔥 OPTIONAL: mark inside request
-  request.refundStatus = "Pending";
 }
 
 module.exports = router;
