@@ -339,14 +339,53 @@ router.put("/orders/:id/status", async (req, res) => {
     }
 
     // DELIVERED → PAYMENT RECEIVED
+    // DELIVERED → PAYMENT RECEIVED
     if (status === "Delivered") {
-      order.deliveredAt = new Date(); // ✅ ADD THIS
+
+      order.deliveredAt = new Date();
       await order.save();
+
       const payment = await Payment.findOne({ orderId: order._id });
 
       if (payment) {
         payment.paymentStatus = "Received";
         await payment.save();
+      }
+
+      // =====================================
+      // 🔥 EXCHANGE STOCK RETURN LOGIC
+      // =====================================
+      if (order.orderType === "exchange") {
+
+        const parentOrder = await Order.findById(order.parentOrderId);
+
+        if (parentOrder) {
+
+          const exchangedItem = order.items[0]; // exchange has 1 item
+
+          const originalItem = parentOrder.items.find(
+            i => i.productId.toString() === exchangedItem.productId.toString()
+          );
+
+          if (originalItem) {
+
+            const product = await Product.findById(exchangedItem.productId);
+
+            if (product) {
+
+              const oldVariant = product.variants.find(v =>
+                v.size === originalItem.size &&
+                v.color === originalItem.color
+              );
+
+              if (oldVariant) {
+                oldVariant.stock += 1; // ✅ ADD BACK OLD STOCK
+                await product.save();
+              }
+
+            }
+          }
+        }
       }
     }
 
@@ -618,17 +657,5 @@ router.get("/bestsellers", async (req, res) => {
   }
 });
 
-// GET all reviews (admin)
-router.get("/admin", async (req, res) => {
-  try {
-    const reviews = await Review.find()
-      .populate("userId", "name")
-      .populate("productId", "name images");
-
-    res.json(reviews);
-  } catch (err) {
-    res.status(500).json({ message: err.message });
-  }
-});
 
 module.exports = router;
