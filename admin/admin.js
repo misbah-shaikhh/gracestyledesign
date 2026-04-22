@@ -1572,34 +1572,41 @@ async function loadReviews() {
 }
 
 document.addEventListener("click", async (e) => {
-  if (e.target.classList.contains("action-btn")) {
 
-    const reviewId = e.target.dataset.id;
-    const status = e.target.dataset.action;
+  const btn = e.target.closest(".action-btn");
+  if (!btn) return;
 
-    try {
-      const res = await fetch(
-        `https://gsd-backend-i5gj.onrender.com/api/reviews/${reviewId}/status`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify({ status })
-        }
-      );
+  const reviewId = btn.dataset.id;
+  const status = btn.dataset.action;
 
-      const data = await res.json();
-
-      if (!res.ok) {
-        alert(data.message);
-        return;
-      }
-
-      loadReviews(); // 🔁 refresh
-
-    } catch (err) {
-      console.error(err);
-    }
+  if (!reviewId) {
+    console.error("❌ Missing reviewId");
+    return;
   }
+
+  try {
+    const res = await fetch(
+      `https://gsd-backend-i5gj.onrender.com/api/reviews/${reviewId}/status`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ status })
+      }
+    );
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      alert(data.message);
+      return;
+    }
+
+    loadReviews();
+
+  } catch (err) {
+    console.error(err);
+  }
+
 });
