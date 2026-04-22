@@ -414,7 +414,22 @@
                 <!-- Reviews Page -->
                 <div class="page" id="reviews">
                     <h2 style="margin-bottom: 20px;">Customer Reviews</h2>
+                    <div class="filters reviews-filters">
 
+                        <select id="reviewStatusFilter">
+                            <option value="">All Status</option>
+                            <option value="Approved">Approved</option>
+                            <option value="Pending">Pending</option>
+                            <option value="Rejected">Rejected</option>
+                        </select>
+
+                        <select id="reviewSortFilter">
+                            <option value="">Sort by Rating</option>
+                            <option value="high">High → Low</option>
+                            <option value="low">Low → High</option>
+                        </select>
+
+                    </div>
                     <table class="premium-table">
                         <thead>
                             <tr>

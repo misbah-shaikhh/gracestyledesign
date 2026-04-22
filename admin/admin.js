@@ -1553,64 +1553,93 @@ async function updateRefund(id) {
 }
 
 // Reviewsss 
+let allReviews = [];
+let filteredReviews = [];
 async function loadReviews() {
   try {
     const res = await fetch("https://gsd-backend-i5gj.onrender.com/api/reviews/admin");
     const data = await res.json();
 
-    console.log("Reviews API:", data); // 🔍 debug
+    console.log("Reviews API:", data);
 
     if (!Array.isArray(data)) {
       console.error("❌ Expected array, got:", data);
       return;
     }
 
-    const tbody = document.getElementById("reviewsTableBody");
-    tbody.innerHTML = "";
+    // ✅ STORE DATA
+    allReviews = data;
+    filteredReviews = [...allReviews];
 
-    data.forEach(r => {
-      const stars = "★".repeat(r.rating) + "☆".repeat(5 - r.rating);
-
-      const row = document.createElement("tr");
-
-      row.innerHTML = `
-        <td>${r.productId?.name}</td>
-        <td>${r.userId?.name}</td>
-        <td>${stars}</td>
-        <td>${r.reviewText}</td>
-        <td>${r.orderId}</td>
-        <td>${r.status}</td>
-        <td>
-  ${r.status === "pending" ? `
-    <button 
-      class="action-btn approve-btn" 
-      data-id="${r._id}" 
-      data-action="approved"
-    >
-      Approve
-    </button>
-
-    <button 
-      class="action-btn reject-btn" 
-      data-id="${r._id}" 
-      data-action="rejected"
-    >
-      Reject
-    </button>
-  ` : `
-    <span class="status-badge ${r.status}">
-      ${r.status}
-    </span>
-  `}
-</td>
-      `;
-
-      tbody.appendChild(row);
-    });
+    renderReviews(filteredReviews);
 
   } catch (err) {
     console.error(err);
   }
+}
+
+function renderReviews(data) {
+  const tbody = document.getElementById("reviewsTableBody");
+  tbody.innerHTML = "";
+
+  if (data.length === 0) {
+    tbody.innerHTML = "<tr><td colspan='7'>No reviews found</td></tr>";
+    return;
+  }
+
+  data.forEach(r => {
+
+    const stars = "★".repeat(r.rating) + "☆".repeat(5 - r.rating);
+
+    const row = document.createElement("tr");
+
+    row.innerHTML = `
+      <td>${r.productId?.name || "-"}</td>
+      <td>${r.userId?.name || "-"}</td>
+      <td>${stars}</td>
+      <td>${r.reviewText || "-"}</td>
+      <td>${r.orderId || "-"}</td>
+      <td>${r.status}</td>
+      <td>
+        ${r.status === "pending" ? `
+          <button class="action-btn approve-btn" data-id="${r._id}" data-action="approved">Approve</button>
+          <button class="action-btn reject-btn" data-id="${r._id}" data-action="rejected">Reject</button>
+        ` : `
+          <span class="status-badge ${r.status}">
+            ${r.status}
+          </span>
+        `}
+      </td>
+    `;
+
+    tbody.appendChild(row);
+  });
+}
+
+function applyReviewFilters() {
+
+  const status = document.getElementById("reviewStatusFilter")?.value || "";
+  const sort = document.getElementById("reviewSortFilter")?.value || "";
+
+  let temp = [...allReviews];
+
+  // 🔥 FILTER BY STATUS
+  if (status) {
+    temp = temp.filter(r => r.status.toLowerCase() === status.toLowerCase());
+  }
+
+  // 🔥 SORT BY RATING
+  if (sort === "high") {
+    temp.sort((a, b) => b.rating - a.rating);
+  }
+
+  if (sort === "low") {
+    temp.sort((a, b) => a.rating - b.rating);
+  }
+
+  filteredReviews = temp;
+
+  renderReviews(filteredReviews);
 }
 
 document.addEventListener("click", async (e) => {
@@ -1645,11 +1674,23 @@ document.addEventListener("click", async (e) => {
       return;
     }
 
-    loadReviews();
+    await loadReviews();
+    applyReviewFilters();
 
   } catch (err) {
     console.error(err);
   }
+
+});
+document.addEventListener("DOMContentLoaded", () => {
+
+  loadReviews();
+
+  document.getElementById("reviewStatusFilter")
+    ?.addEventListener("change", applyReviewFilters);
+
+  document.getElementById("reviewSortFilter")
+    ?.addEventListener("change", applyReviewFilters);
 
 });
 
