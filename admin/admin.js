@@ -1337,6 +1337,7 @@ async function loadRequests() {
   const res = await fetch("https://gsd-backend-i5gj.onrender.com/api/requests");
   const data = await res.json();
 
+  data.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
   const tbody = document.getElementById("requestsTableBody");
   tbody.innerHTML = "";
 
