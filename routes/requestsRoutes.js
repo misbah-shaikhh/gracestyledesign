@@ -64,7 +64,23 @@ router.post("/return", async (req, res) => {
       i => (i.productId._id || i.productId).toString() === productId.toString()
     );
 
-    const refundAmount = item?.price || 0;
+    let refundAmount = item?.price || 0;
+
+    // 🔥 FIX: HANDLE EXCHANGE ORDER
+    if (order.orderType === "exchange" && refundAmount === 0) {
+
+      // get original order
+      const originalOrder = await Order.findById(order.parentOrderId);
+
+      if (originalOrder) {
+
+        const originalItem = originalOrder.items.find(
+          i => (i.productId._id || i.productId).toString() === productId.toString()
+        );
+
+        refundAmount = originalItem?.price || 0;
+      }
+    }
 
     const request = await Request.create({
       type: "Return",
@@ -84,16 +100,16 @@ router.post("/return", async (req, res) => {
 });
 
 router.get("/", async (req, res) => {
-    try {
-        const requests = await Request.find()
-            .populate("userId")
-            .populate("productId");
+  try {
+    const requests = await Request.find()
+      .populate("userId")
+      .populate("productId");
 
-        res.json(requests);
+    res.json(requests);
 
-    } catch (err) {
-        res.status(500).json({ message: err.message });
-    }
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
 });
 
 router.put("/:id/status", async (req, res) => {
@@ -190,7 +206,7 @@ async function handleReturn(request) {
     userId: request.userId,
     orderId: request.orderId,
     requestId: request._id,
-    productId: request.productId, 
+    productId: request.productId,
     amount: request.refundAmount,
     method: "COD", // or detect from order later
     status: "Pending"
