@@ -145,7 +145,33 @@
                     <div class="order-wrapper">
 
                         <p class="order-heading">All Orders</p>
+                        <div class="order-filters">
 
+                            <!-- STATUS -->
+                            <select id="statusFilter">
+                                <option value="">All Status</option>
+                                <option value="Pending">Pending</option>
+                                <option value="Confirmed">Confirmed</option>
+                                <option value="Shipped">Shipped</option>
+                                <option value="Delivered">Delivered</option>
+                                <option value="Cancelled">Cancelled</option>
+                            </select>
+
+                            <!-- ORDER TYPE -->
+                            <select id="typeFilter">
+                                <option value="">All Types</option>
+                                <option value="normal">Normal</option>
+                                <option value="exchange">Exchange</option>
+                            </select>
+
+                            <!-- AMOUNT -->
+                            <select id="amountFilter">
+                                <option value="">Sort by Amount</option>
+                                <option value="low">Low → High</option>
+                                <option value="high">High → Low</option>
+                            </select>
+
+                        </div>
                         <!-- OVERVIEW TABLE -->
                         <table id="overviewTable">
                             <thead>

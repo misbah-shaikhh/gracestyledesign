@@ -1600,3 +1600,48 @@ tbody tr:hover {
     background: #dc3545;
     color: #fff;
 }
+
+/* =========================
+   FILTER BAR
+========================= */
+.order-filters {
+  display: flex;
+  gap: 12px;
+  margin: 15px 0 20px;
+  flex-wrap: wrap;
+}
+
+/* =========================
+   DROPDOWN STYLE
+========================= */
+.order-filters select {
+  padding: 10px 14px;
+  border-radius: 8px;
+  border: 1px solid #e5e5e5;
+  background: #fff;
+  font-size: 14px;
+  color: #333;
+  cursor: pointer;
+  min-width: 160px;
+
+  transition: all 0.25s ease;
+}
+
+/* Hover */
+.order-filters select:hover {
+  border-color: #bbb;
+}
+
+/* Focus */
+.order-filters select:focus {
+  outline: none;
+  border-color: #111;
+  box-shadow: 0 0 0 2px rgba(0,0,0,0.05);
+}
+
+/* =========================
+   OPTIONAL: DARK BADGE FEEL
+========================= */
+.order-filters select option {
+  padding: 10px;
+}

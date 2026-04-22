@@ -958,7 +958,7 @@ async function loadOrders() {
     if (!response.ok) throw new Error('Failed to fetch orders');
     const data = await response.json();
     allOrders = data.orders;
-    renderOverview(allOrders);
+    applyFilters(); // 🔥 instead of direct render
   } catch (error) {
     console.error('Error loading orders:', error);
     document.getElementById('noResult').style.display = 'block';
@@ -991,6 +991,36 @@ function renderOverview(data) {
     });
     tbody.appendChild(tr);
   });
+}
+
+function applyFilters() {
+
+  let filtered = [...allOrders];
+
+  const status = document.getElementById("statusFilter").value;
+  const type = document.getElementById("typeFilter").value;
+  const amount = document.getElementById("amountFilter").value;
+
+  // 🔥 STATUS FILTER
+  if (status) {
+    filtered = filtered.filter(o => o.status === status);
+  }
+
+  // 🔥 TYPE FILTER
+  if (type) {
+    filtered = filtered.filter(o => o.orderType === type);
+  }
+
+  // 🔥 AMOUNT SORT
+  if (amount === "low") {
+    filtered.sort((a, b) => a.totalAmount - b.totalAmount);
+  }
+
+  if (amount === "high") {
+    filtered.sort((a, b) => b.totalAmount - a.totalAmount);
+  }
+
+  renderOverview(filtered);
 }
 
 function openOrderModal(id) {
@@ -1610,4 +1640,14 @@ document.addEventListener("click", async (e) => {
     console.error(err);
   }
 
+});
+
+document.addEventListener("change", (e) => {
+  if (
+    e.target.id === "statusFilter" ||
+    e.target.id === "typeFilter" ||
+    e.target.id === "amountFilter"
+  ) {
+    applyFilters();
+  }
 });
