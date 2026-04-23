@@ -207,6 +207,7 @@
 }
 .about-box b {
   font-size: 20px; 
+  font-family: 'Crimson Text', serif !important;
 }
 .policy-section b {
   font-size: 20px;
@@ -226,25 +227,20 @@
   text-align: center;
   font-size: 26px;
   margin-bottom: 20px;
-  font-family: 'Crimson Text', serif !important;
 }
 
 .policy-section h3 {
   font-size: 18px;
   margin-top: 20px;
   color: rgba(113, 32, 0, 1);
-  font-family: 'Crimson Text', serif !important;
 }
 
 .policy-section a {
   color: rgba(113, 32, 0, 1);
   text-decoration: none;
   font-weight: 600;
-  font-family: 'Crimson Text', serif !important;
 }
-.policy-section p, ol, li {
-    font-family: 'Crimson Text', serif !important;
-}
+
 
 .resend-link {
   cursor: pointer;
