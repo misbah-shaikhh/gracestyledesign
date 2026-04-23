@@ -3,24 +3,28 @@
 <head>
   <meta charset="UTF-8">
   <title>GS Ethnic Store</title>
+
   <link rel="stylesheet" href="../csspages/style.css">
   <link rel="stylesheet" href="../csspages/form.css">
+
   <link href="https://fonts.cdnfonts.com/css/rowdies" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Corben">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Crimson+Text">
   <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
+
 <body>
 
 <!-- HEADER -->
 <header class="header">
   <div class="logo">
-  <img src="../images/gsd.png" alt="GS Logo">
-</div>
+    <img src="../images/gsd.png" alt="GS Logo">
+  </div>
+
   <nav class="nav">
     <a href="../htmlpages/index.html">HOME</a>
     <a href="javascript:void(0)" id="categoryBtn">CATEGORIES</a>
@@ -28,28 +32,23 @@
     <a href="../htmlpages/about.html">ABOUT</a>
     <a href="#contact">CONTACT</a>
   </nav>
-<div class="nav-icons">
 
-  <i class="fa-regular fa-user" id="profileBtn"></i>
+  <div class="nav-icons">
+    <i class="fa-regular fa-user" id="profileBtn"></i>
 
-  <!-- Wishlist Icon -->
-  <a href="../htmlpages/wishlist.html">
-    <i class="fa-regular fa-heart"></i>
-  </a>
+    <a href="../htmlpages/wishlist.html">
+      <i class="fa-regular fa-heart"></i>
+    </a>
 
-  <!-- Cart Icon -->
-  <a href="../htmlpages/cart.html">
-    <i class="fa-solid fa-bag-shopping"></i>
-  </a>
-</div>
-
+    <a href="../htmlpages/cart.html">
+      <i class="fa-solid fa-bag-shopping"></i>
+    </a>
+  </div>
 </header>
 
-  <!-- Categories Overlay -->
+<!-- Categories Overlay -->
 <div class="category-overlay" id="categoryOverlay">
-  <div class="category-box" id="categoryBox">
-    <!-- Dynamic categories will come here -->
-  </div>
+  <div class="category-box" id="categoryBox"></div>
 </div>
 
 <!-- Profile Overlay -->
@@ -65,15 +64,14 @@
 
     <ul>
       <li><a href="../htmlpages/userprofile.html?section=editProfile">Edit Profile</a></li>
-      <li id="logoutBtn"><a href="../htmlpages/login.html">Logout</a></li>
+      <li><a href="../htmlpages/login.html">Logout</a></li>
     </ul>
   </div>
 </div>
 
-
-
+<!-- MAIN -->
 <div class="login-wrapper">
-  <div  style="height: 400px;" class="login-box">
+  <div style="height: 420px;" class="login-box">
 
     <h2>Track Your Order</h2>
 
@@ -84,9 +82,25 @@
 
     <button class="login-btn">Track My Order</button>
 
+    <hr style="margin:20px 0;">
+
+    <!-- COMING SOON SECTION -->
+    <div class="coming-soon-box">
+      <h3 style="margin-bottom:8px;">Online Payments</h3>
+      <p style="font-size:14px; color:#666;">
+        We are currently working on introducing secure online payment options.
+        This feature will be available soon to make your shopping experience even smoother.
+      </p>
+
+      <p style="margin-top:10px; font-weight:600; color:#111;">
+        Coming Soon 🚀
+      </p>
+    </div>
+
   </div>
 </div>
 
 <script src="../jspages/script.js"></script>
+
 </body>
 </html>
