@@ -79,7 +79,7 @@
 
                             <div class="stat-card clickable" onclick="openProductOverlay()">
                                 <div class="stat-label">Total Products</div>
-                                <div class="stat-value" id="totalProducts">0</div>
+                                <div class="stat-value" id="dashboardTotalProducts">0</div>
                                 <div class="stat-period">Inventory Overview</div>
                             </div>
 
@@ -652,11 +652,15 @@
 
                 <hr>
 
-                <h4>Top Selling Products</h4>
-                <div id="topProductsList"></div>
+                <div class="overlay-section">
+                    <h4>Top Selling Products</h4>
+                    <div id="topProductsList"></div>
+                </div>
 
-                <h4 style="margin-top:15px;">Lowest Selling Products</h4>
-                <div id="lowProductsList"></div>
+                <div class="overlay-section">
+                    <h4>Lowest Selling Products</h4>
+                    <div id="lowProductsList"></div>
+                </div>
 
                 <button onclick="closeOverlay('productOverlay')">Close</button>
 

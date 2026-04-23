@@ -1605,11 +1605,16 @@ async function loadProfitAnalytics() {
   }
 }
 
-function renderProductList(containerId, list) {
+function renderProductList(containerId, list = []) {
   const el = document.getElementById(containerId);
   if (!el) return;
 
   el.innerHTML = "";
+
+  if (!list.length) {
+    el.innerHTML = "<p style='color:#777;'>No data</p>";
+    return;
+  }
 
   list.forEach(item => {
     const div = document.createElement("div");
@@ -1628,11 +1633,11 @@ async function loadProductAnalytics() {
   const res = await fetch("https://gsd-backend-i5gj.onrender.com/api/admin/product-analytics");
   const data = await res.json();
 
-  document.getElementById("dashboardTotalProducts").innerText = data.totalProducts;
+  setText("dashboardTotalProducts", data.totalProducts);
 
-  document.getElementById("prodTotal").innerText = data.totalProducts;
-  document.getElementById("prodNew").innerText = data.newProducts;
-  document.getElementById("prodLow").innerText = data.lowStock;
+  setText("prodTotal", data.totalProducts);
+  setText("prodNew", data.newProducts);
+  setText("prodLow", data.lowStock);
 
   renderProductList("topProductsList", data.top5);
   renderProductList("lowProductsList", data.bottom5);
