@@ -1567,27 +1567,38 @@ function closeOverlay(id) {
 }
 
 async function loadProfitAnalytics() {
+  try {
+    const res = await fetch("https://gsd-backend-i5gj.onrender.com/api/admin/profit-analytics");
 
-  const res = await fetch("https://gsd-backend-i5gj.onrender.com/api/admin/profit-analytics");
-  const data = await res.json();
+    if (!res.ok) {
+      throw new Error("API failed");
+    }
 
-  document.getElementById("netProfit").innerText =
-    "₹" + data.thisMonth.toLocaleString();
+    const data = await res.json();
 
-  document.getElementById("profitThisMonth").innerText =
-    data.thisMonth.toLocaleString();
+    console.log("Profit Analytics:", data);
 
-  document.getElementById("profitLastMonth").innerText =
-    data.lastMonth.toLocaleString();
+    document.getElementById("profitThisMonth").innerText =
+      "₹" + (data.thisMonth || 0).toLocaleString();
 
-  document.getElementById("profitGrowth").innerText =
-    data.growth;
+    document.getElementById("profitLastMonth").innerText =
+      "₹" + (data.lastMonth || 0).toLocaleString();
 
-  document.getElementById("yearProfit").innerText =
-    data.yearProfit.toLocaleString();
+    document.getElementById("profitGrowth").innerText =
+      (data.growth || 0) + "%";
 
-  document.getElementById("bestMonth").innerText =
-    data.bestMonth;
+    document.getElementById("yearProfit").innerText =
+      "₹" + (data.yearProfit || 0).toLocaleString();
+
+  } catch (err) {
+    console.error("Profit analytics error:", err);
+
+    // fallback UI
+    document.getElementById("profitThisMonth").innerText = "₹0";
+    document.getElementById("profitLastMonth").innerText = "₹0";
+    document.getElementById("profitGrowth").innerText = "0%";
+    document.getElementById("yearProfit").innerText = "₹0";
+  }
 }
 
 async function loadProductAnalytics() {

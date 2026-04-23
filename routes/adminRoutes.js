@@ -5,6 +5,7 @@ const Payment = require("../models/payment");
 const Order = require("../models/orders");
 const Product = require("../models/product"); // 🔥 ADD THIS
 const Review = require("../models/review");
+const Refund = require("../models/refund");
 
 const PDFDocument = require("pdfkit");
 const { Resend } = require("resend");
@@ -690,11 +691,10 @@ router.get("/profit-analytics", async (req, res) => {
     const endOfLastMonth = new Date(now.getFullYear(), now.getMonth(), 0);
 
     // 💰 RECEIVED PAYMENTS
-    const payments = await Payment.find({ paymentStatus: "Received" });
+    const payments = await Payment.find({ paymentStatus: "Received" }) || [];
 
     // 💸 REFUNDS
-    const refunds = await Refund.find({ status: "Processed" });
-
+    const refunds = await Refund.find({ status: "Processed" }) || [];
     const calc = (from, to) => {
 
       const income = payments
