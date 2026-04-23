@@ -248,6 +248,61 @@
   font-weight: 600;
 }
 
+/* FIX GLOBAL POLICY ALIGNMENT */
+.about-box,
+.policy-section {
+  width: 92%;
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 30px 40px;
+  line-height: 1.7;
+  text-align: left; /* IMPORTANT */
+}
+
+/* Keep only titles centered */
+.about-box h2,
+.policy-section h2 {
+  text-align: center;
+}
+
+/* FIX: stop centering paragraphs */
+.about-box p {
+  text-align: left !important;
+}
+
+/* POLICY TEXT CLEAN ALIGNMENT */
+.policy-section p,
+.policy-section li,
+.policy-section ol {
+  text-align: left;
+  font-family: 'Crimson Text', serif !important;
+}
+
+/* LIST SPACING FIX */
+.policy-section ul,
+.policy-section ol {
+  padding-left: 20px;
+  margin-bottom: 15px;
+}
+
+/* HEADINGS ALIGN CLEAN */
+.policy-section h3 {
+  text-align: left;
+  margin-top: 25px;
+}
+
+/* HORIZONTAL LINE FIX */
+.policy-section hr {
+  margin: 20px 0;
+  border: 0;
+  border-top: 1px solid rgba(113, 32, 0, 0.4);
+}
+
+/* OPTIONAL: improve readability */
+.policy-section p {
+  margin-bottom: 12px;
+}
+
 @media (max-width: 768px) {
 
   /* Reduce outer spacing */
