@@ -69,11 +69,8 @@ async function fetchAndRenderBestsellers() {
   if (!productGrid) return;
 
   try {
-    const res = await fetch("https://gsd-backend-i5gj.onrender.com/api/products");
+    const res = await fetch("https://gsd-backend-i5gj.onrender.com/api/products/bestsellers");
     let products = await res.json();
-
-    // --- PICK 6 RANDOM PRODUCTS ---
-    products = shuffleArray(products).slice(0, 6);
 
     // --- FILTER BY PRICE ---
     products = products.filter(p => {
@@ -83,7 +80,7 @@ async function fetchAndRenderBestsellers() {
 
     // --- FILTER BY SIZE ---
     if (selectedSizes.length > 0) {
-      products = products.filter(p => 
+      products = products.filter(p =>
         p.variants?.some(v => selectedSizes.includes(v.size))
       );
     }
@@ -95,18 +92,18 @@ async function fetchAndRenderBestsellers() {
       return;
     }
 
-products.forEach(p => {
-  const card = document.createElement("div");
-  card.classList.add("product-card");
-card.dataset.id = p._id; // use the real MongoDB _id
-card.addEventListener("click", () => {
-  const id = card.dataset.id; // this is _id now
-  window.location.href = `../htmlpages/prodview.html?id=${id}`;
-});
-  // Get first two colors
-  const colors = p.colors?.slice(0, 2) || [];
+    products.forEach(p => {
+      const card = document.createElement("div");
+      card.classList.add("product-card");
+      card.dataset.id = p._id; // use the real MongoDB _id
+      card.addEventListener("click", () => {
+        const id = card.dataset.id; // this is _id now
+        window.location.href = `../htmlpages/prodview.html?id=${id}`;
+      });
+      // Get first two colors
+      const colors = p.colors?.slice(0, 2) || [];
 
-  card.innerHTML = `
+      card.innerHTML = `
     <!-- IMAGE -->
     <div class="product-img">
       <img src="${p.images?.[0] || '../images/product.jpg'}" alt="${p.name}">
@@ -135,10 +132,10 @@ card.addEventListener("click", () => {
     </div>
   `;
 
-  productGrid.appendChild(card);
-});
-// ✅ Sync hearts after all product cards are rendered
-syncWishlistHearts();
+      productGrid.appendChild(card);
+    });
+    // ✅ Sync hearts after all product cards are rendered
+    syncWishlistHearts();
 
   } catch (err) {
     console.error("Error fetching products:", err);
