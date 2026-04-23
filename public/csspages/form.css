@@ -205,7 +205,12 @@
   margin-bottom: 20px;
   font-family: 'Crimson Text', serif !important;
 }
-
+.about-box b {
+  font-size: 20px; 
+}
+.policy-section b {
+  font-size: 20px;
+}
 .policy-section {
   width: 96%;
   max-width: 1600px;
