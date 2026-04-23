@@ -50,6 +50,51 @@ router.get('/', async (req, res) => {
     }
 });
 
+const Order = require("../models/orders"); // 🔥 add this
+
+// GET BESTSELLING PRODUCTS
+router.get("/bestsellers", async (req, res) => {
+  try {
+    const orders = await Order.find();
+
+    const productMap = {};
+
+    // 🔥 count quantity sold
+    orders.forEach(order => {
+      order.items.forEach(item => {
+        const key = item.productId.toString();
+
+        if (!productMap[key]) {
+          productMap[key] = 0;
+        }
+
+        productMap[key] += item.quantity;
+      });
+    });
+
+    // 🔥 sort by highest sold
+    const sortedIds = Object.entries(productMap)
+      .sort((a, b) => b[1] - a[1])
+      .map(([id]) => id);
+
+    // 🔥 fetch full product details
+    const products = await Product.find({
+      _id: { $in: sortedIds }
+    });
+
+    // 🔥 preserve order (important!)
+    const sortedProducts = sortedIds.map(id =>
+      products.find(p => p._id.toString() === id)
+    ).filter(Boolean);
+
+    res.json(sortedProducts);
+
+  } catch (err) {
+    console.error("Bestsellers error:", err);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
 // GET SINGLE PRODUCT BY ID
 router.get('/:id', async (req, res) => {
     try {
@@ -109,49 +154,6 @@ router.get("/test", (req, res) => {
     res.json({ message: "Product routes are working" });
 });
 
-const Order = require("../models/orders"); // 🔥 add this
 
-// GET BESTSELLING PRODUCTS
-router.get("/bestsellers", async (req, res) => {
-  try {
-    const orders = await Order.find();
-
-    const productMap = {};
-
-    // 🔥 count quantity sold
-    orders.forEach(order => {
-      order.items.forEach(item => {
-        const key = item.productId.toString();
-
-        if (!productMap[key]) {
-          productMap[key] = 0;
-        }
-
-        productMap[key] += item.quantity;
-      });
-    });
-
-    // 🔥 sort by highest sold
-    const sortedIds = Object.entries(productMap)
-      .sort((a, b) => b[1] - a[1])
-      .map(([id]) => id);
-
-    // 🔥 fetch full product details
-    const products = await Product.find({
-      _id: { $in: sortedIds }
-    });
-
-    // 🔥 preserve order (important!)
-    const sortedProducts = sortedIds.map(id =>
-      products.find(p => p._id.toString() === id)
-    ).filter(Boolean);
-
-    res.json(sortedProducts);
-
-  } catch (err) {
-    console.error("Bestsellers error:", err);
-    res.status(500).json({ message: "Server error" });
-  }
-});
 
 module.exports = router;

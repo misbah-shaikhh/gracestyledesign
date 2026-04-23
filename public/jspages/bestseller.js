@@ -70,7 +70,17 @@ async function fetchAndRenderBestsellers() {
 
   try {
     const res = await fetch("https://gsd-backend-i5gj.onrender.com/api/products/bestsellers");
+
+    if (!res.ok) {
+      throw new Error("Failed to fetch bestsellers");
+    }
+
     let products = await res.json();
+
+    if (!Array.isArray(products)) {
+      console.error("Expected array, got:", products);
+      return;
+    }
 
     // --- FILTER BY PRICE ---
     products = products.filter(p => {
