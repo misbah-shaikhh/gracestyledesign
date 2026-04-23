@@ -680,5 +680,105 @@ router.get("/bestsellers", async (req, res) => {
   }
 });
 
+router.get("/profit-analytics", async (req, res) => {
+  try {
 
+    const now = new Date();
+
+    const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+    const startOfLastMonth = new Date(now.getFullYear(), now.getMonth() - 1, 1);
+    const endOfLastMonth = new Date(now.getFullYear(), now.getMonth(), 0);
+
+    // 💰 RECEIVED PAYMENTS
+    const payments = await Payment.find({ paymentStatus: "Received" });
+
+    // 💸 REFUNDS
+    const refunds = await Refund.find({ status: "Processed" });
+
+    const calc = (from, to) => {
+
+      const income = payments
+        .filter(p => p.createdAt >= from && p.createdAt <= to)
+        .reduce((sum, p) => sum + p.totalAmount, 0);
+
+      const refundAmt = refunds
+        .filter(r => r.createdAt >= from && r.createdAt <= to)
+        .reduce((sum, r) => sum + r.amount, 0);
+
+      return income - refundAmt;
+    };
+
+    const thisMonth = calc(startOfMonth, now);
+    const lastMonth = calc(startOfLastMonth, endOfLastMonth);
+
+    const growth = lastMonth === 0
+      ? 100
+      : (((thisMonth - lastMonth) / lastMonth) * 100).toFixed(2);
+
+    // 📊 YEAR PROFIT
+    const startOfYear = new Date(now.getFullYear(), 3, 1); // April (India FY)
+
+    const yearProfit = payments
+      .filter(p => p.createdAt >= startOfYear)
+      .reduce((sum, p) => sum + p.totalAmount, 0)
+      -
+      refunds
+        .filter(r => r.createdAt >= startOfYear)
+        .reduce((sum, r) => sum + r.amount, 0);
+
+    res.json({
+      thisMonth,
+      lastMonth,
+      growth,
+      yearProfit,
+      bestMonth: "Coming soon" // optional enhancement
+    });
+
+  } catch (err) {
+    res.status(500).json({ message: "Error" });
+  }
+});
+
+router.get("/product-analytics", async (req, res) => {
+  try {
+
+    const totalProducts = await Product.countDocuments();
+
+    const now = new Date();
+    const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+
+    const newProducts = await Product.countDocuments({
+      createdAt: { $gte: startOfMonth }
+    });
+
+    const lowStock = await Product.countDocuments({
+      totalStock: { $lte: 10 }
+    });
+
+    // 🧠 BEST + WORST SELLERS
+    const orders = await Order.find();
+
+    const map = {};
+
+    orders.forEach(o => {
+      o.items.forEach(i => {
+        const key = i.name;
+        map[key] = (map[key] || 0) + i.quantity;
+      });
+    });
+
+    const sorted = Object.entries(map).sort((a, b) => b[1] - a[1]);
+
+    res.json({
+      totalProducts,
+      newProducts,
+      lowStock,
+      best: sorted[0]?.[0] || "-",
+      worst: sorted[sorted.length - 1]?.[0] || "-"
+    });
+
+  } catch (err) {
+    res.status(500).json({ message: "Error" });
+  }
+});
 module.exports = router;

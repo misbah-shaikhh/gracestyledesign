@@ -69,7 +69,21 @@
                                 <div class="stat-value" id="lowStockAlerts">0</div>
                             </div>
                         </div>
+                        <div class="analytics-grid">
 
+                            <div class="stat-card clickable" onclick="openProfitOverlay()">
+                                <div class="stat-label">Net Profit</div>
+                                <div class="stat-value" id="netProfit">₹0</div>
+                                <div class="stat-period">This Month</div>
+                            </div>
+
+                            <div class="stat-card clickable" onclick="openProductOverlay()">
+                                <div class="stat-label">Total Products</div>
+                                <div class="stat-value" id="totalProducts">0</div>
+                                <div class="stat-period">Inventory Overview</div>
+                            </div>
+
+                        </div>
                         <!-- refund + BESTSELLERS -->
                         <div class="two-col-grid">
                             <div class="card">
@@ -607,124 +621,47 @@
                 <button onclick="closeEditModal()">Cancel</button>
             </div>
         </div>
-        <!-- Add Offer Modal -->
-        <div id="addOfferModal" class="modal">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h2>Add New Offer</h2>
-                    <button class="close-modal" id="closeOfferModal">&times;</button>
-                </div>
+        <!--    Profit analysis Modal -->
+        <div class="overlay" id="profitOverlay">
+            <div class="overlay-box">
 
-                <form id="addOfferForm">
-                    <div class="form-group-full">
-                        <label for="offerName">Offer Name / Title *</label>
-                        <input type="text" id="offerName" name="offerName" required
-                            placeholder="e.g., Summer Sale, Festival Discount">
-                    </div>
+                <h2>Profit Analytics</h2>
 
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="couponCode">Coupon Code *</label>
-                            <input type="text" id="couponCode" name="couponCode" required placeholder="e.g., SUMMER20"
-                                style="text-transform: uppercase;">
-                        </div>
+                <p><b>This Month:</b> ₹<span id="profitThisMonth"></span></p>
+                <p><b>Last Month:</b> ₹<span id="profitLastMonth"></span></p>
+                <p><b>Growth:</b> <span id="profitGrowth"></span>%</p>
 
-                        <div class="form-group">
-                            <label for="offerType">Offer Type *</label>
-                            <select id="offerType" name="offerType" required>
-                                <option value="">Select Offer Type</option>
-                                <option value="percentage">Percentage Off</option>
-                                <option value="fixed">Fixed Amount Off</option>
-                                <option value="buy_one_get_one">Buy One Get One</option>
-                                <option value="free_shipping">Free Shipping</option>
-                            </select>
-                        </div>
-                    </div>
+                <hr>
 
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="discountValue">Discount Value *</label>
-                            <input type="number" id="discountValue" name="discountValue" required
-                                placeholder="e.g., 20 for 20%" step="0.01" min="0">
-                            <small style="color: #666; font-size: 12px; display: block; margin-top: 5px;">Enter
-                                percentage (e.g., 20 for 20%) or amount in Rs.</small>
-                        </div>
+                <p><b>Financial Year Profit:</b> ₹<span id="yearProfit"></span></p>
+                <p><b>Best Month:</b> <span id="bestMonth"></span></p>
 
-                        <div class="form-group">
-                            <label for="usageLimit">Usage Limit *</label>
-                            <input type="number" id="usageLimit" name="usageLimit" required placeholder="e.g., 100"
-                                min="1">
-                        </div>
-                    </div>
+                <button onclick="closeOverlay('profitOverlay')">Close</button>
 
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="startDate">Start Date *</label>
-                            <input type="date" id="startDate" name="startDate" required>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="endDate">End Date *</label>
-                            <input type="date" id="endDate" name="endDate" required>
-                        </div>
-                    </div>
-
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="minPurchase">Minimum Purchase Amount (Rs.)</label>
-                            <input type="number" id="minPurchase" name="minPurchase" placeholder="Optional" step="0.01"
-                                min="0">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="maxDiscount">Maximum Discount Amount (Rs.)</label>
-                            <input type="number" id="maxDiscount" name="maxDiscount" placeholder="Optional" step="0.01"
-                                min="0">
-                        </div>
-                    </div>
-
-                    <div class="form-group-full">
-                        <label>Applicable To</label>
-                        <div style="display: flex; gap: 15px; flex-wrap: wrap;">
-                            <div class="checkbox-group">
-                                <input type="checkbox" id="allProducts" name="applicableTo" value="all" checked>
-                                <label for="allProducts">All Products</label>
-                            </div>
-                            <div class="checkbox-group">
-                                <input type="checkbox" id="kurti" name="applicableTo" value="kurti">
-                                <label for="kurti">Kurti</label>
-                            </div>
-                            <div class="checkbox-group">
-                                <input type="checkbox" id="saree" name="applicableTo" value="saree">
-                                <label for="saree">Saree</label>
-                            </div>
-                            <div class="checkbox-group">
-                                <input type="checkbox" id="suit" name="applicableTo" value="suit">
-                                <label for="suit">Suit</label>
-                            </div>
-                            <div class="checkbox-group">
-                                <input type="checkbox" id="lehenga" name="applicableTo" value="lehenga">
-                                <label for="lehenga">Lehenga</label>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="form-group-full">
-                        <label for="offerDescription">Offer Description</label>
-                        <textarea id="offerDescription" name="offerDescription"
-                            placeholder="Enter offer terms and conditions (optional)"></textarea>
-                    </div>
-
-
-
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-cancel" id="cancelOfferBtn">Cancel</button>
-                        <button type="submit" class="btn btn-submit">Add Offer</button>
-                    </div>
-                </form>
             </div>
         </div>
+        <!-- Products analysis modal -->
+        <div class="overlay" id="productOverlay">
+            <div class="overlay-box">
+
+                <h2>Product Analytics</h2>
+
+                <p><b>Total Products:</b> <span id="prodTotal"></span></p>
+                <p><b>New This Month:</b> <span id="prodNew"></span></p>
+                <p><b>Low Stock:</b> <span id="prodLow"></span></p>
+
+                <hr>
+
+                <p><b>Bestseller:</b> <span id="prodBest"></span></p>
+                <p><b>Lowest Selling:</b> <span id="prodWorst"></span></p>
+
+                <button onclick="closeOverlay('productOverlay')">Close</button>
+
+            </div>
+        </div>
+
     </div>
+
 
     <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
     <script src="admin.js"></script>

@@ -1690,3 +1690,19 @@ tbody tr:hover {
   background: #fff;
   cursor: pointer;
 }
+
+.analytics-grid {
+  display: grid;
+  grid-template-columns: 2fr 2fr;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.clickable {
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.clickable:hover {
+  transform: translateY(-4px);
+}

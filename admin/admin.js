@@ -1552,6 +1552,59 @@ async function updateRefund(id) {
   loadRefunds(); // refresh table
 }
 
+function openProfitOverlay() {
+  document.getElementById("profitOverlay").style.display = "flex";
+  loadProfitAnalytics();
+}
+
+function openProductOverlay() {
+  document.getElementById("productOverlay").style.display = "flex";
+  loadProductAnalytics();
+}
+
+function closeOverlay(id) {
+  document.getElementById(id).style.display = "none";
+}
+
+async function loadProfitAnalytics() {
+
+  const res = await fetch("/api/admin/profit-analytics");
+  const data = await res.json();
+
+  document.getElementById("netProfit").innerText =
+    "₹" + data.thisMonth.toLocaleString();
+
+  document.getElementById("profitThisMonth").innerText =
+    data.thisMonth.toLocaleString();
+
+  document.getElementById("profitLastMonth").innerText =
+    data.lastMonth.toLocaleString();
+
+  document.getElementById("profitGrowth").innerText =
+    data.growth;
+
+  document.getElementById("yearProfit").innerText =
+    data.yearProfit.toLocaleString();
+
+  document.getElementById("bestMonth").innerText =
+    data.bestMonth;
+}
+
+async function loadProductAnalytics() {
+
+  const res = await fetch("/api/admin/product-analytics");
+  const data = await res.json();
+
+  document.getElementById("totalProducts").innerText = data.totalProducts;
+
+  document.getElementById("prodTotal").innerText = data.totalProducts;
+  document.getElementById("prodNew").innerText = data.newProducts;
+  document.getElementById("prodLow").innerText = data.lowStock;
+
+  document.getElementById("prodBest").innerText = data.best;
+  document.getElementById("prodWorst").innerText = data.worst;
+}
+
 // Reviewsss 
 let allReviews = [];
 let filteredReviews = [];
