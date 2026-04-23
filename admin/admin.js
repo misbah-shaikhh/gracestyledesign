@@ -1639,6 +1639,29 @@ function setText(id, value) {
 
   el.innerText = value;
 }
+function renderLowStock(id, list = []) {
+  const el = document.getElementById(id);
+  if (!el) return;
+
+  el.innerHTML = "";
+
+  if (!list.length) {
+    el.innerHTML = "<p>No low stock products</p>";
+    return;
+  }
+
+  list.forEach(p => {
+    const div = document.createElement("div");
+    div.className = "product-row";
+
+    div.innerHTML = `
+      <span>${p.name}</span>
+      <b>${p.totalStock} left</b>
+    `;
+
+    el.appendChild(div);
+  });
+}
 
 async function loadProductAnalytics() {
   const res = await fetch("https://gsd-backend-i5gj.onrender.com/api/admin/product-analytics");
@@ -1652,8 +1675,10 @@ async function loadProductAnalytics() {
 
   renderProductList("topProductsList", data.top5);
   renderProductList("lowProductsList", data.bottom5);
-}
 
+  // 🔥 ADD THIS
+  renderLowStock("lowStockList", data.lowStockList);
+}
 // Reviewsss 
 let allReviews = [];
 let filteredReviews = [];

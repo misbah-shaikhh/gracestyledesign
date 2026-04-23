@@ -751,43 +751,60 @@ router.get("/product-analytics", async (req, res) => {
       createdAt: { $gte: startOfMonth }
     });
 
-    const lowStock = await Product.countDocuments({
+    // 🔥 LOW STOCK LIST (not just count)
+    const lowStockProducts = await Product.find({
       totalStock: { $lte: 10 }
-    });
+    }).select("name totalStock");
 
-    // 🧠 BEST + WORST SELLERS
+    // 🔥 GET ALL PRODUCTS
+    const products = await Product.find();
+
+    // 🔥 GET ALL ORDERS
     const orders = await Order.find();
 
+    // 🔥 MAP ALL PRODUCTS (INCLUDING 0 SALES)
     const map = {};
 
+    products.forEach(p => {
+      map[p._id.toString()] = {
+        name: p.name,
+        count: 0
+      };
+    });
+
+    // 🔥 ADD SALES DATA
     orders.forEach(o => {
       o.items.forEach(i => {
-        const key = i.name;
-        map[key] = (map[key] || 0) + i.quantity;
+        const key = i.productId.toString();
+
+        if (map[key]) {
+          map[key].count += i.quantity;
+        }
       });
     });
 
-    const sorted = Object.entries(map).sort((a, b) => b[1] - a[1]);
+    // 🔥 SORT
+    const sorted = Object.values(map).sort((a, b) => b.count - a.count);
 
-    const top5 = sorted.slice(0, 5).map(([name, count]) => ({
-      name,
-      count
-    }));
+    const top5 = sorted.slice(0, 5);
 
-    const bottom5 = sorted.slice(-5).reverse().map(([name, count]) => ({
-      name,
-      count
-    }));
+    const bottom5 = sorted
+      .slice(-5)
+      .reverse(); // 👈 important
 
     res.json({
       totalProducts,
       newProducts,
-      lowStock,
+      lowStock: lowStockProducts.length,
+
+      lowStockList: lowStockProducts, // 🔥 NEW
+
       top5,
       bottom5
     });
 
   } catch (err) {
+    console.error(err);
     res.status(500).json({ message: "Error" });
   }
 });
