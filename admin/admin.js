@@ -1568,7 +1568,7 @@ function closeOverlay(id) {
 
 async function loadProfitAnalytics() {
 
-  const res = await fetch("/api/admin/profit-analytics");
+  const res = await fetch("https://gsd-backend-i5gj.onrender.com/api/admin/profit-analytics");
   const data = await res.json();
 
   document.getElementById("netProfit").innerText =
@@ -1592,7 +1592,7 @@ async function loadProfitAnalytics() {
 
 async function loadProductAnalytics() {
 
-  const res = await fetch("/api/admin/product-analytics");
+  const res = await fetch("https://gsd-backend-i5gj.onrender.com/api/admin/product-analytics");
   const data = await res.json();
 
   document.getElementById("totalProducts").innerText = data.totalProducts;
