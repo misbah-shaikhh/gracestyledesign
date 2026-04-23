@@ -1573,40 +1573,69 @@ async function loadProfitAnalytics() {
     console.log("Profit Analytics:", data);
 
     // 🔥 DASHBOARD CARD
-    document.getElementById("netProfitValue").innerText =
-      "₹" + (data.thisMonth || 0).toLocaleString();
+    const netEl = document.getElementById("netProfitValue");
+    if (netEl) {
+      netEl.innerText = "₹" + (data.thisMonth || 0).toLocaleString();
+    }
 
     // 🔥 OVERLAY
-    document.getElementById("profitThisMonth").innerText =
-      "₹" + (data.thisMonth || 0).toLocaleString();
+    const thisMonthEl = document.getElementById("profitThisMonth");
+    const lastMonthEl = document.getElementById("profitLastMonth");
+    const growthEl = document.getElementById("profitGrowth");
+    const yearEl = document.getElementById("yearProfit");
+    const bestMonthEl = document.getElementById("bestMonth");
 
-    document.getElementById("profitLastMonth").innerText =
-      "₹" + (data.lastMonth || 0).toLocaleString();
+    if (thisMonthEl)
+      thisMonthEl.innerText = "₹" + (data.thisMonth || 0).toLocaleString();
 
-    document.getElementById("profitGrowth").innerText =
-      (data.growth || 0) + "%";
+    if (lastMonthEl)
+      lastMonthEl.innerText = "₹" + (data.lastMonth || 0).toLocaleString();
 
-    document.getElementById("yearProfit").innerText =
-      "₹" + (data.yearProfit || 0).toLocaleString();
+    if (growthEl)
+      growthEl.innerText = (data.growth || 0) + "%";
+
+    if (yearEl)
+      yearEl.innerText = "₹" + (data.yearProfit || 0).toLocaleString();
+
+    if (bestMonthEl)
+      bestMonthEl.innerText = data.bestMonth || "-";
 
   } catch (err) {
     console.error("Profit analytics error:", err);
   }
 }
 
-async function loadProductAnalytics() {
+function renderProductList(containerId, list) {
+  const el = document.getElementById(containerId);
+  if (!el) return;
 
+  el.innerHTML = "";
+
+  list.forEach(item => {
+    const div = document.createElement("div");
+    div.className = "product-row";
+
+    div.innerHTML = `
+      <span>${item.name}</span>
+      <b>${item.count}</b>
+    `;
+
+    el.appendChild(div);
+  });
+}
+
+async function loadProductAnalytics() {
   const res = await fetch("https://gsd-backend-i5gj.onrender.com/api/admin/product-analytics");
   const data = await res.json();
 
-  document.getElementById("totalProducts").innerText = data.totalProducts;
+  document.getElementById("dashboardTotalProducts").innerText = data.totalProducts;
 
   document.getElementById("prodTotal").innerText = data.totalProducts;
   document.getElementById("prodNew").innerText = data.newProducts;
   document.getElementById("prodLow").innerText = data.lowStock;
 
-  document.getElementById("prodBest").innerText = data.best;
-  document.getElementById("prodWorst").innerText = data.worst;
+  renderProductList("topProductsList", data.top5);
+  renderProductList("lowProductsList", data.bottom5);
 }
 
 // Reviewsss 

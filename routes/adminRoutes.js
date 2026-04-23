@@ -769,12 +769,22 @@ router.get("/product-analytics", async (req, res) => {
 
     const sorted = Object.entries(map).sort((a, b) => b[1] - a[1]);
 
+    const top5 = sorted.slice(0, 5).map(([name, count]) => ({
+      name,
+      count
+    }));
+
+    const bottom5 = sorted.slice(-5).reverse().map(([name, count]) => ({
+      name,
+      count
+    }));
+
     res.json({
       totalProducts,
       newProducts,
       lowStock,
-      best: sorted[0]?.[0] || "-",
-      worst: sorted[sorted.length - 1]?.[0] || "-"
+      top5,
+      bottom5
     });
 
   } catch (err) {

@@ -1691,102 +1691,138 @@ tbody tr:hover {
   cursor: pointer;
 }
 
-.analytics-grid {
-  display: grid;
-  grid-template-columns: 2fr 2fr;
-  gap: 20px;
-  margin-bottom: 20px;
-}
-
-.clickable {
-  cursor: pointer;
-  transition: 0.2s ease;
-}
-
-.clickable:hover {
-  transform: translateY(-4px);
-}
-
+/* OVERLAY BACKDROP */
 .overlay {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  inset: 0;
 
-  background: rgba(0, 0, 0, 0.6);
-  backdrop-filter: blur(6px);
+  background: rgba(15, 15, 15, 0.65);
+  backdrop-filter: blur(10px);
 
   display: none;
   align-items: center;
   justify-content: center;
 
   z-index: 9999;
+
   animation: fadeIn 0.25s ease;
 }
 
+/* MODAL BOX */
 .overlay-box {
-  width: 500px;
-  max-width: 90%;
+  width: 520px;
+  max-width: 92%;
 
-  background: #fff;
-  border-radius: 16px;
+  background: linear-gradient(145deg, #ffffff, #f7f7f7);
+  border-radius: 18px;
 
-  padding: 25px;
+  padding: 28px;
 
-  box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+  box-shadow:
+    0 25px 80px rgba(0, 0, 0, 0.25),
+    inset 0 1px 0 rgba(255,255,255,0.6);
 
   animation: scaleIn 0.25s ease;
 }
+
+/* HEADER */
 .overlay-box h2 {
-  margin-bottom: 15px;
   font-size: 22px;
   font-weight: 600;
+  margin-bottom: 18px;
+  letter-spacing: 0.3px;
 }
+
+/* DATA ROWS */
 .overlay-box p {
-  margin: 8px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
   font-size: 14px;
-  color: #444;
+  padding: 8px 0;
+
+  border-bottom: 1px solid #f1f1f1;
+}
+
+.overlay-box p:last-child {
+  border-bottom: none;
 }
 
 .overlay-box b {
+  color: #222;
+  font-weight: 500;
+}
+
+/* VALUE STYLE */
+.overlay-box span {
+  font-weight: 600;
   color: #111;
 }
+
+/* DIVIDER */
 .overlay-box hr {
-  margin: 15px 0;
+  margin: 18px 0;
   border: none;
-  border-top: 1px solid #eee;
+  border-top: 1px solid #eaeaea;
 }
+
+/* BUTTON */
 .overlay-box button {
+  width: 100%;
   margin-top: 20px;
 
-  background: #111;
+  background: linear-gradient(135deg, #111, #333);
   color: #fff;
 
   border: none;
-  padding: 10px 15px;
+  padding: 12px;
 
-  border-radius: 8px;
+  border-radius: 10px;
+
+  font-size: 14px;
+  letter-spacing: 0.3px;
+
   cursor: pointer;
-
-  transition: 0.2s;
+  transition: 0.25s ease;
 }
 
 .overlay-box button:hover {
-  background: #333;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.25);
 }
+
+/* ANIMATIONS */
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from { opacity: 0 }
+  to { opacity: 1 }
 }
 
 @keyframes scaleIn {
   from {
-    transform: scale(0.9);
+    transform: scale(0.92);
     opacity: 0;
   }
   to {
     transform: scale(1);
     opacity: 1;
   }
+}
+
+.product-row {
+  display: flex;
+  justify-content: space-between;
+
+  padding: 8px 0;
+  font-size: 14px;
+
+  border-bottom: 1px solid #f1f1f1;
+}
+
+.product-row span {
+  color: #333;
+}
+
+.product-row b {
+  color: #111;
 }
