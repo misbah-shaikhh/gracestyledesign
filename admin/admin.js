@@ -1480,10 +1480,6 @@ async function loadBestsellers() {
 
 loadBestsellers();
 
-window.addEventListener("DOMContentLoaded", () => {
-  loadDashboardStats();
-});
-
 // dashboard refund table 
 async function loadRefunds() {
   try {
@@ -1570,14 +1566,17 @@ async function loadProfitAnalytics() {
   try {
     const res = await fetch("https://gsd-backend-i5gj.onrender.com/api/admin/profit-analytics");
 
-    if (!res.ok) {
-      throw new Error("API failed");
-    }
+    if (!res.ok) throw new Error("API failed");
 
     const data = await res.json();
 
     console.log("Profit Analytics:", data);
 
+    // 🔥 DASHBOARD CARD
+    document.getElementById("netProfitValue").innerText =
+      "₹" + (data.thisMonth || 0).toLocaleString();
+
+    // 🔥 OVERLAY
     document.getElementById("profitThisMonth").innerText =
       "₹" + (data.thisMonth || 0).toLocaleString();
 
@@ -1592,12 +1591,6 @@ async function loadProfitAnalytics() {
 
   } catch (err) {
     console.error("Profit analytics error:", err);
-
-    // fallback UI
-    document.getElementById("profitThisMonth").innerText = "₹0";
-    document.getElementById("profitLastMonth").innerText = "₹0";
-    document.getElementById("profitGrowth").innerText = "0%";
-    document.getElementById("yearProfit").innerText = "₹0";
   }
 }
 
@@ -1766,4 +1759,9 @@ document.addEventListener("change", (e) => {
   ) {
     applyFilters();
   }
+});
+
+window.addEventListener("DOMContentLoaded", () => {
+  loadDashboardStats();
+  loadProfitAnalytics(); // 🔥 ADD THIS
 });
