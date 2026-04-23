@@ -1720,6 +1720,10 @@ tbody tr:hover {
   width: 520px;
   max-width: 92%;
 
+  /* 🔥 ADD THESE */
+  max-height: 85vh;
+  overflow-y: auto;
+
   background: linear-gradient(145deg, #ffffff, #f4f4f4);
   border-radius: 20px;
 
@@ -1730,6 +1734,19 @@ tbody tr:hover {
     inset 0 1px 0 rgba(255,255,255,0.7);
 
   animation: scaleIn 0.25s ease;
+}
+
+.overlay-box::-webkit-scrollbar {
+  width: 6px;
+}
+
+.overlay-box::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 10px;
+}
+
+.overlay-box::-webkit-scrollbar-thumb:hover {
+  background: #999;
 }
 
 /* HEADER */
