@@ -191,44 +191,10 @@
   line-height: 1.8;
 }
 
-.about-box h2 {
-  text-align: center;
-  font-size: 36px;
-  font-weight: 600;
-  margin-bottom: 20px;
-  text-decoration: underline;
-  font-family: 'Crimson Text', serif !important;
-}
-
 .about-box p {
   font-size: 20px;
   margin-bottom: 20px;
   text-align: center;
-  font-family: 'Crimson Text', serif !important;
-}
-
-.policy-section {
-  width: 96%;
-  max-width: 1600px;
-  margin: 40px auto;
-  background: rgba(157, 145, 103, 0.6);
-  border: 2px solid rgba(113, 32, 0, 1);
-  padding: 30px 40px;
-  color: #000;
-  line-height: 1.7;
-}
-
-.policy-section h2 {
-  text-align: center;
-  font-size: 26px;
-  margin-bottom: 20px;
-  font-family: 'Crimson Text', serif !important;
-}
-
-.policy-section h3 {
-  font-size: 18px;
-  margin-top: 20px;
-  color: rgba(113, 32, 0, 1);
   font-family: 'Crimson Text', serif !important;
 }
 
@@ -238,9 +204,7 @@
   font-weight: 600;
   font-family: 'Crimson Text', serif !important;
 }
-.policy-section p, ol, li {
-    font-family: 'Crimson Text', serif !important;
-}
+
 
 .resend-link {
   cursor: pointer;
