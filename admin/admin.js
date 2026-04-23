@@ -1629,6 +1629,17 @@ function renderProductList(containerId, list = []) {
   });
 }
 
+function setText(id, value) {
+  const el = document.getElementById(id);
+
+  if (!el) {
+    console.warn("Missing element:", id);
+    return;
+  }
+
+  el.innerText = value;
+}
+
 async function loadProductAnalytics() {
   const res = await fetch("https://gsd-backend-i5gj.onrender.com/api/admin/product-analytics");
   const data = await res.json();
