@@ -74,33 +74,6 @@ body {
     content: "📊";
 }
 
-.nav-item[data-page="products"]::before {
-    content: "🏷️";
-}
-
-.nav-item[data-page="orders"]::before {
-    content: "📦";
-}
-
-.nav-item[data-page="customers"]::before {
-    content: "👥";
-}
-
-.nav-item[data-page="inventory"]::before {
-    content: "📋";
-}
-
-.nav-item[data-page="payments"]::before {
-    content: "💳";
-}
-
-.nav-item[data-page="offers"]::before {
-    content: "🎁";
-}
-
-.nav-item[data-page="settings"]::before {
-    content: "⚙️";
-}
 
 /* Main Content */
 .main-content {
