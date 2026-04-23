@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>GS Ethnic Store</title>
@@ -10,89 +11,128 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Corben">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Crimson+Text">
   <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
+
 <body>
 
-<!-- HEADER -->
-<header class="header">
-  <div class="logo">
-  <img src="../images/gsd.png" alt="GS Logo">
-</div>
-  <nav class="nav">
-    <a href="../htmlpages/index.html">HOME</a>
-    <a href="javascript:void(0)" id="categoryBtn">CATEGORIES</a>
-    <a href="#">SALE</a>
-    <a href="../htmlpages/about.html">ABOUT</a>
-    <a href="#">CONTACT</a>
-  </nav>
-<div class="nav-icons">
+  <!-- HEADER -->
+  <header class="header">
+    <div class="logo">
+      <img src="../images/gsd.png" alt="GS Logo">
+    </div>
+    <nav class="nav">
+      <a href="../htmlpages/index.html">HOME</a>
+      <a href="javascript:void(0)" id="categoryBtn">CATEGORIES</a>
+      <a href="#">SALE</a>
+      <a href="../htmlpages/about.html">ABOUT</a>
+      <a href="#">CONTACT</a>
+    </nav>
+    <div class="nav-icons">
 
-  <i class="fa-regular fa-user" id="profileBtn"></i>
+      <i class="fa-regular fa-user" id="profileBtn"></i>
 
-  <!-- Wishlist Icon -->
-  <a href="../htmlpages/wishlist.html">
-    <i class="fa-regular fa-heart"></i>
-  </a>
+      <!-- Wishlist Icon -->
+      <a href="../htmlpages/wishlist.html">
+        <i class="fa-regular fa-heart"></i>
+      </a>
 
-  <!-- Cart Icon -->
-  <a href="../htmlpages/cart.html">
-    <i class="fa-solid fa-bag-shopping"></i>
-  </a>
-</div>
+      <!-- Cart Icon -->
+      <a href="../htmlpages/cart.html">
+        <i class="fa-solid fa-bag-shopping"></i>
+      </a>
+    </div>
 
-</header>
+  </header>
 
   <!-- Categories Overlay -->
-<div class="category-overlay" id="categoryOverlay">
-  <div class="category-box" id="categoryBox">
-    <!-- Dynamic categories will come here -->
+  <div class="category-overlay" id="categoryOverlay">
+    <div class="category-box" id="categoryBox">
+      <!-- Dynamic categories will come here -->
+    </div>
   </div>
-</div>
-<!-- Profile Overlay -->
-<div class="profile-overlay" id="profileOverlay">
-  <div class="profile-box">
-    <ul>
-      <li><a href="../htmlpages/userprofile.html?section=orders">My Orders</a></li>
-      <li><a href="../htmlpages/wishlist.html">My Wishlist</a></li>
-      <li><a href="../htmlpages/userprofile.html?section=savedAddress">Saved Addresses</a></li>
-    </ul>
+  <!-- Profile Overlay -->
+  <div class="profile-overlay" id="profileOverlay">
+    <div class="profile-box">
+      <ul>
+        <li><a href="../htmlpages/userprofile.html?section=orders">My Orders</a></li>
+        <li><a href="../htmlpages/wishlist.html">My Wishlist</a></li>
+        <li><a href="../htmlpages/userprofile.html?section=savedAddress">Saved Addresses</a></li>
+      </ul>
 
-    <hr>
+      <hr>
 
-    <ul>
-      <li><a href="../htmlpages/userprofile.html?section=editProfile">Edit Profile</a></li>
-      <li id="logoutBtn"><a href="../htmlpages/login.html">Logout</a></li>
-    </ul>
+      <ul>
+        <li><a href="../htmlpages/userprofile.html?section=editProfile">Edit Profile</a></li>
+        <li id="logoutBtn"><a href="../htmlpages/login.html">Logout</a></li>
+      </ul>
+    </div>
   </div>
-</div>
 
-<div class="about-wrapper">
-  <div class="about-box">
+  <div class="about-wrapper">
+    <div class="about-box">
 
-    <h2>Shipping Policy</h2>
+      <div class="about-wrapper">
+        <div class="about-box">
 
-    <p>
-      We are committed to providing efficient delivery services, ensuring that your orders arrive within 3-5 working days. <br><br>
-      We strive to ensure that all orders are dispatched promptly and delivered within the estimated time frame.
-      Once you place the order, you will be notified with the placement of order. Day, date and time of dispatching the order and the delivery of the order. So, we suggest you check your email or your inbox from time to time.
-    </p>
+          ```
+          <h2>Shipping & Payment Policy</h2>
 
-    <p>
-      However, due to logistical issues, it may happen that your order may take upto 7-10 days to be delivered. 
-    </p>
+          <p>
+            We offer reliable and timely delivery across all serviceable locations.
+            All orders are processed promptly and typically delivered within <b>3–5 working days</b>.
+          </p>
 
-    <p>
-     Our cancellation policy is as follows: <br><br>
+          <p>
+            Once your order is placed, you will receive updates at every stage — including order confirmation, dispatch
+            details, and delivery status.
+            Please ensure you check your email or notifications regularly for updates.
+          </p>
 
-    Once an order is placed, it cannot be cancelled. This is because we import our products internationally, and custom fees and taxes are immediately charged upon receipt of the order. These fees are non-refundable, and unfortunately, we are unable to absorb the cost of cancelling orders.    </p>
+          <p>
+            In certain cases due to logistics or high demand, delivery may take up to <b>7–10 working days</b>.
+            We always strive to deliver your order as quickly as possible.
+          </p>
+
+          <hr>
+
+          <h3>Payment Method (Cash on Delivery)</h3>
+
+          <p>
+            We currently offer <b>Cash on Delivery (COD)</b> as our primary payment method.
+            This means you only pay for your order at the time of delivery.
+          </p>
+
+          <p>
+            Please ensure that the correct amount is available at the time of delivery to avoid any inconvenience.
+          </p>
+
+          <hr>
+
+          <h3>Order Cancellation</h3>
+
+          <p>
+            Orders can only be cancelled <b>before they are confirmed or shipped</b>.
+            Once an order has been processed or dispatched, cancellation will not be possible.
+          </p>
+
+          <p>
+            If you wish to cancel your order, please contact support at the earliest after placing the order.
+          </p>
+          ```
+
+        </div>
+      </div>
 
 
+
+    </div>
   </div>
-</div>
 
-<script src="../jspages/script.js"></script>
+  <script src="../jspages/script.js"></script>
 </body>
+
 </html>
