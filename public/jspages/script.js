@@ -1,4 +1,8 @@
+function renderRating(rating = 0) {
+  if (!rating) return "—"; // cleaner than "No rating"
 
+  return `${Number(rating).toFixed(1)}`;
+}
 /* =========================
    LOGIN CHECK (GLOBAL)
 ========================= */
@@ -69,10 +73,10 @@ document.addEventListener("click", async (e) => {
   const productId = card.dataset.id;
   const userId = localStorage.getItem("userId");
 
-if (!isLoggedIn()) {
-  redirectLogin();
-  return;
-}
+  if (!isLoggedIn()) {
+    redirectLogin();
+    return;
+  }
 
   try {
 
@@ -120,8 +124,16 @@ if (categoryBtn && overlay && categoryBox) {
 
   categoryBtn.addEventListener("click", (e) => {
     e.stopPropagation();
+
+    const rect = categoryBtn.getBoundingClientRect();
+
     overlay.style.display = "block";
-      loadCategories();
+
+    // ✅ ADD THIS
+    categoryBox.style.top = rect.bottom + "px";
+    categoryBox.style.left = rect.left + "px";
+
+    loadCategories();
   });
 
   overlay.addEventListener("click", () => {
@@ -145,29 +157,31 @@ const profileIcon = document.getElementById("profileIcon");
 if (profileBtn && profileOverlay) {
 
   profileBtn.addEventListener("click", () => {
+
     if (!isLoggedIn()) {
       redirectLogin();
       return;
     }
-    profileOverlay.classList.add("show");
+
+    const rect = profileBtn.getBoundingClientRect();
+
+    profileOverlay.style.display = "block";
+
+    const profileBox = document.querySelector(".profile-box");
+
+    profileBox.style.top = rect.bottom + "px";
+    profileBox.style.left = rect.right - profileBox.offsetWidth + "px";
   });
 
   profileOverlay.addEventListener("click", (e) => {
     if (e.target === profileOverlay) {
-      profileOverlay.classList.remove("show");
+      profileOverlay.style.display = "none";
     }
   });
 
-  if (profileIcon) {
-    profileIcon.addEventListener("click", (e) => {
-      e.stopPropagation();
-      profileOverlay.classList.toggle("show");
-    });
-  }
-
   document.addEventListener("click", (e) => {
-    if (!profileOverlay.contains(e.target) && e.target !== profileIcon) {
-      profileOverlay.classList.remove("show");
+    if (!profileOverlay.contains(e.target) && e.target !== profileBtn) {
+      profileOverlay.style.display = "none";
     }
   });
 
@@ -193,16 +207,6 @@ document.addEventListener("click", (e) => {
 
 });
 
-profileBtn.addEventListener("click", () => {
-
-  if (!isLoggedIn()) {
-    redirectLogin();
-    return;
-  }
-
-  profileOverlay.style.display = "block";
-
-});
 
 /* =========================
    LOGOUT
@@ -277,45 +281,14 @@ function goToCategory(categoryName) {
   window.location.href = `../htmlpages/productcatalogue.html?category=${encodeURIComponent(categoryName)}`;
 }
 
-function renderRating(rating = 0) {
-  if (!rating) return "—"; // cleaner than "No rating"
-
-  return `${Number(rating).toFixed(1)}`;
-}
-
 // for overlays 
-const categoryBtn = document.querySelector("#categoriesBtn"); // your nav item
-const categoryOverlay = document.getElementById("categoryOverlay");
-const categoryBox = document.getElementById("categoryBox");
 
-categoryBtn.addEventListener("click", (e) => {
-  const rect = categoryBtn.getBoundingClientRect();
-
-  categoryOverlay.style.display = "block";
-
-  categoryBox.style.top = rect.bottom + "px";
-  categoryBox.style.left = rect.left + "px";
-});
-const profileBtn = document.querySelector("#profileBtn");
-const profileOverlay = document.getElementById("profileOverlay");
 const profileBox = document.querySelector(".profile-box");
 
-profileBtn.addEventListener("click", () => {
-  const rect = profileBtn.getBoundingClientRect();
-
-  profileOverlay.style.display = "block";
-
-  profileBox.style.top = rect.bottom + "px";
-  profileBox.style.left = rect.right - profileBox.offsetWidth + "px";
-});
-categoryOverlay.addEventListener("click", (e) => {
-  if (!categoryBox.contains(e.target)) {
-    categoryOverlay.style.display = "none";
-  }
-});
-
-profileOverlay.addEventListener("click", (e) => {
-  if (!profileBox.contains(e.target)) {
-    profileOverlay.style.display = "none";
-  }
-});
+if (profileOverlay && profileBox) {
+  profileOverlay.addEventListener("click", (e) => {
+    if (!profileBox.contains(e.target)) {
+      profileOverlay.style.display = "none";
+    }
+  });
+}
