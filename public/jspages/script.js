@@ -282,3 +282,40 @@ function renderRating(rating = 0) {
 
   return `${Number(rating).toFixed(1)}`;
 }
+
+// for overlays 
+const categoryBtn = document.querySelector("#categoriesBtn"); // your nav item
+const categoryOverlay = document.getElementById("categoryOverlay");
+const categoryBox = document.getElementById("categoryBox");
+
+categoryBtn.addEventListener("click", (e) => {
+  const rect = categoryBtn.getBoundingClientRect();
+
+  categoryOverlay.style.display = "block";
+
+  categoryBox.style.top = rect.bottom + "px";
+  categoryBox.style.left = rect.left + "px";
+});
+const profileBtn = document.querySelector("#profileBtn");
+const profileOverlay = document.getElementById("profileOverlay");
+const profileBox = document.querySelector(".profile-box");
+
+profileBtn.addEventListener("click", () => {
+  const rect = profileBtn.getBoundingClientRect();
+
+  profileOverlay.style.display = "block";
+
+  profileBox.style.top = rect.bottom + "px";
+  profileBox.style.left = rect.right - profileBox.offsetWidth + "px";
+});
+categoryOverlay.addEventListener("click", (e) => {
+  if (!categoryBox.contains(e.target)) {
+    categoryOverlay.style.display = "none";
+  }
+});
+
+profileOverlay.addEventListener("click", (e) => {
+  if (!profileBox.contains(e.target)) {
+    profileOverlay.style.display = "none";
+  }
+});
