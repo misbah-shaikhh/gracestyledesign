@@ -3,6 +3,7 @@ const router = express.Router();
 const Refund = require("../models/refund");
 const Order = require("../models/orders");
 const Product = require("../models/product");
+const Request = require("../models/requests");
 
 // ✅ GET ONLY PENDING REFUNDS (for dashboard)
 router.get("/pending", async (req, res) => {
@@ -61,6 +62,12 @@ router.put("/:id/status", async (req, res) => {
     }
 
     await refund.save();
+    // 🔥 SYNC REQUEST STATUS
+    if (status === "Processed") {
+      await Request.findByIdAndUpdate(refund.requestId, {
+        status: "Refund Completed"
+      });
+    }
 
     res.json(refund);
 
